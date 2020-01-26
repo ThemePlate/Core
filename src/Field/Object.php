@@ -179,7 +179,7 @@ class Object {
 		$total    = wp_count_terms( $_GET['options']['taxonomy'] );
 		$query    = new \WP_Term_Query( array_merge( $defaults, $_GET['options'] ) );
 
-		if ( $_GET['page']['paged'] < ceil( $total / self::$count ) ) {
+		if ( ! is_wp_error( $total ) && $_GET['page']['paged'] < ceil( $total / self::$count ) ) {
 			$return['pagination']['more'] = true;
 		}
 
