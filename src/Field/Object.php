@@ -61,15 +61,6 @@ class Object {
 	}
 
 
-	public static function ajax_actions() {
-
-		add_action( 'wp_ajax_tp_posts', array( __CLASS__, 'get_posts' ) );
-		add_action( 'wp_ajax_tp_users', array( __CLASS__, 'get_users' ) );
-		add_action( 'wp_ajax_tp_terms', array( __CLASS__, 'get_terms' ) );
-
-	}
-
-
 	private static $count    = 10;
 	private static $prefixes = array();
 
