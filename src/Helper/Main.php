@@ -73,6 +73,18 @@ class Main {
 		$absolute_path = wp_normalize_path( untrailingslashit( ABSPATH ) );
 		$file_path     = wp_normalize_path( $file_path );
 		$file_url      = str_replace( $absolute_path, site_url(), $file_path );
+		$content_path  = wp_normalize_path( untrailingslashit( WP_CONTENT_DIR ) );
+		$content_url   = untrailingslashit( content_url() );
+
+		if ( false !== strpos( $file_path, $content_path ) ) {
+			$file_url = str_replace( $content_path, $content_url, $file_path );
+		}
+
+		if ( 0 === strpos( $file_path, get_template_directory() ) ) {
+			$file_url = get_template_directory_uri() . str_replace( get_template_directory(), '', $file_path );
+		} elseif ( 0 === strpos( $file_path, get_stylesheet_directory() ) ) {
+			$file_url = get_stylesheet_directory_uri() . str_replace( get_stylesheet_directory(), '', $file_path );
+		}
 
 		return set_url_scheme( $file_url );
 
