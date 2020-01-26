@@ -67,4 +67,15 @@ class Main {
 
 	}
 
+
+	public static function get_url( $file_path ) {
+
+		$absolute_path = wp_normalize_path( untrailingslashit( ABSPATH ) );
+		$file_path     = wp_normalize_path( $file_path );
+		$file_url      = str_replace( $absolute_path, site_url(), $file_path );
+
+		return set_url_scheme( $file_url );
+
+	}
+
 }
