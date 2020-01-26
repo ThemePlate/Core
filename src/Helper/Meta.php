@@ -9,6 +9,8 @@
 
 namespace ThemePlate\Core\Helper;
 
+use ThemePlate\Core\Helper\Main;
+
 class Meta {
 
 	public static function should_display( $meta_box, $object_id ) {
@@ -73,7 +75,7 @@ class Meta {
 			$container[ $type . '_cb' ] = $value;
 			unset( $container[ $type ] );
 		} elseif ( is_array( $value ) ) {
-			if ( ! ThemePlate_Helper_Main::is_sequential( $value ) ) {
+			if ( ! Main::is_sequential( $value ) ) {
 				$value              = array( $value );
 				$container[ $type ] = array( $container[ $type ] );
 			}

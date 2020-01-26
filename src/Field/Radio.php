@@ -9,11 +9,13 @@
 
 namespace ThemePlate\Core\Field;
 
+use ThemePlate\Core\Helper\Main;
+
 class Radio {
 
 	public static function render( $field, $list = false ) {
 
-		$seq = ThemePlate_Helper_Main::is_sequential( $field['options'] );
+		$seq = Main::is_sequential( $field['options'] );
 		$tag = $list ? 'p' : 'span';
 		if ( ! empty( $field['options'] ) ) {
 			echo '<fieldset id="' . esc_attr( $field['id'] ) . '">';
