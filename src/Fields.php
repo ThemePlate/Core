@@ -97,10 +97,10 @@ class Fields {
 				$stored  = isset( $options[ $field['id'] ] ) ? $options[ $field['id'] ] : '';
 				$key     = $object_id;
 			} else {
-				$field['id'] = ThemePlate()->key . '_' . $metabox_id . '_' . $id;
+				$field['id'] = $metabox_id . '_' . $id;
 
 				$stored = get_metadata( $object_type, $object_id, $field['id'], ! $field['repeatable'] );
-				$key    = ThemePlate()->key;
+				$key    = 'themeplate';
 			}
 
 			$value = $stored ?: $field['default'];
