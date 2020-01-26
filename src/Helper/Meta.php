@@ -118,7 +118,7 @@ class Meta {
 		}
 
 		if ( 1 === count( $value ) ) {
-			if ( $args['repeatable'] ) {
+			if ( $args['repeatable'] || $args['multiple'] ) {
 				print_r( $value[0] );
 			} else {
 				echo $value; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
