@@ -1,0 +1,15 @@
+{
+    "name": "themeplate/core",
+    "authors": [
+        {
+            "name": "Gene Alyson Fortunado Torcende",
+            "email": "genealyson.torcende@gmail.com"
+        }
+    ],
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "ThemePlate\\Core\\": "src/"
+        }
+    }
+}
