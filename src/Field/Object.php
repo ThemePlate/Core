@@ -86,7 +86,7 @@ class Object {
 			);
 		}
 
-		$query = new WP_Query( array_merge( $defaults, $_GET['options'], $_GET['page'] ) );
+		$query = new \WP_Query( array_merge( $defaults, $_GET['options'], $_GET['page'] ) );
 
 		if ( $_GET['page']['paged'] < $query->max_num_pages ) {
 			$return['pagination']['more'] = true;
@@ -140,7 +140,7 @@ class Object {
 			'number'  => $_GET['ids__in'] ? -1 : self::$count,
 			'include' => $_GET['ids__in'],
 		);
-		$query    = new WP_User_Query( array_merge( $defaults, $_GET['options'], $_GET['page'] ) );
+		$query    = new \WP_User_Query( array_merge( $defaults, $_GET['options'], $_GET['page'] ) );
 
 		if ( $_GET['page']['paged'] < ceil( $query->get_total() / self::$count ) ) {
 			$return['pagination']['more'] = true;
@@ -177,7 +177,7 @@ class Object {
 			'offset'  => $offset,
 		);
 		$total    = wp_count_terms( $_GET['options']['taxonomy'] );
-		$query    = new WP_Term_Query( array_merge( $defaults, $_GET['options'] ) );
+		$query    = new \WP_Term_Query( array_merge( $defaults, $_GET['options'] ) );
 
 		if ( $_GET['page']['paged'] < ceil( $total / self::$count ) ) {
 			$return['pagination']['more'] = true;
