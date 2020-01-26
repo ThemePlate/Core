@@ -9,6 +9,10 @@
 
 namespace ThemePlate\Core;
 
+use ThemePlate\Core\Helper\Field;
+use ThemePlate\Core\Helper\Main;
+use ThemePlate\Core\Helper\Meta;
+
 class Fields {
 
 	private $collection;
@@ -47,9 +51,9 @@ class Fields {
 				'minimum'    => 0,
 				'maximum'    => 0,
 			);
-			$field    = ThemePlate_Helper_Main::fool_proof( $defaults, $field );
-			$field    = ThemePlate_Helper_Meta::normalize_options( $field );
-			$field    = ThemePlate_Helper_Field::deprecate_check( $field );
+			$field    = Main::fool_proof( $defaults, $field );
+			$field    = Meta::normalize_options( $field );
+			$field    = Field::deprecate_check( $field );
 
 			if ( 'group' === $field['type'] ) {
 				if ( array_key_exists( 'fields', $field ) && ! empty( $field['fields'] ) ) {
@@ -119,7 +123,7 @@ class Fields {
 
 		/* phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact */
 		echo '<div class="field-wrapper type-' . esc_attr( $field['type'] ) . ' ' . esc_attr( $field['style'] ) . '">';
-			ThemePlate_Helper_Meta::render_options( $field );
+			Meta::render_options( $field );
 
 			if ( ! empty( $field['title'] ) || ! empty( $field['description'] ) ) {
 				echo '<div class="field-label">';
@@ -172,7 +176,7 @@ class Fields {
 	private function render( $field ) {
 
 		if ( 'group' !== $field['type'] ) {
-			ThemePlate_Helper_Field::render( $field );
+			Field::render( $field );
 			return;
 		}
 

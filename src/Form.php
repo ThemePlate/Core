@@ -9,6 +9,10 @@
 
 namespace ThemePlate\Core;
 
+use ThemePlate\Core\Fields;
+use ThemePlate\Core\Helper\Main;
+use ThemePlate\Core\Helper\Meta;
+
 class Form {
 
 	private $config;
@@ -24,16 +28,16 @@ class Form {
 			'fields',
 		);
 
-		if ( ! ThemePlate_Helper_Main::is_complete( $config, $expected ) ) {
+		if ( ! Main::is_complete( $config, $expected ) ) {
 			throw new Exception();
 		}
 
 		$defaults     = array(
 			'style' => '',
 		);
-		$this->config = ThemePlate_Helper_Main::fool_proof( $defaults, $config );
-		$this->config = ThemePlate_Helper_Meta::normalize_options( $this->config );
-		$this->fields = new ThemePlate_Fields( $config['fields'] );
+		$this->config = Main::fool_proof( $defaults, $config );
+		$this->config = Meta::normalize_options( $this->config );
+		$this->fields = new Fields( $config['fields'] );
 
 	}
 
@@ -100,7 +104,7 @@ class Form {
 
 		wp_nonce_field( 'save_themeplate_' . $meta_box['id'], 'themeplate_' . $meta_box['id'] . '_nonce' );
 
-		ThemePlate_Helper_Meta::render_options( $meta_box );
+		Meta::render_options( $meta_box );
 
 		if ( ! empty( $meta_box['description'] ) ) {
 			echo '<p class="description">' . $meta_box['description'] . '</p>'; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
