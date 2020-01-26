@@ -74,10 +74,10 @@ class Object {
 			),
 		);
 		$defaults = array(
-			's'              => $_GET['search'],
+			's'              => isset( $_GET['search'] ) ? $_GET['search'] : '',
 			'fields'         => 'ids',
-			'posts_per_page' => $_GET['ids__in'] ? -1 : self::$count,
-			'post__in'       => $_GET['ids__in'],
+			'posts_per_page' => isset( $_GET['ids__in'] ) ? -1 : self::$count,
+			'post__in'       => isset( $_GET['ids__in'] ) ? $_GET['ids__in'] : '',
 		);
 
 		if ( is_array( $_GET['options']['post_type'] ) && 1 < count( $_GET['options']['post_type'] ) ) {
@@ -135,10 +135,10 @@ class Object {
 			),
 		);
 		$defaults = array(
-			'search'  => $_GET['search'],
+			'search'  => isset( $_GET['search'] ) ? $_GET['search'] : '',
 			'fields'  => array( 'ID', 'display_name' ),
-			'number'  => $_GET['ids__in'] ? -1 : self::$count,
-			'include' => $_GET['ids__in'],
+			'number'  => isset( $_GET['ids__in'] ) ? -1 : self::$count,
+			'include' => isset( $_GET['ids__in'] ) ? $_GET['ids__in'] : '',
 		);
 		$query    = new \WP_User_Query( array_merge( $defaults, $_GET['options'], $_GET['page'] ) );
 
@@ -170,10 +170,10 @@ class Object {
 		);
 		$offset   = ( $_GET['page']['paged'] > 0 ) ? self::$count * ( $_GET['page']['paged'] - 1 ) : 1;
 		$defaults = array(
-			'search'  => $_GET['search'],
+			'search'  => isset( $_GET['search'] ) ? $_GET['search'] : '',
 			'fields'  => 'id=>name',
-			'number'  => $_GET['ids__in'] ? 0 : self::$count,
-			'include' => $_GET['ids__in'],
+			'number'  => isset( $_GET['ids__in'] ) ? 0 : self::$count,
+			'include' => isset( $_GET['ids__in'] ) ? $_GET['ids__in'] : '',
 			'offset'  => $offset,
 		);
 		$total    = wp_count_terms( $_GET['options']['taxonomy'] );
