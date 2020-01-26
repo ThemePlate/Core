@@ -38,7 +38,7 @@ class Object {
 				break;
 			case 'term':
 				$action   = 'tp_terms';
-				$defaults = array( 'taxonomy' => array() );
+				$defaults = array( 'taxonomy' => null );
 
 				if ( Main::is_sequential( $field['options'] ) ) {
 					$field['options'] = array( 'taxonomy' => $field['options'] );
