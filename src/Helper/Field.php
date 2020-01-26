@@ -9,6 +9,19 @@
 
 namespace ThemePlate\Core\Helper;
 
+use ThemePlate\Core\Field\Checkbox;
+use ThemePlate\Core\Field\Color;
+use ThemePlate\Core\Field\Date;
+use ThemePlate\Core\Field\Editor;
+use ThemePlate\Core\Field\File;
+use ThemePlate\Core\Field\Html;
+use ThemePlate\Core\Field\Input;
+use ThemePlate\Core\Field\Number;
+use ThemePlate\Core\Field\Object;
+use ThemePlate\Core\Field\Radio;
+use ThemePlate\Core\Field\Select;
+use ThemePlate\Core\Field\Textarea;
+
 class Field {
 
 	public static function render( $field ) {
@@ -21,62 +34,62 @@ class Field {
 			case 'time':
 			case 'email':
 			case 'url':
-				ThemePlate_Field_Input::render( $field );
+				Input::render( $field );
 				break;
 
 			case 'textarea':
-				ThemePlate_Field_Textarea::render( $field );
+				Textarea::render( $field );
 				break;
 
 			case 'date':
-				ThemePlate_Field_Date::render( $field );
+				Date::render( $field );
 				break;
 
 			case 'select':
 			case 'select2':
-				ThemePlate_Field_Select::render( $field );
+				Select::render( $field );
 				break;
 
 			case 'radiolist':
 				$list = true;
 				// intentional fall-through
 			case 'radio':
-				ThemePlate_Field_Radio::render( $field, $list );
+				Radio::render( $field, $list );
 				break;
 
 			case 'checklist':
 				$list = true;
 				// intentional fall-through
 			case 'checkbox':
-				ThemePlate_Field_Checkbox::render( $field, $list );
+				Checkbox::render( $field, $list );
 				break;
 
 			case 'color':
-				ThemePlate_Field_Color::render( $field );
+				Color::render( $field );
 				break;
 
 			case 'file':
-				ThemePlate_Field_File::render( $field );
+				File::render( $field );
 				break;
 
 			case 'number':
 			case 'range':
-				ThemePlate_Field_Number::render( $field );
+				Number::render( $field );
 				break;
 
 			case 'editor':
-				ThemePlate_Field_Editor::render( $field );
+				Editor::render( $field );
 				break;
 
 			case 'post':
 			case 'page':
 			case 'user':
 			case 'term':
-				ThemePlate_Field_Object::render( $field );
+				Object::render( $field );
 				break;
 
 			case 'html':
-				ThemePlate_Field_Html::render( $field );
+				Html::render( $field );
 				break;
 		}
 
