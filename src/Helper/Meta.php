@@ -7,8 +7,9 @@
  * @since 0.1.0
  */
 
+namespace ThemePlate\Core\Helper;
 
-class ThemePlate_Helper_Meta {
+class Meta {
 
 	public static function should_display( $meta_box, $object_id ) {
 

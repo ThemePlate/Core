@@ -7,8 +7,9 @@
  * @since 0.1.0
  */
 
+namespace ThemePlate\Core\Helper;
 
-class ThemePlate_Helper_Main {
+class Main {
 
 	public static function fool_proof( $defaults, $options ) {
 

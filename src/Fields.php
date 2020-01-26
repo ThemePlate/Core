@@ -7,8 +7,9 @@
  * @since 0.1.0
  */
 
+namespace ThemePlate\Core;
 
-class ThemePlate_Fields {
+class Fields {
 
 	private $collection;
 

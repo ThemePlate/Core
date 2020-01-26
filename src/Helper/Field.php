@@ -7,8 +7,9 @@
  * @since 0.1.0
  */
 
+namespace ThemePlate\Core\Helper;
 
-class ThemePlate_Helper_Field {
+class Field {
 
 	public static function render( $field ) {
 

@@ -7,8 +7,9 @@
  * @since 0.1.0
  */
 
+namespace ThemePlate\Core;
 
-class ThemePlate_Form {
+class Form {
 
 	private $config;
 	private $fields;

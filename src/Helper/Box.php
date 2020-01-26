@@ -7,8 +7,9 @@
  * @since 0.1.0
  */
 
+namespace ThemePlate\Core\Helper;
 
-class ThemePlate_Helper_Box {
+class Box {
 
 	public static function prepare_save( $data ) {
 
