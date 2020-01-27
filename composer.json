@@ -1,6 +1,7 @@
 {
     "name": "themeplate/core",
     "description" : "ThemePlate core functions and helpers",
+    "type": "wordpress-dropin",
     "license": "GPL-3.0",
     "authors": [
         {
@@ -9,6 +10,7 @@
         }
     ],
     "require": {
+        "composer/installers": "^1.0",
         "php": ">=5.6.0"
     },
     "autoload": {
