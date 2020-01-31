@@ -21,7 +21,7 @@ class Fields {
 	public function __construct( $collection ) {
 
 		if ( ! is_array( $collection ) || empty( $collection ) ) {
-			throw new Exception();
+			throw new \Exception();
 		}
 
 		$this->collection = $this->filter( $collection );
