@@ -11,7 +11,7 @@ namespace ThemePlate\Core\Helper;
 
 class Meta {
 
-	public static function should_display( $meta_box, $object_id ) {
+	public static function should_display( array $meta_box, int $object_id ) {
 
 		$check = true;
 
@@ -30,7 +30,7 @@ class Meta {
 	}
 
 
-	private static function display_check( $object_id, $callback, $id ) {
+	private static function display_check( int $object_id, $callback, int $id ) {
 
 		$result = true;
 
@@ -47,7 +47,7 @@ class Meta {
 	}
 
 
-	public static function normalize_options( $container ) {
+	public static function normalize_options( array $container ): array {
 
 		foreach ( array( 'show', 'hide' ) as $key ) {
 			if ( ! empty( $container[ $key . '_on' ] ) ) {
@@ -60,7 +60,7 @@ class Meta {
 	}
 
 
-	private static function option_check( $type, $container ) {
+	private static function option_check( string $type, array $container ): array {
 
 		$additional = array(
 			$type . '_cb' => '',
@@ -89,7 +89,7 @@ class Meta {
 	}
 
 
-	public static function render_options( $container ) {
+	public static function render_options( array $container ): void {
 
 		if ( ! empty( $container['show_on'] ) || ! empty( $container['hide_on'] ) ) {
 			echo '<div class="themeplate-options"';
@@ -107,7 +107,7 @@ class Meta {
 	}
 
 
-	public static function display_column( $object_id, $args ) {
+	public static function display_column( int $object_id, array $args ): void {
 
 		$value = get_metadata( $args['object_type'], $object_id, $args['id'], ! $args['repeatable'] );
 

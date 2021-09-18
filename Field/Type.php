@@ -13,7 +13,7 @@ use ThemePlate\Core\Helper\Main;
 
 class Type {
 
-	public static function render( $field ) {
+	public static function render( array $field ): void {
 
 		switch ( $field['type'] ) {
 			default:
@@ -64,11 +64,11 @@ class Type {
 	}
 
 
-	private static $count    = 10;
-	private static $prefixes = array();
+	private static int $count      = 10;
+	private static array $prefixes = array();
 
 
-	public static function get_posts() {
+	public static function get_posts(): void {
 
 		$return   = array(
 			'results'    => array(),
@@ -109,7 +109,7 @@ class Type {
 	}
 
 
-	private static function get_prefix( $id, $options ) {
+	private static function get_prefix( int $id, array $options ): string {
 
 		$prefix = '';
 
@@ -129,7 +129,7 @@ class Type {
 	}
 
 
-	public static function get_users() {
+	public static function get_users(): void {
 
 		$return   = array(
 			'results'    => array(),
@@ -163,7 +163,7 @@ class Type {
 	}
 
 
-	public static function get_terms() {
+	public static function get_terms(): void {
 
 		$return   = array(
 			'results'    => array(),

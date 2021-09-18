@@ -32,7 +32,7 @@ class Box {
 	}
 
 
-	private static function filter( $data ) {
+	private static function filter( array $data ): array {
 
 		foreach ( $data as $key => $value ) {
 			if ( is_array( $value ) ) {
@@ -49,7 +49,7 @@ class Box {
 	}
 
 
-	public static function get_priority( $config ) {
+	public static function get_priority( array $config ): int {
 
 		switch ( $config['priority'] ) {
 			default:

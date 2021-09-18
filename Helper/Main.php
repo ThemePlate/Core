@@ -11,7 +11,7 @@ namespace ThemePlate\Core\Helper;
 
 class Main {
 
-	public static function fool_proof( $defaults, $options ) {
+	public static function fool_proof( array $defaults, array $options ): array {
 
 		$result = array_merge( $defaults, $options );
 
@@ -34,14 +34,14 @@ class Main {
 	}
 
 
-	public static function is_sequential( $array ) {
+	public static function is_sequential( array $array ): bool {
 
 		return ( array_keys( $array ) === range( 0, count( $array ) - 1 ) );
 
 	}
 
 
-	public static function is_complete( $config, $expected ) {
+	public static function is_complete( array $config, array $expected ): bool {
 
 		if ( ! is_array( $config ) || empty( $config ) ) {
 			return false;
@@ -68,7 +68,7 @@ class Main {
 	}
 
 
-	public static function get_url( $file_path ) {
+	public static function get_url( string $file_path ): string {
 
 		$absolute_path = wp_normalize_path( untrailingslashit( ABSPATH ) );
 		$file_path     = wp_normalize_path( $file_path );
@@ -91,7 +91,7 @@ class Main {
 	}
 
 
-	public static function asset_url( $file ) {
+	public static function asset_url( string $file ): string {
 
 		$url = defined( 'TP_CORE_URL' ) ? untrailingslashit( TP_CORE_URL ) : self::get_url( TP_CORE_PATH );
 

@@ -13,7 +13,7 @@ use ThemePlate\Core\Helper\Main;
 
 class Radio {
 
-	public static function render( $field, $list = false ) {
+	public static function render( array $field, bool $list = false ): void {
 
 		$seq = Main::is_sequential( $field['options'] );
 		$tag = $list ? 'p' : 'span';

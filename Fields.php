@@ -14,10 +14,10 @@ use ThemePlate\Core\Helper\Meta;
 
 class Fields {
 
-	private $collection;
+	private array $collection;
 
 
-	public function __construct( $collection ) {
+	public function __construct( array $collection ) {
 
 		if ( ! is_array( $collection ) || empty( $collection ) ) {
 			throw new \Exception();
@@ -28,7 +28,7 @@ class Fields {
 	}
 
 
-	private function filter( $fields ) {
+	private function filter( array $fields ): array {
 
 		$processed = array();
 
@@ -55,7 +55,7 @@ class Fields {
 	}
 
 
-	public function setup( $metabox_id = '', $object_type = 'post', $object_id = 0 ) {
+	public function setup( string $metabox_id = '', string $object_type = 'post', int $object_id = 0 ): void {
 
 		foreach ( $this->collection as $id => $field ) {
 			$object_menu = false;
@@ -93,7 +93,7 @@ class Fields {
 	}
 
 
-	private function layout( $field, $value, $name ) {
+	private function layout( array $field, $value, string $name ): void {
 
 		$current = count( (array) $value );
 
@@ -146,7 +146,7 @@ class Fields {
 	}
 
 
-	private function cloner( $field, $last = false ) {
+	private function cloner( array $field, bool $last = false ): void {
 
 		echo '<div class="themeplate-clone' . ( $last ? ' hidden' : '' ) . '">';
 			echo '<div class="themeplate-handle"></div>';
@@ -176,7 +176,7 @@ class Fields {
 	}
 
 
-	private function render( $field ) {
+	private function render( array $field ): void {
 
 		if ( 'custom' === $field['type'] ) {
 			call_user_func( $field['callback'], $field );
@@ -201,7 +201,7 @@ class Fields {
 	}
 
 
-	public function get_collection() {
+	public function get_collection(): array {
 
 		return $this->collection;
 

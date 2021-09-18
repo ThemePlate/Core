@@ -11,7 +11,7 @@ namespace ThemePlate\Core\Field;
 
 class Date {
 
-	public static function render( $field ) {
+	public static function render( array $field ): void {
 
 		echo '<div class="wrapper">';
 

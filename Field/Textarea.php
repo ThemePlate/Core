@@ -13,7 +13,7 @@ use ThemePlate\Core\Helper\Main;
 
 class Textarea {
 
-	public static function render( $field ) {
+	public static function render( array $field ): void {
 
 		$defaults = array( 'rows' => 4 );
 		$attrs    = Main::fool_proof( $defaults, $field['options'] );

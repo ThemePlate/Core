@@ -13,7 +13,7 @@ use ThemePlate\Core\Helper\Main;
 
 class Select {
 
-	public static function render( $field ) {
+	public static function render( array $field ): void {
 
 		$seq = Main::is_sequential( $field['options'] );
 		echo '<select' . ( 'select2' === $field['type'] ? ' class="themeplate-select2"' : '' ) . ' name="' . esc_attr( $field['name'] ) . ( $field['multiple'] ? '[]' : '' ) . '" id="' . esc_attr( $field['id'] ) . '"' . ( $field['multiple'] ? ' multiple="multiple"' : '' ) . ( $field['none'] ? ' data-none="true"' : '' ) . ( $field['required'] ? ' required="required"' : '' ) . '>';

@@ -25,7 +25,7 @@ use ThemePlate\Core\Field\Textarea;
 
 class Field {
 
-	public static function filter( $field ) {
+	public static function filter( array $field ): array {
 
 		$defaults = array(
 			'type'       => 'text',
@@ -65,7 +65,7 @@ class Field {
 	}
 
 
-	public static function render( $field ) {
+	public static function render( array $field ): void {
 
 		$list = false;
 
@@ -141,7 +141,7 @@ class Field {
 	}
 
 
-	public static function deprecate_check( $field ) {
+	public static function deprecate_check( array $field ): array {
 
 		if ( ! empty( $field['name'] ) ) {
 			$field['title'] = $field['name'];

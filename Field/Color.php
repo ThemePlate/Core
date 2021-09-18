@@ -11,7 +11,7 @@ namespace ThemePlate\Core\Field;
 
 class Color {
 
-	public static function render( $field ) {
+	public static function render( array $field ): void {
 
 		echo '<input type="text" name="' . esc_attr( $field['name'] ) . '" id="' . esc_attr( $field['id'] ) . '" class="themeplate-color-picker" value="' . esc_attr( $field['value'] ) . '"' . ( esc_attr( $field['default'] ) ? ' data-default-color="' . esc_attr( $field['default'] ) . '"' : '' );
 		if ( ! empty( $field['options'] ) ) {

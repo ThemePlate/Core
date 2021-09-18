@@ -11,7 +11,7 @@ namespace ThemePlate\Core\Field;
 
 class Link {
 
-	public static function render( $field ) {
+	public static function render( array $field ): void {
 
 		echo '<div id="' . esc_attr( $field['id'] ) . '" class="themeplate-link">';
 		echo '<input type="button" class="button link-select" value="Select" />';

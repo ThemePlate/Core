@@ -11,7 +11,7 @@ namespace ThemePlate\Core\Field;
 
 class Number {
 
-	public static function render( $field ) {
+	public static function render( array $field ): void {
 
 		echo '<input type="' . esc_attr( $field['type'] ) . '" name="' . esc_attr( $field['name'] ) . '" id="' . esc_attr( $field['id'] ) . '" value="' . esc_attr( $field['value'] ) . '"';
 		if ( ! empty( $field['options'] ) ) {

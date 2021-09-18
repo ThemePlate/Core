@@ -13,7 +13,7 @@ use ThemePlate\Core\Helper\Main;
 
 class Editor {
 
-	public static function render( $field ) {
+	public static function render( array $field ): void {
 
 		$defaults = array(
 			'editor_class'  => 'themeplate-wysiwyg',

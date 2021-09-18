@@ -14,11 +14,11 @@ use ThemePlate\Core\Helper\Meta;
 
 class Form {
 
-	private $config;
-	private $fields;
+	private array $config;
+	private Fields $fields;
 
 
-	public function __construct( $config ) {
+	public function __construct( array $config ) {
 
 		$expected = array(
 			'object_type',
@@ -41,7 +41,7 @@ class Form {
 	}
 
 
-	public function enqueue( $object_type ) {
+	public function enqueue( string $object_type ): void {
 
 		if ( wp_script_is( 'themeplate-script' ) ) {
 			return;
@@ -79,7 +79,7 @@ class Form {
 	}
 
 
-	public function layout_postbox( $object_id ) {
+	public function layout_postbox( int $object_id ): void {
 
 		global $wp_version;
 
@@ -115,7 +115,7 @@ class Form {
 	}
 
 
-	public function layout_inside( $object_id ) {
+	public function layout_inside( int $object_id ): void {
 
 		$meta_box = $this->config;
 
@@ -134,7 +134,7 @@ class Form {
 	}
 
 
-	public function get_fields() {
+	public function get_fields(): array {
 
 		return $this->fields->get_collection();
 

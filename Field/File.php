@@ -11,7 +11,7 @@ namespace ThemePlate\Core\Field;
 
 class File {
 
-	public static function render( $field ) {
+	public static function render( array $field ): void {
 
 		$options = wp_json_encode( $field['options'] );
 		echo '<input type="hidden" name="' . esc_attr( $field['name'] ) . '" />';
