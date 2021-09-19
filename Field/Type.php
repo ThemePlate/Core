@@ -10,6 +10,9 @@
 namespace ThemePlate\Core\Field;
 
 use ThemePlate\Core\Helper\Main;
+use WP_Query;
+use WP_Term_Query;
+use WP_User_Query;
 
 class Type {
 
@@ -77,10 +80,10 @@ class Type {
 			),
 		);
 		$defaults = array(
-			's'              => isset( $_GET['search'] ) ? $_GET['search'] : '',
+			's'              => $_GET['search'] ?? '',
 			'fields'         => 'ids',
 			'posts_per_page' => isset( $_GET['ids__in'] ) ? -1 : self::$count,
-			'post__in'       => isset( $_GET['ids__in'] ) ? $_GET['ids__in'] : '',
+			'post__in'       => $_GET['ids__in'] ?? '',
 		);
 
 		if ( is_array( $_GET['options']['post_type'] ) && 1 < count( $_GET['options']['post_type'] ) ) {
@@ -89,7 +92,7 @@ class Type {
 			);
 		}
 
-		$query = new \WP_Query( array_merge( $defaults, $_GET['options'], $_GET['page'] ) );
+		$query = new WP_Query( array_merge( $defaults, $_GET['options'], $_GET['page'] ) );
 
 		if ( $_GET['page']['paged'] < $query->max_num_pages ) {
 			$return['pagination']['more'] = true;
@@ -141,9 +144,9 @@ class Type {
 			'search'  => isset( $_GET['search'] ) ? '*' . $_GET['search'] . '*' : '',
 			'fields'  => array( 'ID', 'display_name' ),
 			'number'  => isset( $_GET['ids__in'] ) ? -1 : self::$count,
-			'include' => isset( $_GET['ids__in'] ) ? $_GET['ids__in'] : '',
+			'include' => $_GET['ids__in'] ?? '',
 		);
-		$query    = new \WP_User_Query( array_merge( $defaults, $_GET['options'], $_GET['page'] ) );
+		$query    = new WP_User_Query( array_merge( $defaults, $_GET['options'], $_GET['page'] ) );
 
 		if ( $_GET['page']['paged'] < ceil( $query->get_total() / self::$count ) ) {
 			$return['pagination']['more'] = true;
@@ -173,14 +176,14 @@ class Type {
 		);
 		$offset   = ( $_GET['page']['paged'] > 0 ) ? self::$count * ( $_GET['page']['paged'] - 1 ) : 1;
 		$defaults = array(
-			'search'  => isset( $_GET['search'] ) ? $_GET['search'] : '',
+			'search'  => $_GET['search'] ?? '',
 			'fields'  => 'id=>name',
 			'number'  => isset( $_GET['ids__in'] ) ? 0 : self::$count,
-			'include' => isset( $_GET['ids__in'] ) ? $_GET['ids__in'] : '',
+			'include' => $_GET['ids__in'] ?? '',
 			'offset'  => $offset,
 		);
 		$total    = wp_count_terms( $_GET['options']['taxonomy'] );
-		$query    = new \WP_Term_Query( array_merge( $defaults, $_GET['options'] ) );
+		$query    = new WP_Term_Query( array_merge( $defaults, $_GET['options'] ) );
 
 		if ( ! is_wp_error( $total ) && $_GET['page']['paged'] < ceil( $total / self::$count ) ) {
 			$return['pagination']['more'] = true;

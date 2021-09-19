@@ -19,10 +19,6 @@ class Fields {
 
 	public function __construct( array $collection ) {
 
-		if ( ! is_array( $collection ) || empty( $collection ) ) {
-			throw new \Exception();
-		}
-
 		$this->collection = $this->filter( $collection );
 
 	}
@@ -60,15 +56,13 @@ class Fields {
 		foreach ( $this->collection as $id => $field ) {
 			$object_menu = false;
 
-			if ( 'options' === $object_type ) {
-				$field['id'] = $metabox_id . '_' . $id;
+			$field['id'] = $metabox_id . '_' . $id;
 
+			if ( 'options' === $object_type ) {
 				$options = get_option( $object_id );
-				$stored  = isset( $options[ $field['id'] ] ) ? $options[ $field['id'] ] : '';
+				$stored  = $options[ $field['id'] ] ?? '';
 				$key     = $object_id;
 			} else {
-				$field['id'] = $metabox_id . '_' . $id;
-
 				if ( 'menu' === $object_type ) {
 					$object_type = 'post';
 					$object_menu = true;
@@ -191,7 +185,7 @@ class Fields {
 		foreach ( $field['fields'] as $id => $sub ) {
 			$sub['id'] = $field['id'] . '_' . $id;
 
-			$stored = isset( $field['value'][ $id ] ) ? $field['value'][ $id ] : '';
+			$stored = $field['value'][ $id ] ?? '';
 			$value  = $stored ?: $sub['default'];
 			$name   = $field['name'] . '[' . $id . ']';
 

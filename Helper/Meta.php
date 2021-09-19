@@ -11,7 +11,7 @@ namespace ThemePlate\Core\Helper;
 
 class Meta {
 
-	public static function should_display( array $meta_box, int $object_id ) {
+	public static function should_display( array $meta_box, int $object_id ): bool {
 
 		$check = true;
 
@@ -30,7 +30,7 @@ class Meta {
 	}
 
 
-	private static function display_check( int $object_id, $callback, int $id ) {
+	private static function display_check( int $object_id, $callback, int $id ): bool {
 
 		$result = true;
 
@@ -42,7 +42,7 @@ class Meta {
 			$result = array_intersect( (array) $object_id, (array) $id );
 		}
 
-		return $result;
+		return (bool) $result;
 
 	}
 

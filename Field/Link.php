@@ -18,7 +18,7 @@ class Link {
 		echo '<input type="button" class="button link-remove' . ( empty( $field['value'] ) ? ' hidden' : '' ) . '" value="Remove" />';
 
 		foreach ( array( 'url', 'text', 'target' ) as $attr ) {
-			$value = isset( $field['value'][ $attr ] ) ? $field['value'][ $attr ] : '';
+			$value = $field['value'][ $attr ] ?? '';
 
 			echo '<input type="hidden" class="input-' . $attr . '" name="' . esc_attr( $field['name'] ) . '[' . $attr . ']" value="' . esc_attr( $value ) . '">';
 		}

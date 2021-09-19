@@ -9,6 +9,7 @@
 
 namespace ThemePlate\Core;
 
+use Exception;
 use ThemePlate\Core\Helper\Main;
 use ThemePlate\Core\Helper\Meta;
 
@@ -28,7 +29,7 @@ class Form {
 		);
 
 		if ( ! Main::is_complete( $config, $expected ) ) {
-			throw new \Exception();
+			throw new Exception();
 		}
 
 		$defaults     = array(

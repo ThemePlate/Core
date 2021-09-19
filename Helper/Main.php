@@ -43,10 +43,6 @@ class Main {
 
 	public static function is_complete( array $config, array $expected ): bool {
 
-		if ( ! is_array( $config ) || empty( $config ) ) {
-			return false;
-		}
-
 		$result = true;
 
 		foreach ( $expected as $key ) {
