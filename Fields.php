@@ -51,7 +51,7 @@ class Fields {
 	}
 
 
-	public function setup( string $metabox_id = '', string $object_type = 'post', int $object_id = 0 ): void {
+	public function setup( string $metabox_id = '', string $object_type = 'post', string $object_id = '' ): void {
 
 		foreach ( $this->collection as $id => $field ) {
 			$object_menu = false;

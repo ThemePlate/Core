@@ -80,7 +80,7 @@ class Form {
 	}
 
 
-	public function layout_postbox( int $object_id ): void {
+	public function layout_postbox( string $object_id ): void {
 
 		global $wp_version;
 
@@ -118,7 +118,7 @@ class Form {
 	}
 
 
-	public function layout_inside( int $object_id ): void {
+	public function layout_inside( string $object_id ): void {
 
 		$meta_box = $this->config;
 
