@@ -22,13 +22,13 @@ class Checkbox {
 			echo '<fieldset id="' . esc_attr( $field['id'] ) . '">';
 			foreach ( $field['options'] as $value => $option ) {
 				$value = ( $seq ? $value + 1 : $value );
-				echo '<' . $tag . '>';
+				echo '<' . esc_attr( $tag ) . '>';
 				echo '<label><input type="checkbox" name="' . esc_attr( $field['name'] ) . '[]" value="' . esc_attr( $value ) . '"';
 				if ( in_array( (string) $value, (array) $field['value'], true ) ) {
 					echo ' checked="checked"';
 				}
 				echo ( $field['required'] ? ' required="required"' : '' ) . ' />' . esc_html( $option ) . '</label>';
-				echo '</' . $tag . '>';
+				echo '</' . esc_attr( $tag ) . '>';
 			}
 			echo '</fieldset>';
 		} else {

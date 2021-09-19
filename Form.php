@@ -90,6 +90,7 @@ class Form {
 
 		if ( version_compare( $wp_version, '5.5', '<' ) ) {
 			echo '<button type="button" class="handlediv button-link" aria-expanded="true">';
+				/* translators: %s: metabox title */
 				echo '<span class="screen-reader-text">' . esc_html( sprintf( __( 'Toggle panel: %s' ), $meta_box['title'] ) ) . '</span>';
 				echo '<span class="toggle-indicator" aria-hidden="true"></span>';
 			echo '</button>';
@@ -101,6 +102,7 @@ class Form {
 
 				echo '<div class="handle-actions hide-if-no-js">';
 					echo '<button type="button" class="handlediv button-link" aria-expanded="true">';
+						/* translators: %s: metabox title */
 						echo '<span class="screen-reader-text">' . esc_html( sprintf( __( 'Toggle panel: %s' ), $meta_box['title'] ) ) . '</span>';
 						echo '<span class="toggle-indicator" aria-hidden="true"></span>';
 					echo '</button>';

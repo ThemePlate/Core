@@ -20,7 +20,7 @@ class Link {
 		foreach ( array( 'url', 'text', 'target' ) as $attr ) {
 			$value = $field['value'][ $attr ] ?? '';
 
-			echo '<input type="hidden" class="input-' . $attr . '" name="' . esc_attr( $field['name'] ) . '[' . $attr . ']" value="' . esc_attr( $value ) . '">';
+			echo '<input type="hidden" class="input-' . esc_attr( $attr ) . '" name="' . esc_attr( $field['name'] ) . '[' . $attr . ']" value="' . esc_attr( $value ) . '">';
 		}
 
 		echo '<div class="link-holder">';

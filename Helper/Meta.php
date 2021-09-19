@@ -117,7 +117,7 @@ class Meta {
 
 		if ( 1 === count( (array) $value ) ) {
 			if ( $args['repeatable'] || $args['multiple'] ) {
-				print_r( $value[0] );
+				print_r( $value[0] ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions
 			} else {
 				echo $value; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
@@ -129,7 +129,7 @@ class Meta {
 
 		foreach ( $value as $val ) {
 			echo '<li>';
-			print_r( $val );
+			print_r( $val ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions
 			echo '</li>';
 		}
 
