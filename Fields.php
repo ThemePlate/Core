@@ -161,7 +161,7 @@ class Fields {
 			echo '<div class="button disabled themeplate-counter">';
 
 			if ( $field['repeatable'] && $field['maximum'] ) {
-				echo 'Remaining : <strong>' . ( $field['maximum'] - $field['count'] ) . '</strong>';
+				echo 'Remaining : <strong>' . ( $field['maximum'] - $field['count'] ) . '</strong>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 
 			echo '</div>';
