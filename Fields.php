@@ -54,6 +54,10 @@ class Fields {
 	public function setup( string $metabox_id = '', string $object_type = 'post', string $object_id = '' ): void {
 
 		foreach ( $this->collection as $id => $field ) {
+			if ( ! Meta::should_display( $field, (int) $object_id ) ) {
+				continue;
+			}
+
 			$object_menu = false;
 
 			$field['id'] = $metabox_id . '_' . $id;
@@ -68,7 +72,7 @@ class Fields {
 					$object_menu = true;
 				}
 
-				$stored = get_metadata( $object_type, $object_id, $field['id'], ! $field['repeatable'] );
+				$stored = get_metadata( $object_type, (int) $object_id, $field['id'], ! $field['repeatable'] );
 				$key    = 'themeplate';
 			}
 
