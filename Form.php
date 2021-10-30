@@ -33,7 +33,9 @@ class Form {
 		}
 
 		$defaults     = array(
-			'style' => '',
+			'style'   => '',
+			'show_on' => array(),
+			'hide_on' => array(),
 		);
 		$this->config = Main::fool_proof( $defaults, $config );
 		$this->config = Meta::normalize_options( $this->config );
