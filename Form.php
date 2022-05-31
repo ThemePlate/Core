@@ -9,103 +9,77 @@
 
 namespace ThemePlate\Core;
 
-use Exception;
-use ThemePlate\Core\Helper\Main;
 use ThemePlate\Core\Helper\Meta;
 
-class Form {
+abstract class Form {
 
-	private array $config;
-	private Fields $fields;
+	protected ?Fields $fields = null;
+	protected array $defaults = array(
+		'description' => '',
+		'style'       => '',
+		'show_on'     => array(),
+		'hide_on'     => array(),
+		'context'     => 'normal',
+		'priority'    => 'default',
+	);
+	protected array $config;
+	protected array $screens;
+	protected string $title;
 
 
-	public function __construct( array $config ) {
+	public function __construct( string $title, array $screens, array $config = array() ) {
 
-		$expected = array(
-			'object_type',
-			'id',
-			'title',
-			'fields',
-		);
+		$this->initialize( $config );
 
-		if ( ! Main::is_complete( $config, $expected ) ) {
-			throw new Exception();
-		}
-
-		$defaults     = array(
-			'style'   => '',
-			'show_on' => array(),
-			'hide_on' => array(),
-		);
-		$this->config = Main::fool_proof( $defaults, $config );
-		$this->config = Meta::normalize_options( $this->config );
-		$this->fields = new Fields( $config['fields'] );
+		$this->title   = $title;
+		$this->screens = $screens;
+		$this->config  = array_merge( $this->defaults, $config );
 
 	}
 
 
-	public function enqueue( string $object_type ): void {
+	abstract protected function initialize( array &$config ): void;
 
-		if ( wp_script_is( 'themeplate-script' ) ) {
-			return;
-		}
 
-		wp_enqueue_media();
-		wp_enqueue_style( 'wp-color-picker' );
-		wp_enqueue_script( 'wp-color-picker' );
-		wp_enqueue_style( 'editor-buttons' );
-		wp_enqueue_script( 'wplink' );
-		wp_enqueue_script( 'jquery-ui-sortable' );
-		wp_enqueue_style( 'themeplate-select2-style', Main::asset_url( 'select2.min.css' ), array(), '4.0.12' );
-		wp_enqueue_script( 'themeplate-select2-script', Main::asset_url( 'select2.full.min.js' ), array(), '4.0.12', true );
-		wp_enqueue_style( 'themeplate-datepicker-style', Main::asset_url( 'datepicker.min.css' ), array(), '1.9.0' );
-		wp_enqueue_script( 'themeplate-datepicker-script', Main::asset_url( 'datepicker.min.js' ), array(), '1.9.0', true );
-		wp_add_inline_script( 'themeplate-datepicker-script', 'if ( ! jQuery.fn.bootstrapDP && jQuery.fn.datepicker && jQuery.fn.datepicker.noConflict ) jQuery.fn.bootstrapDP = jQuery.fn.datepicker.noConflict();' );
-		wp_enqueue_style( 'themeplate-style', Main::asset_url( 'themeplate.css' ), array(), TP_CORE_VERSION );
-		wp_enqueue_script( 'themeplate-script', Main::asset_url( 'themeplate.js' ), array(), TP_CORE_VERSION, true );
-		wp_enqueue_script( 'themeplate-wysiwyg', Main::asset_url( 'wysiwyg.js' ), array(), TP_CORE_VERSION, true );
-		wp_enqueue_script( 'themeplate-show-hide', Main::asset_url( 'show-hide.js' ), array(), TP_CORE_VERSION, true );
-		wp_enqueue_script( 'themeplate-repeater', Main::asset_url( 'repeater.js' ), array(), TP_CORE_VERSION, true );
+	abstract protected function fields_group_key(): string;
 
-		wp_localize_script( 'themeplate-script', 'ThemePlate', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 
-		if ( 'post' !== $object_type ) {
-			return;
-		}
+	abstract protected function get_field_value( Field $field );
 
-		if ( function_exists( 'use_block_editor_for_post' ) && use_block_editor_for_post( get_the_ID() ) ) {
-			wp_enqueue_script( 'themeplate-show-hide-gutenberg', Main::asset_url( 'show-hide-gutenberg.js' ), array(), TP_CORE_VERSION, true );
-		} else {
-			wp_enqueue_script( 'themeplate-show-hide-classic', Main::asset_url( 'show-hide-classic.js' ), array(), TP_CORE_VERSION, true );
-		}
+
+	public function fields( array $list ): self {
+
+		$this->fields = new Fields( $list );
+
+		return $this;
 
 	}
 
 
-	public function layout_postbox( string $object_id ): void {
+	public function layout_postbox(): void {
 
 		global $wp_version;
 
-		$meta_box = $this->config;
+		$form_id = sanitize_title( $this->title );
 
-		printf( '<div id="themeplate_%s" class="tpo postbox">', esc_attr( $meta_box['id'] ) );
+		printf( '<div id="themeplate_%s" class="tpo postbox">', esc_attr( $form_id ) );
 
 		if ( version_compare( $wp_version, '5.5', '<' ) ) {
 			echo '<button type="button" class="handlediv button-link" aria-expanded="true">';
 				/* translators: %s: metabox title */
-				echo '<span class="screen-reader-text">' . esc_html( sprintf( __( 'Toggle panel: %s' ), $meta_box['title'] ) ) . '</span>';
+				echo '<span class="screen-reader-text">' . esc_html( sprintf( __( 'Toggle panel: %s' ), $this->title ) ) . '</span>';
 				echo '<span class="toggle-indicator" aria-hidden="true"></span>';
 			echo '</button>';
 
-			echo '<h2 class="hndle"><span>' . esc_html( $meta_box['title'] ) . '</span></h2>';
+			echo '<h2 class="hndle"><span>' . esc_html( $this->title ) . '</span></h2>';
 		} else {
 			echo '<div class="postbox-header">';
-				echo '<h2 class="hndle"><span>' . esc_html( $meta_box['title'] ) . '</span></h2>';
+				echo '<h2 class="hndle"><span>' . esc_html( $this->title ) . '</span></h2>';
 
 				echo '<div class="handle-actions hide-if-no-js">';
 					echo '<button type="button" class="handlediv button-link" aria-expanded="true">';
 						/* translators: %s: metabox title */
-						echo '<span class="screen-reader-text">' . esc_html( sprintf( __( 'Toggle panel: %s' ), $meta_box['title'] ) ) . '</span>';
+						echo '<span class="screen-reader-text">' . esc_html( sprintf( __( 'Toggle panel: %s' ), $this->title ) ) . '</span>';
 						echo '<span class="toggle-indicator" aria-hidden="true"></span>';
 					echo '</button>';
 				echo '</div>';
@@ -113,35 +87,36 @@ class Form {
 		}
 
 			echo '<div class="inside">';
-				$this->layout_inside( $object_id );
+				$this->layout_inside();
 			echo '</div>';
 		echo '</div>';
 
 	}
 
 
-	public function layout_inside( string $object_id ): void {
+	public function layout_inside(): void {
 
-		$meta_box = $this->config;
+		$form_id = sanitize_title( $this->title );
 
-		wp_nonce_field( 'save_themeplate_' . $meta_box['id'], 'themeplate_' . $meta_box['id'] . '_nonce' );
+		wp_nonce_field( 'save_themeplate_' . $form_id, 'themeplate_' . $form_id . '_nonce' );
+		Meta::render_options( $this->config );
 
-		Meta::render_options( $meta_box );
-
-		if ( ! empty( $meta_box['description'] ) ) {
-			echo '<p class="description">' . $meta_box['description'] . '</p>'; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
+		if ( ! empty( $this->config['description'] ) ) {
+			echo '<p class="description">' . $this->config['description'] . '</p>'; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
 		}
 
-		echo '<div class="fields-container ' . esc_attr( $meta_box['style'] ) . '">';
-			$this->fields->setup( $meta_box['id'], $meta_box['object_type'], $object_id );
+		echo '<div class="fields-container ' . esc_attr( $this->config['style'] ) . '">';
+
+		if ( null !== $this->fields ) {
+			foreach ( $this->fields->get_collection() as $field ) {
+				$field->set_id( $this->fields_group_key() . '_' . $field->data_key() );
+				$field->set_name( $this->fields_group_key() . '[' . $field->data_key() . ']' );
+
+				$this->fields->layout( $field, $this->get_field_value( $field ) );
+			}
+		}
+
 		echo '</div>';
-
-	}
-
-
-	public function get_fields(): array {
-
-		return $this->fields->get_collection();
 
 	}
 

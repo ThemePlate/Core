@@ -9,11 +9,22 @@
 
 namespace ThemePlate\Core\Field;
 
-class Input {
+use ThemePlate\Core\Field;
 
-	public static function render( array $field ): void {
+class Input extends Field {
 
-		echo '<input type="' . esc_attr( $field['type'] ) . '" name="' . esc_attr( $field['name'] ) . '" id="' . esc_attr( $field['id'] ) . '" value="' . esc_attr( $field['value'] ) . '"' . ( $field['required'] ? ' required="required"' : '' ) . ' />';
+	/**
+	 * @param $value string
+	 */
+	public function render( $value ): void {
+
+		echo '<input
+				type="' . esc_attr( $this->get_config( 'type' ) ) . '"
+				name="' . esc_attr( $this->get_config( 'name' ) ) . '"
+				id="' . esc_attr( $this->get_config( 'id' ) ) . '"
+				value="' . esc_attr( $value ) . '"
+				' . ( $this->get_config( 'required' ) ? ' required="required"' : '' ) .
+				' />';
 
 	}
 

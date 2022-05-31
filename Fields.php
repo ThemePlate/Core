@@ -9,12 +9,15 @@
 
 namespace ThemePlate\Core;
 
-use ThemePlate\Core\Helper\Field;
+use ThemePlate\Core\Helper\Form;
 use ThemePlate\Core\Helper\Meta;
 
 class Fields {
 
-	private array $collection;
+	/**
+	 * @var Field[]
+	 */
+	protected array $collection;
 
 
 	public function __construct( array $collection ) {
@@ -24,26 +27,34 @@ class Fields {
 	}
 
 
-	private function filter( array $fields ): array {
+	/**
+	 * @param array $fields
+	 *
+	 * @return Field[]
+	 */
+	protected function filter( array $fields ): array {
 
 		$processed = array();
 
 		foreach ( $fields as $id => $field ) {
+			if ( $field instanceof Field ) {
+				continue;
+			}
+
 			if ( ! is_array( $field ) || empty( $field ) ) {
 				continue;
 			}
 
-			$field = Field::filter( $field );
-
 			if ( 'group' === $field['type'] ) {
 				if ( array_key_exists( 'fields', $field ) && ! empty( $field['fields'] ) ) {
-					$field['fields'] = $this->filter( $field['fields'] );
+					$field['fields'] = new Fields( $field['fields'] );
 				} else {
 					continue;
 				}
 			}
 
-			$processed[ $id ] = $field;
+			$processed[] = Form::make_field( $id, $field );
+
 		}
 
 		return $processed;
@@ -51,92 +62,42 @@ class Fields {
 	}
 
 
-	public function setup( string $metabox_id = '', string $object_type = 'post', string $object_id = '' ): void {
+	public function layout( Field $field, $value ): void {
 
-		foreach ( $this->collection as $id => $field ) {
-			if ( ! Meta::should_display( $field, (int) $object_id ) ) {
-				continue;
-			}
+		$field->maybe_adjust( $value );
 
-			$object_menu = false;
-
-			$field['id'] = $metabox_id . '_' . $id;
-
-			if ( 'options' === $object_type ) {
-				$options = get_option( $object_id );
-				$stored  = $options[ $field['id'] ] ?? '';
-				$key     = $object_id;
-			} else {
-				if ( 'menu' === $object_type ) {
-					$object_type = 'post';
-					$object_menu = true;
-				}
-
-				$stored = get_metadata( $object_type, (int) $object_id, $field['id'], ! $field['repeatable'] );
-				$key    = 'themeplate';
-			}
-
-			$value = $stored ?: $field['default'];
-			$name  = $key . '[' . $field['id'] . ']';
-
-			if ( $object_menu ) {
-				$name .= '[' . $object_id . ']';
-
-				$object_type = 'menu';
-			}
-
-			$this->layout( $field, $value, $name );
-		}
-
-	}
-
-
-	private function layout( array $field, $value, string $name ): void {
-
-		$current = count( (array) $value );
-
-		if ( $current < $field['minimum'] ) {
-			$balance = $field['minimum'] - $current;
-			$value   = array_merge( (array) $value, array_fill( $current, $balance, null ) );
-		}
+		$field_config = $field->get_config();
 
 		/* phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact */
-		echo '<div class="field-wrapper type-' . esc_attr( $field['type'] ) . ' ' . esc_attr( $field['style'] ) . '">';
-			Meta::render_options( $field );
+		echo '<div class="field-wrapper ' . $field->get_classname() . '">';
+			Meta::render_options( $field_config );
 
-			if ( ! empty( $field['title'] ) || ! empty( $field['description'] ) ) {
+			if ( ! empty( $field->get_config( 'title' ) ) || ! empty( $field->get_config( 'description' ) ) ) {
 				echo '<div class="field-label">';
-					echo ! empty( $field['title'] ) ? '<label class="label" for="' . esc_attr( $field['id'] ) . '">' . esc_html( $field['title'] ) . '</label>' : '';
-					echo ! empty( $field['description'] ) ? '<p class="description">' . $field['description'] . '</p>' : ''; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
+					echo ! empty( $field->get_config( 'title' ) ) ? '<label class="label" for="' . esc_attr( $field->get_config( 'id' ) ) . '">' . esc_html( $field->get_config( 'title' ) ) . '</label>' : '';
+					echo ! empty( $field->get_config( 'description' ) ) ? '<p class="description">' . $field->get_config( 'description' ) . '</p>' : ''; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
 				echo '</div>';
 			}
 
-			echo '<div class="field-input' . ( esc_attr( $field['repeatable'] ) ? ' repeatable' : '' ) . '" data-min="' . esc_attr( $field['minimum'] ) . '" data-max="' . esc_attr( $field['maximum'] ) . '">';
-				if ( ! $field['repeatable'] ) {
-					$field['value'] = $value;
-					$field['name']  = $name;
-
-					$this->render( $field );
+			echo '<div class="field-input' . ( esc_attr( $field->get_config( 'repeatable' ) ) ? ' repeatable' : '' ) . '" data-min="' . esc_attr( $field->get_config( 'minimum' ) ) . '" data-max="' . esc_attr( $field->get_config( 'maximum' ) ) . '">';
+				if ( ! $field->get_config( 'repeatable' ) ) {
+					$field->render( $value );
 				} else {
-					$base_id = $field['id'];
+					$base_id   = $field->get_config( 'id' );
+					$base_name = $field->get_config( 'name' );
 
 					foreach ( (array) $value as $i => $val ) {
-						$field['value'] = $val;
-						$field['id']    = $base_id . '_' . $i;
-						$field['name']  = $name . '[' . $i . ']';
-
-						$this->cloner( $field );
+						$field->set_id( $base_id . '_' . $i );
+						$field->set_name( $base_name . '[' . $i . ']' );
+						$this->cloner( $field, $val );
 					}
 
-					$field['value'] = $field['default'];
-					$field['id']    = $base_id . '_i-x';
-					$field['name']  = $name . '[i-x]';
-					$field['count'] = count( (array) $value );
-
-					$this->cloner( $field, true );
+					$field->set_id( $base_id . '_i-x' );
+					$field->set_name( $base_name . '[i-x]' );
+					$this->cloner( $field, $field->get_config( 'default' ), true );
 				}
 
-				echo ! empty( $field['information'] ) ? '<p class="description">' . $field['information'] . '</p>' : ''; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
+				echo ! empty( $field->get_config( 'information' ) ) ? '<p class="description">' . $field->get_config( 'information' ) . '</p>' : ''; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
 			echo '</div>';
 		echo '</div>';
 		/* phpcs:enable */
@@ -144,14 +105,14 @@ class Fields {
 	}
 
 
-	private function cloner( array $field, bool $last = false ): void {
+	protected function cloner( Field $field, $value, bool $last = false ): void {
 
 		echo '<div class="themeplate-clone' . ( $last ? ' hidden' : '' ) . '">';
 			echo '<div class="themeplate-handle"></div>';
-			$this->render( $field );
+			$field->render( $value );
 			echo '<button type="button" class="button-link attachment-close media-modal-icon"><span class="screen-reader-text">Remove</span></button>';
 
-		if ( 'group' === $field['type'] ) {
+		if ( 'group' === $field->get_config( 'type' ) ) {
 			echo '<fieldset class="themeplate-mover">';
 				echo '<button type="button" class="button-link clone-move" data-move="up">Move Up</button>';
 				echo '<button type="button" class="button-link clone-move" data-move="down">Move Down</button>';
@@ -164,8 +125,8 @@ class Fields {
 			echo '<input type="button" class="button clone-add" value="Add Field" />';
 			echo '<div class="button disabled themeplate-counter">';
 
-			if ( $field['repeatable'] && $field['maximum'] ) {
-				echo 'Remaining : <strong>' . ( $field['maximum'] - $field['count'] ) . '</strong>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			if ( $field->get_config( 'repeatable' ) && $field->get_config( 'maximum' ) ) {
+				echo 'Remaining : <strong>' . ( $field->get_config( 'maximum' ) - $field->get_config( 'count' ) ) . '</strong>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			}
 
 			echo '</div>';
@@ -174,31 +135,9 @@ class Fields {
 	}
 
 
-	private function render( array $field ): void {
-
-		if ( 'custom' === $field['type'] ) {
-			call_user_func( $field['callback'], $field );
-			return;
-		}
-
-		if ( 'group' !== $field['type'] ) {
-			Field::render( $field );
-			return;
-		}
-
-		foreach ( $field['fields'] as $id => $sub ) {
-			$sub['id'] = $field['id'] . '_' . $id;
-
-			$stored = $field['value'][ $id ] ?? '';
-			$value  = $stored ?: $sub['default'];
-			$name   = $field['name'] . '[' . $id . ']';
-
-			$this->layout( $sub, $value, $name );
-		}
-
-	}
-
-
+	/**
+	 * @return Field[]
+	 */
 	public function get_collection(): array {
 
 		return $this->collection;
