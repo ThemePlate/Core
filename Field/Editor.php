@@ -9,21 +9,22 @@
 
 namespace ThemePlate\Core\Field;
 
+use ThemePlate\Core\Field;
 use ThemePlate\Core\Helper\Main;
 
-class Editor {
+class Editor extends Field {
 
-	public static function render( array $field ): void {
+	public function render( $value ): void {
 
 		$defaults = array(
 			'editor_class'  => 'themeplate-wysiwyg',
 			'textarea_rows' => 10,
 		);
-		$settings = Main::fool_proof( $defaults, $field['options'] );
+		$settings = Main::fool_proof( $defaults, $this->get_config( 'options' ) );
 
-		$settings['textarea_name'] = $field['name'];
+		$settings['textarea_name'] = $this->get_config( 'name' );
 
-		wp_editor( $field['value'], $field['id'], $settings );
+		wp_editor( $value, $this->get_config( 'id' ), $settings );
 
 	}
 

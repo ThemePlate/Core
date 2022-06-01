@@ -9,21 +9,29 @@
 
 namespace ThemePlate\Core\Field;
 
-class Number {
+use ThemePlate\Core\Field;
 
-	public static function render( array $field ): void {
+class Number extends Field {
 
-		echo '<input type="' . esc_attr( $field['type'] ) . '" name="' . esc_attr( $field['name'] ) . '" id="' . esc_attr( $field['id'] ) . '" value="' . esc_attr( $field['value'] ) . '"';
-		if ( ! empty( $field['options'] ) ) {
-			foreach ( $field['options'] as $option => $value ) {
-				echo esc_attr( $option ) . '="' . esc_attr( $value ) . '"';
+	public function render( $value ): void {
+
+		echo '<input
+				type="' . esc_attr( $this->get_config( 'type' ) ) . '"
+				name="' . esc_attr( $this->get_config( 'name' ) ) . '"
+				id="' . esc_attr( $this->get_config( 'id' ) ) . '"
+				value="' . esc_attr( $value ) . '"';
+
+		if ( ! empty( $this->get_config( 'options' ) ) ) {
+			foreach ( $this->get_config( 'options' ) as $option_key => $option_value ) {
+				echo esc_attr( $option_key ) . '="' . esc_attr( $option_value ) . '"';
 			}
 		}
-		if ( 'range' === $field['type'] ) {
+
+		if ( 'range' === $this->get_config( 'type' ) ) {
 			echo ' oninput="this.nextElementSibling.innerHTML=this.value" />';
-			echo '<span>' . esc_html( $field['value'] ) . '</span>';
+			echo '<span>' . esc_html( $value ) . '</span>';
 		} else {
-			echo ( $field['required'] ? ' required="required"' : '' ) . ' />';
+			echo ( $this->get_config( 'required' ) ? ' required="required"' : '' ) . ' />';
 		}
 
 	}

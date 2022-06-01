@@ -9,30 +9,43 @@
 
 namespace ThemePlate\Core\Field;
 
+use ThemePlate\Core\Field;
 use ThemePlate\Core\Helper\Main;
 
-class Checkbox {
+class Checkbox extends Field {
 
-	public static function render( array $field, bool $list = false ): void {
+	public function render( $value ): void {
 
-		$seq = Main::is_sequential( $field['options'] );
-		$tag = $list ? 'p' : 'span';
-		echo '<input type="hidden" name="' . esc_attr( $field['name'] ) . '" />';
-		if ( ! empty( $field['options'] ) ) {
-			echo '<fieldset id="' . esc_attr( $field['id'] ) . '">';
-			foreach ( $field['options'] as $value => $option ) {
-				$value = ( $seq ? $value + 1 : $value );
+		$seq = Main::is_sequential( $this->get_config( 'options' ) );
+		$tag = 'checklist' === $this->get_config( 'type' ) ? 'p' : 'span';
+
+		echo '<input type="hidden" name="' . esc_attr( $this->get_config( 'name' ) ) . '" />';
+
+		if ( ! empty( $this->get_config( 'options' ) ) ) {
+			echo '<fieldset id="' . esc_attr( $this->get_config( 'id' ) ) . '">';
+
+			foreach ( $this->get_config( 'options' ) as $option_value => $option_label ) {
+				$option_value = ( $seq ? $option_value + 1 : $option_value );
+
 				echo '<' . esc_attr( $tag ) . '>';
-				echo '<label><input type="checkbox" name="' . esc_attr( $field['name'] ) . '[]" value="' . esc_attr( $value ) . '"';
-				if ( in_array( (string) $value, (array) $field['value'], true ) ) {
+				echo '<label><input type="checkbox" name="' . esc_attr( $this->get_config( 'name' ) ) . '[]" value="' . esc_attr( $option_value ) . '"';
+
+				if ( in_array( (string) $option_value, (array) $value, true ) ) {
 					echo ' checked="checked"';
 				}
-				echo ( $field['required'] ? ' required="required"' : '' ) . ' />' . esc_html( $option ) . '</label>';
+
+				echo ( $this->get_config( 'required' ) ? ' required="required"' : '' ) . ' />' . esc_html( $option_label ) . '</label>';
 				echo '</' . esc_attr( $tag ) . '>';
 			}
+
 			echo '</fieldset>';
 		} else {
-			echo '<input type="checkbox" id="' . esc_attr( $field['id'] ) . '" name="' . esc_attr( $field['name'] ) . '" value="1"' . checked( $field['value'], 1, false ) . ' />';
+			echo '<input
+					type="checkbox"
+					id="' . esc_attr( $this->get_config( 'id' ) ) . '"
+					name="' . esc_attr( $this->get_config( 'name' ) ) . '"
+					value="1"' . checked( $value, 1, false ) .
+					' />';
 		}
 
 	}

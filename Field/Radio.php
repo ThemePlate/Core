@@ -9,22 +9,33 @@
 
 namespace ThemePlate\Core\Field;
 
+use ThemePlate\Core\Field;
 use ThemePlate\Core\Helper\Main;
 
-class Radio {
+class Radio extends Field {
 
-	public static function render( array $field, bool $list = false ): void {
+	public function render( $value ): void {
 
-		$seq = Main::is_sequential( $field['options'] );
-		$tag = $list ? 'p' : 'span';
-		if ( ! empty( $field['options'] ) ) {
-			echo '<fieldset id="' . esc_attr( $field['id'] ) . '">';
-			foreach ( $field['options'] as $value => $option ) {
-				$value = ( $seq ? $value + 1 : $value );
+		$seq = Main::is_sequential( $this->get_config( 'options' ) );
+		$tag = 'radiolist' === $this->get_config( 'type' ) ? 'p' : 'span';
+
+		if ( ! empty( $this->get_config( 'options' ) ) ) {
+			echo '<fieldset id="' . esc_attr( $this->get_config( 'id' ) ) . '">';
+
+			foreach ( $this->get_config( 'options' ) as $option_value => $option_label ) {
+				$option_value = ( $seq ? $option_value + 1 : $option_value );
+
 				echo '<' . esc_attr( $tag ) . '>';
-				echo '<label><input type="radio" name="' . esc_attr( $field['name'] ) . '" value="' . esc_attr( $value ) . '"' . checked( $field['value'], $value, false ) . ( $field['required'] ? ' required="required"' : '' ) . ' />' . esc_html( $option ) . '</label>';
+				echo '<label><input
+						type="radio"
+						name="' . esc_attr( $this->get_config( 'name' ) ) . '"
+						value="' . esc_attr( $option_value ) . '"
+						' . checked( $value, $option_value, false ) .
+						( $this->get_config( 'required' ) ? ' required="required"' : '' ) .
+						' />' . esc_html( $option_label ) . '</label>';
 				echo '</' . esc_attr( $tag ) . '>';
 			}
+
 			echo '</fieldset>';
 		}
 

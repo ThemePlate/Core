@@ -9,19 +9,27 @@
 
 namespace ThemePlate\Core\Field;
 
+use ThemePlate\Core\Field;
 use ThemePlate\Core\Helper\Main;
 
-class Textarea {
+class Textarea extends Field {
 
-	public static function render( array $field ): void {
+	public function render( $value ): void {
 
 		$defaults = array( 'rows' => 4 );
-		$attrs    = Main::fool_proof( $defaults, $field['options'] );
-		echo '<textarea name="' . esc_attr( $field['name'] ) . '" id="' . esc_attr( $field['id'] ) . '" ';
-		foreach ( $attrs as $attr => $value ) {
-			echo esc_attr( $attr ) . '="' . esc_attr( $value ) . '"';
+		$attrs    = Main::fool_proof( $defaults, $this->get_config( 'options' ) );
+
+		echo '<textarea
+			name="' . esc_attr( $this->get_config( 'name' ) ) . '"
+			id="' . esc_attr( $this->get_config( 'id' ) ) . '" ';
+
+		foreach ( $attrs as $attr_name => $attr_value ) {
+			echo esc_attr( $attr_name ) . '="' . esc_attr( $attr_value ) . '"';
 		}
-		echo ( $field['required'] ? ' required="required"' : '' ) . '>' . esc_textarea( $field['value'] ) . '</textarea>';
+
+		echo ( $this->get_config( 'required' ) ? ' required="required"' : '' ) . '>' .
+			esc_textarea( $value ) .
+			'</textarea>';
 
 	}
 

@@ -9,13 +9,22 @@
 
 namespace ThemePlate\Core\Field;
 
-class Color {
+use ThemePlate\Core\Field;
 
-	public static function render( array $field ): void {
+class Color extends Field {
 
-		echo '<input type="text" name="' . esc_attr( $field['name'] ) . '" id="' . esc_attr( $field['id'] ) . '" class="themeplate-color-picker" value="' . esc_attr( $field['value'] ) . '"' . ( esc_attr( $field['default'] ) ? ' data-default-color="' . esc_attr( $field['default'] ) . '"' : '' );
-		if ( ! empty( $field['options'] ) ) {
-			$values = wp_json_encode( $field['options'] );
+	public function render( $value ): void {
+
+		echo '<input
+				type="text"
+				name="' . esc_attr( $this->get_config( 'name' ) ) . '"
+				id="' . esc_attr( $this->get_config( 'id' ) ) . '"
+				class="themeplate-color-picker"
+				value="' . esc_attr( $value ) . '"
+				' . ( esc_attr( $this->get_config( 'default' ) ) ? ' data-default-color="' . esc_attr( $this->get_config( 'default' ) ) . '"' : '' );
+		if ( ! empty( $this->get_config( 'options' ) ) ) {
+			$values = wp_json_encode( $this->get_config( 'options' ) );
+
 			echo ' data-palettes="' . esc_attr( $values ) . '"';
 		}
 		echo ' />';

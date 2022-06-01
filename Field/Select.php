@@ -9,40 +9,71 @@
 
 namespace ThemePlate\Core\Field;
 
+use ThemePlate\Core\Field;
 use ThemePlate\Core\Helper\Main;
 
-class Select {
+class Select extends Field {
 
-	public static function render( array $field ): void {
+	public function render( $value ): void {
 
-		$seq = Main::is_sequential( $field['options'] );
-		echo '<select' . ( 'select2' === $field['type'] ? ' class="themeplate-select2"' : '' ) . ' name="' . esc_attr( $field['name'] ) . ( $field['multiple'] ? '[]' : '' ) . '" id="' . esc_attr( $field['id'] ) . '"' . ( $field['multiple'] ? ' multiple="multiple"' : '' ) . ( $field['none'] ? ' data-none="true"' : '' ) . ( $field['required'] ? ' required="required"' : '' ) . '>';
-		if ( 'select2' === $field['type'] && ! $field['value'] ) {
+		$config_options = $this->get_config( 'options' );
+		$is_sequential = Main::is_sequential( $config_options );
+
+		echo '<select' . ( 'select2' === $this->get_config( 'type' ) ? ' class="themeplate-select2"' : '' ) . '
+				name="' . esc_attr( $this->get_config( 'name' ) ) . ( $this->get_config( 'multiple' ) ? '[]' : '' ) . '"
+				id="' . esc_attr( $this->get_config( 'id' ) ) . '"
+				' . ( $this->get_config( 'multiple' ) ? ' multiple="multiple"' : '' ) .
+				( $this->get_config( 'none' ) ? ' data-none="true"' : '' ) .
+				( $this->get_config( 'required' ) ? ' required="required"' : '' ) .
+				'>';
+
+		if ( 'select2' === $this->get_config( 'type' ) && ! $value ) {
 			echo '<option></option>';
-		} elseif ( 'select2' !== $field['type'] && ( ( $field['none'] && $field['value'] ) || ( ! $field['multiple'] && ! $field['value'] ) ) ) {
-			echo '<option value=""' . ( $field['none'] && $field['value'] ? '' : ' disabled hidden' ) . ( esc_attr( $field['value'] ) ? '>' . esc_attr( __( '&mdash; None &mdash;' ) ) : ' selected>' . esc_attr( __( '&mdash; Select &mdash;' ) ) ) . '</option>';
+		} elseif (
+			'select2' !== $this->get_config( 'type' ) &&
+			(
+				( $this->get_config( 'none' ) && $value ) ||
+				( ! $this->get_config( 'multiple' ) && ! $value )
+			)
+		) {
+			echo '<option value=""' .
+				( $this->get_config( 'none' ) && $value ? '' : ' disabled hidden' ) .
+				( esc_attr( $value ) ? '>' . esc_attr( __( '&mdash; None &mdash;' ) ) : ' selected>' .
+				esc_attr( __( '&mdash; Select &mdash;' ) ) ) .
+				'</option>';
 		}
-		if ( 'select2' === $field['type'] && $field['multiple'] && $field['value'] ) {
+
+		if ( 'select2' === $this->get_config( 'type' ) && $this->get_config( 'multiple' ) && $value ) {
 			$ordered = array();
-			$values  = array_keys( $field['options'] );
-			foreach ( (array) $field['value'] as $value ) {
-				$value = ( $seq ? (int) $value - 1 : $value );
-				if ( ! in_array( (string) $value, array_map( 'strval', $values ), true ) ) {
+			$values  = array_keys( $config_options );
+
+			foreach ( (array) $value as $item ) {
+				$item = ( $is_sequential ? (int) $item - 1 : $item );
+
+				if ( ! in_array( (string) $item, array_map( 'strval', $values ), true ) ) {
 					continue;
 				}
-				$ordered[ $value ] = $field['options'][ $value ];
-				unset( $field['options'][ $value ] );
+
+				$ordered[ $item ] = $config_options[ $item ];
+
+				unset( $config_options[ $item ] );
 			}
-			$field['options'] = $ordered + $field['options'];
+
+			$config_options = $ordered + $config_options;
 		}
-		foreach ( $field['options'] as $value => $option ) {
-			$value = ( $seq ? $value + 1 : $value );
-			echo '<option value="' . esc_attr( $value ) . '"';
-			if ( in_array( (string) $value, (array) $field['value'], true ) ) {
+
+		foreach ( $config_options as $option_value => $option_label ) {
+			$option_value = ( $is_sequential ? $option_value + 1 : $option_value );
+
+			echo '<option value="' . esc_attr( $option_value ) . '"';
+
+			if ( in_array( (string) $option_value, (array) $value, true ) ) {
 				echo ' selected="selected"';
 			}
-			echo '>' . esc_html( $option ) . '</option>';
+
+			echo '>' . esc_html( $option_label ) . '</option>';
 		}
+
 		echo '</select>';
 
 	}

@@ -9,11 +9,13 @@
 
 namespace ThemePlate\Core\Field;
 
-class Html {
+use ThemePlate\Core\Field;
 
-	public static function render( array $field ): void {
+class Html extends Field {
 
-		echo $field['default']; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	public function render( $value ): void {
+
+		echo $this->get_config( 'default' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 
 	}
 

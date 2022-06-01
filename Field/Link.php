@@ -9,28 +9,35 @@
 
 namespace ThemePlate\Core\Field;
 
-class Link {
+use ThemePlate\Core\Field;
 
-	public static function render( array $field ): void {
+class Link extends Field {
 
-		echo '<div id="' . esc_attr( $field['id'] ) . '" class="themeplate-link">';
+	public function render( $value ): void {
+
+		echo '<div id="' . esc_attr( $this->get_config( 'id' ) ) . '" class="themeplate-link">';
 		echo '<input type="button" class="button link-select" value="Select" />';
-		echo '<input type="button" class="button link-remove' . ( empty( $field['value'] ) ? ' hidden' : '' ) . '" value="Remove" />';
+		echo '<input type="button" class="button link-remove' . ( empty( $value ) ? ' hidden' : '' ) . '" value="Remove" />';
 
 		foreach ( array( 'url', 'text', 'target' ) as $attr ) {
-			$value = $field['value'][ $attr ] ?? '';
+			$value = $value[ $attr ] ?? '';
 
-			echo '<input type="hidden" class="input-' . esc_attr( $attr ) . '" name="' . esc_attr( $field['name'] ) . '[' . $attr . ']" value="' . esc_attr( $value ) . '">';
+			echo '<input
+				type="hidden"
+				class="input-' . esc_attr( $attr ) . '"
+				name="' . esc_attr( $this->get_config( 'name' ) ) . '[' . $attr . ']"
+				value="' . esc_attr( $value ) .
+				'">';
 		}
 
 		echo '<div class="link-holder">';
 
-		if ( isset( $field['value']['text'] ) ) {
-			echo '<span>' . esc_html( $field['value']['text'] ) . '</span>';
+		if ( isset( $value['text'] ) ) {
+			echo '<span>' . esc_html( $value['text'] ) . '</span>';
 		}
 
-		if ( isset( $field['value']['url'] ) ) {
-			echo '<a href="' . esc_url( $field['value']['url'] ) . '" target="_blank">' . esc_html( $field['value']['url'] ) . '</a>';
+		if ( isset( $value['url'] ) ) {
+			echo '<a href="' . esc_url( $value['url'] ) . '" target="_blank">' . esc_html( $value['url'] ) . '</a>';
 		}
 
 		echo '</div>';

@@ -9,23 +9,26 @@
 
 namespace ThemePlate\Core\Field;
 
+use ThemePlate\Core\Field;
 use ThemePlate\Core\Helper\Main;
 use WP_Query;
 use WP_Term_Query;
 use WP_User_Query;
 
-class Type {
+class Type extends Field {
 
-	public static function render( array $field ): void {
+	public function render( $value ): void {
 
-		switch ( $field['type'] ) {
+		$config_options = $this->get_config( 'options' );
+
+		switch ( $this->get_config( 'type' ) ) {
 			default:
 			case 'post':
 				$action   = 'tp_posts';
-				$defaults = array( 'post_type' => $field['type'] );
+				$defaults = array( 'post_type' => $this->get_config( 'type' ) );
 
-				if ( Main::is_sequential( $field['options'] ) ) {
-					$field['options'] = array( 'post_type' => $field['options'] );
+				if ( Main::is_sequential( $config_options ) ) {
+					$config_options = array( 'post_type' => $config_options );
 				}
 
 				break;
@@ -33,8 +36,8 @@ class Type {
 				$action   = 'tp_users';
 				$defaults = array( 'role' => '' );
 
-				if ( Main::is_sequential( $field['options'] ) ) {
-					$field['options'] = array( 'role' => $field['options'] );
+				if ( Main::is_sequential( $config_options ) ) {
+					$config_options = array( 'role' => $config_options );
 				}
 
 				break;
@@ -42,24 +45,36 @@ class Type {
 				$action   = 'tp_terms';
 				$defaults = array( 'taxonomy' => null );
 
-				if ( Main::is_sequential( $field['options'] ) ) {
-					$field['options'] = array( 'taxonomy' => $field['options'] );
+				if ( Main::is_sequential( $config_options ) ) {
+					$config_options = array( 'taxonomy' => $config_options );
 				}
 
 				break;
 		}
 
-		$args = Main::fool_proof( $defaults, $field['options'] );
+		$args = Main::fool_proof( $defaults, $config_options );
 
 		echo '<select disabled><option>Loading values...</option></select>';
-		echo '<select class="themeplate-select2 select2-hidden-accessible" name="' . esc_attr( $field['name'] ) . ( $field['multiple'] ? '[]' : '' ) . '" id="' . esc_attr( $field['id'] ) . '"' . ( $field['multiple'] ? ' multiple="multiple"' : '' ) . ( $field['none'] ? ' data-none="true"' : '' ) . ( $field['required'] ? ' required="required"' : '' ) . '>';
-		if ( $field['value'] ) {
-			foreach ( (array) $field['value'] as $value ) {
-				echo '<option value="' . esc_attr( $value ) . '" selected="selected">' . esc_html( $value ) . '</option>';
+		echo '<select class="themeplate-select2 select2-hidden-accessible"
+				name="' . esc_attr( $this->get_config( 'name' ) ) . ( $this->get_config( 'multiple' ) ? '[]' : '' ) . '"
+				id="' . esc_attr( $this->get_config( 'id' ) ) . '"' .
+				( $this->get_config( 'multiple' ) ? ' multiple="multiple"' : '' ) .
+				( $this->get_config( 'none' ) ? ' data-none="true"' : '' ) .
+				( $this->get_config( 'required' ) ? ' required="required"' : '' ) .
+				'>';
+
+		if ( $value ) {
+			foreach ( (array) $value as $item ) {
+				echo '<option value="' . esc_attr( $item ) . '" selected="selected">' . esc_html( $item ) . '</option>';
 			}
 		}
+
 		echo '</select>';
-		echo '<div class="select2-options" data-action="' . esc_attr( $action ) . '" data-options="' . esc_attr( wp_json_encode( $args, JSON_NUMERIC_CHECK ) ) . '" data-value="' . esc_attr( wp_json_encode( $field['value'], JSON_NUMERIC_CHECK ) ) . '"></div>';
+		echo '<div class="select2-options"
+				data-action="' . esc_attr( $action ) . '"
+				data-options="' . esc_attr( wp_json_encode( $args, JSON_NUMERIC_CHECK ) ) . '"
+				data-value="' . esc_attr( wp_json_encode( $value, JSON_NUMERIC_CHECK ) ) . '"
+				></div>';
 
 	}
 
