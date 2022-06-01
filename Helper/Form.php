@@ -13,7 +13,7 @@ use ThemePlate\Core\Field;
 
 class Form {
 
-	public static function enqueue_assets( string $object_type ): void {
+	public static function enqueue_assets( string $hook_suffix ): void {
 
 		if ( wp_script_is( 'themeplate-script' ) ) {
 			return;
@@ -38,7 +38,7 @@ class Form {
 
 		wp_localize_script( 'themeplate-script', 'ThemePlate', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 
-		if ( 'post' !== $object_type ) {
+		if ( 'post.php' !== $hook_suffix ) {
 			return;
 		}
 
