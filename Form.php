@@ -23,17 +23,15 @@ abstract class Form {
 		'priority'    => 'default',
 	);
 	protected array $config;
-	protected array $screens;
 	protected string $title;
 
 
-	public function __construct( string $title, array $screens, array $config = array() ) {
+	public function __construct( string $title, array $config = array() ) {
 
 		$this->initialize( $config );
 
-		$this->title   = $title;
-		$this->screens = $screens;
-		$this->config  = array_merge( $this->defaults, $config );
+		$this->title  = $title;
+		$this->config = array_merge( $this->defaults, $config );
 
 	}
 
