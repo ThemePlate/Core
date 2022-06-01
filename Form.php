@@ -44,6 +44,9 @@ abstract class Form {
 	abstract protected function fields_group_key(): string;
 
 
+	abstract protected function should_display_field( Field $field ): bool;
+
+
 	abstract protected function get_field_value( Field $field );
 
 
@@ -109,6 +112,10 @@ abstract class Form {
 
 		if ( null !== $this->fields ) {
 			foreach ( $this->fields->get_collection() as $field ) {
+				if ( ! $this->should_display_field( $field ) ) {
+					continue;
+				}
+
 				$field->set_id( $this->fields_group_key() . '_' . $field->data_key() );
 				$field->set_name( $this->fields_group_key() . '[' . $field->data_key() . ']' );
 

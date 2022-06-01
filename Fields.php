@@ -69,7 +69,7 @@ class Fields {
 		$field_config = $field->get_config();
 
 		/* phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact */
-		echo '<div class="field-wrapper ' . $field->get_classname() . '">';
+		echo '<div class="field-wrapper ' . $field->get_classname() . '">'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			Meta::render_options( $field_config );
 
 			if ( ! empty( $field->get_config( 'title' ) ) || ! empty( $field->get_config( 'description' ) ) ) {
