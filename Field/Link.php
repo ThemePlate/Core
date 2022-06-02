@@ -19,14 +19,14 @@ class Link extends Field {
 		echo '<input type="button" class="button link-select" value="Select" />';
 		echo '<input type="button" class="button link-remove' . ( empty( $value ) ? ' hidden' : '' ) . '" value="Remove" />';
 
-		foreach ( array( 'url', 'text', 'target' ) as $attr ) {
-			$value = $value[ $attr ] ?? '';
+		foreach ( array( 'url', 'text', 'target' ) as $attr_key ) {
+			$attr_value = $value[ $attr_key ] ?? '';
 
 			echo '<input
 				type="hidden"
-				class="input-' . esc_attr( $attr ) . '"
-				name="' . esc_attr( $this->get_config( 'name' ) ) . '[' . $attr . ']"
-				value="' . esc_attr( $value ) .
+				class="input-' . esc_attr( $attr_key ) . '"
+				name="' . esc_attr( $this->get_config( 'name' ) ) . '[' . esc_attr( $attr_key ) . ']"
+				value="' . esc_attr( $attr_value ) .
 				'">';
 		}
 
