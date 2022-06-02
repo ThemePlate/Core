@@ -9,6 +9,7 @@
 
 namespace ThemePlate\Core;
 
+use ThemePlate\Core\Helper\Main;
 use ThemePlate\Core\Helper\Meta;
 
 abstract class Form {
@@ -29,15 +30,10 @@ abstract class Form {
 
 	public function __construct( string $title, array $config = array() ) {
 
-		$this->initialize( $config );
-
 		$this->title  = $title;
-		$this->config = array_merge( $this->defaults, $config );
+		$this->config = $this->check( $config );
 
 	}
-
-
-	abstract protected function initialize( array &$config ): void;
 
 
 	abstract protected function fields_group_key(): string;
@@ -47,6 +43,18 @@ abstract class Form {
 
 
 	abstract protected function get_field_value( Field $field );
+
+
+	protected function check( array $config ): array {
+
+		$config = Main::fool_proof( $this->defaults, $config );
+		$config = Meta::normalize_options( $config );
+
+		$config['form_id'] = sanitize_title( $this->title );
+
+		return $config;
+
+	}
 
 
 	public function fields( array $list ): self {
@@ -62,9 +70,7 @@ abstract class Form {
 
 		global $wp_version;
 
-		$form_id = sanitize_title( $this->title );
-
-		printf( '<div id="themeplate_%s" class="tpo postbox">', esc_attr( $form_id ) );
+		printf( '<div id="themeplate_%s" class="tpo postbox">', esc_attr( $this->config['form_id'] ) );
 
 		if ( version_compare( $wp_version, '5.5', '<' ) ) {
 			echo '<button type="button" class="handlediv button-link" aria-expanded="true">';
@@ -98,7 +104,7 @@ abstract class Form {
 
 	public function layout_inside(): void {
 
-		$form_id = sanitize_title( $this->title );
+		$form_id = $this->config['form_id'];
 		$prefix  = $this->config['data_prefix'];
 
 		wp_nonce_field( 'save_themeplate_' . $form_id, 'themeplate_' . $form_id . '_nonce' );
