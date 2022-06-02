@@ -16,6 +16,7 @@ abstract class Form {
 	protected ?Fields $fields = null;
 	protected array $defaults = array(
 		'description' => '',
+		'data_prefix' => '',
 		'style'       => '',
 		'show_on'     => array(),
 		'hide_on'     => array(),
@@ -98,6 +99,7 @@ abstract class Form {
 	public function layout_inside(): void {
 
 		$form_id = sanitize_title( $this->title );
+		$prefix  = $this->config['data_prefix'];
 
 		wp_nonce_field( 'save_themeplate_' . $form_id, 'themeplate_' . $form_id . '_nonce' );
 		Meta::render_options( $this->config );
@@ -114,8 +116,8 @@ abstract class Form {
 					continue;
 				}
 
-				$field->set_id( $this->fields_group_key() . '_' . $field->data_key() );
-				$field->set_name( $this->fields_group_key() . '[' . $field->data_key() . ']' );
+				$field->set_id( $this->fields_group_key() . '_' . $field->data_key( $prefix ) );
+				$field->set_name( $this->fields_group_key() . '[' . $field->data_key( $prefix ) . ']' );
 
 				$this->fields->layout( $field, $this->get_field_value( $field ) );
 			}

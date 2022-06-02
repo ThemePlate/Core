@@ -26,7 +26,7 @@ class Group extends Field {
 
 		foreach ( $fields->get_collection() as $field ) {
 			$field->set_id( $this->get_config( 'id' ) . '_' . $field->data_key() );
-			$field->set_name( $this->get_config('name' ) . '[' . $field->data_key() . ']' );
+			$field->set_name( $this->get_config( 'name' ) . '[' . $field->data_key() . ']' );
 			$fields->layout( $field, $value[ $field->data_key() ] ?? $field->get_config( 'default' ) );
 		}
 

@@ -68,9 +68,9 @@ abstract class Field {
 	}
 
 
-	public function data_key(): string {
+	public function data_key( string $prefix = '' ): string {
 
-		return $this->data_key;
+		return $prefix . $this->data_key;
 
 	}
 
