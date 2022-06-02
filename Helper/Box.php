@@ -11,11 +11,7 @@ namespace ThemePlate\Core\Helper;
 
 class Box {
 
-	public static function prepare_save( $data ) {
-
-		if ( ! is_array( $data ) ) {
-			return $data;
-		}
+	public static function prepare_save( array $data ): array {
 
 		$filtered = array();
 
