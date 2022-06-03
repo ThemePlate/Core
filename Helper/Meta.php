@@ -11,17 +11,15 @@ namespace ThemePlate\Core\Helper;
 
 class Meta {
 
-	public static function should_display( array $meta_box, int $object_id ): bool {
+	public static function should_display( array $meta_box, string $current_id ): bool {
 
 		$check = true;
 
-		foreach ( array( 'show', 'hide' ) as $key ) {
-			if ( ! empty( $meta_box[ $key . '_on_cb' ] ) || ! empty( $meta_box[ $key . '_on_id' ] ) ) {
-				$check = self::display_check( $object_id, $meta_box[ $key . '_on_cb' ], $meta_box[ $key . '_on_id' ] );
-
-				if ( 'hide' === $key ) {
-					$check = ! $check;
-				}
+		foreach ( array( 'show', 'hide' ) as $type ) {
+			if ( ! empty( $meta_box[ $type . '_on_cb' ] ) ) {
+				$check = self::cb_check( $type, $current_id, $meta_box[ $type . '_on_cb' ] );
+			} elseif ( ! empty( $meta_box[ $type . '_on_id' ] ) ) {
+				$check = self::id_check( $type, $current_id, $meta_box[ $type . '_on_id' ] );
 			}
 		}
 
@@ -30,19 +28,28 @@ class Meta {
 	}
 
 
-	private static function display_check( int $object_id, ?callable $callback, int $id ): bool {
+	private static function cb_check( string $type, string $current_id, callable $callback ): bool {
 
-		$result = true;
+		$result = (bool) ( $callback( $current_id ) );
 
-		if ( $callback ) {
-			$result = $callback( $object_id );
+		if ( 'hide' === $type ) {
+			$result = ! $result;
 		}
 
-		if ( $id ) {
-			$result = array_intersect( (array) $object_id, (array) $id );
+		return $result;
+
+	}
+
+
+	private static function id_check( string $type, string $current_id, array $wanted_ids ): bool {
+
+		$result = in_array( $current_id, array_map( 'strval', $wanted_ids ), true );
+
+		if ( 'hide' === $type ) {
+			$result = ! $result;
 		}
 
-		return (bool) $result;
+		return $result;
 
 	}
 
@@ -62,25 +69,19 @@ class Meta {
 
 	private static function option_check( string $type, array $container ): array {
 
-		$additional = array(
-			$type . '_cb' => null,
-			$type . '_id' => 0,
-		);
-		$value      = $container[ $type ];
+		$value = $container[ $type ];
 
 		if ( ! Main::is_sequential( $value ) ) {
 			$container[ $type ] = array( $value );
 			$value              = array( $value );
 		}
 
-		$container = array_merge( $additional, $container );
-
 		if ( 1 === count( $value ) ) {
 			if ( is_callable( $value[0] ) ) {
 				$container[ $type . '_cb' ] = $value[0];
 				unset( $container[ $type ] );
 			} elseif ( isset( $value[0]['key'] ) && 'id' === $value[0]['key'] ) {
-				$container[ $type . '_id' ] = $value[0]['value'];
+				$container[ $type . '_id' ] = (array) $value[0]['value'];
 				unset( $container[ $type ] );
 			}
 		}
