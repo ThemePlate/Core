@@ -45,9 +45,6 @@ abstract class Form {
 	abstract protected function maybe_nonce_fields( string $current_id ): void;
 
 
-	abstract protected function should_display_field( Field $field ): bool;
-
-
 	abstract protected function get_field_value( Field $field, string $current_id );
 
 
@@ -125,7 +122,7 @@ abstract class Form {
 
 		if ( null !== $this->fields ) {
 			foreach ( $this->fields->get_collection() as $field ) {
-				if ( ! $this->should_display_field( $field ) ) {
+				if ( ! Meta::should_display( $field->get_config(), $current_id ) ) {
 					continue;
 				}
 
