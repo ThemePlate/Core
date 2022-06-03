@@ -36,6 +36,9 @@ abstract class Form {
 	}
 
 
+	abstract protected function initialize( array &$config ): void;
+
+
 	abstract protected function fields_group_key(): string;
 
 
@@ -54,6 +57,8 @@ abstract class Form {
 		$config = Meta::normalize_options( $config );
 
 		$config['form_id'] = sanitize_title( $this->title );
+
+		$this->initialize( $config );
 
 		return $config;
 
