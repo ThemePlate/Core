@@ -42,13 +42,13 @@ abstract class Form {
 	abstract protected function fields_group_key(): string;
 
 
-	abstract protected function maybe_nonce_fields(): void;
+	abstract protected function maybe_nonce_fields( string $current_id ): void;
 
 
 	abstract protected function should_display_field( Field $field ): bool;
 
 
-	abstract protected function get_field_value( Field $field );
+	abstract protected function get_field_value( Field $field, string $current_id );
 
 
 	protected function check( array $config ): array {
@@ -74,7 +74,7 @@ abstract class Form {
 	}
 
 
-	public function layout_postbox(): void {
+	public function layout_postbox( string $current_id ): void {
 
 		global $wp_version;
 
@@ -103,18 +103,18 @@ abstract class Form {
 		}
 
 			echo '<div class="inside">';
-				$this->layout_inside();
+				$this->layout_inside( $current_id );
 			echo '</div>';
 		echo '</div>';
 
 	}
 
 
-	public function layout_inside(): void {
+	public function layout_inside( string $current_id ): void {
 
 		$prefix = $this->config['data_prefix'];
 
-		$this->maybe_nonce_fields();
+		$this->maybe_nonce_fields( $current_id );
 		Meta::render_options( $this->config );
 
 		if ( ! empty( $this->config['description'] ) ) {
@@ -132,7 +132,7 @@ abstract class Form {
 				$field->set_id( $this->fields_group_key() . '_' . $field->data_key( $prefix ) );
 				$field->set_name( $this->fields_group_key() . '[' . $field->data_key( $prefix ) . ']' );
 
-				$this->fields->layout( $field, $this->get_field_value( $field ) );
+				$this->fields->layout( $field, $this->get_field_value( $field, $current_id ) );
 			}
 		}
 
