@@ -39,6 +39,9 @@ abstract class Form {
 	abstract protected function fields_group_key(): string;
 
 
+	abstract protected function maybe_nonce_fields(): void;
+
+
 	abstract protected function should_display_field( Field $field ): bool;
 
 
@@ -104,10 +107,9 @@ abstract class Form {
 
 	public function layout_inside(): void {
 
-		$form_id = $this->config['form_id'];
-		$prefix  = $this->config['data_prefix'];
+		$prefix = $this->config['data_prefix'];
 
-		wp_nonce_field( 'save_themeplate_' . $form_id, 'themeplate_' . $form_id . '_nonce' );
+		$this->maybe_nonce_fields();
 		Meta::render_options( $this->config );
 
 		if ( ! empty( $this->config['description'] ) ) {
