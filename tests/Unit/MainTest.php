@@ -4,7 +4,7 @@
  * @package ThemePlate
  */
 
-namespace Tests\Helper;
+namespace Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
 use ThemePlate\Core\Helper\Main;

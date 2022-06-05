@@ -4,7 +4,7 @@
  * @package ThemePlate
  */
 
-namespace Tests\Helper;
+namespace Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
 use ThemePlate\Core\Helper\Meta;
@@ -194,5 +194,92 @@ class MetaTest extends TestCase {
 	 */
 	public function test_normalize_options( array $container, $expected ): void {
 		$this->assertSame( $expected, Meta::normalize_options( $container ) );
+	}
+
+	public function for_render_options(): array {
+		// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
+		return array(
+			'with callable data' => array(
+				array(
+					'show_on_cb' => 'date',
+					'hide_on_cb' => 'date',
+				),
+			),
+			'with ID data' => array(
+				array(
+					'show_on_id' => array( 911 ),
+					'hide_on_id' => array( 911 ),
+				),
+			),
+			'with key-value pair for JS show' => array(
+				array(
+					'show_on' => array(
+						array(
+							'key' => '#field_id',
+							'value' => 'test',
+						),
+					),
+				),
+			),
+			'with key-value pair for JS hide' => array(
+				array(
+					'hide_on' => array(
+						array(
+							'key' => '#field_id',
+							'value' => 'test',
+						),
+					),
+				),
+			),
+			'with multiple key-value pair show' => array(
+				array(
+					'show_on' => array(
+						array(
+							'key' => 'id',
+							'value' => array( 911, 4688 ),
+						),
+						array(
+							'key' => '#field_id',
+							'value' => 'test',
+						),
+					),
+				),
+			),
+			'with multiple key-value pair hide' => array(
+				array(
+					'hide_on' => array(
+						array(
+							'key' => 'id',
+							'value' => array( 911, 4688 ),
+						),
+						array(
+							'key' => '#field_id',
+							'value' => 'test',
+						),
+					),
+				),
+			),
+		);
+		// phpcs:enable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
+	}
+
+	/**
+	 * @dataProvider for_render_options
+	 */
+	public function test_render_options( array $container ): void {
+		ob_start();
+		Meta::render_options( $container );
+
+		$output = ob_get_clean();
+
+		$this->assertIsString( $output );
+
+		if ( array_key_exists( 'show_on', $container ) ) {
+			$this->assertStringContainsString( 'data-show', $output );
+		} elseif ( array_key_exists( 'hide_on', $container ) ) {
+			$this->assertStringContainsString( 'data-hide', $output );
+		} else {
+			$this->assertEmpty( $output );
+		}
 	}
 }
