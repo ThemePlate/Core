@@ -25,7 +25,20 @@ class Main {
 			}
 
 			if ( is_int( $value ) ) {
-				$result[ $key ] = (int) $result[ $key ];
+				if ( is_scalar( $result[ $key ] ) || null === $result[ $key ] ) {
+					$result[ $key ] = (int) $result[ $key ];
+				} else {
+					$result[ $key ] = (int) ( (bool) $result[ $key ] );
+				}
+			}
+
+			if ( is_string( $value ) ) {
+				if ( is_scalar( $result[ $key ] ) || null === $result[ $key ] ) {
+					$result[ $key ] = (string) $result[ $key ];
+				} else {
+					// phpcs:ignore WordPress.WP.AlternativeFunctions.json_encode_json_encode
+					$result[ $key ] = json_encode( $result[ $key ] );
+				}
 			}
 		}
 
