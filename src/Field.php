@@ -20,7 +20,6 @@ abstract class Field {
 		'style'      => '',
 		'repeatable' => false,
 		'required'   => false,
-		'column'     => false,
 		'minimum'    => 0,
 		'maximum'    => 0,
 		'show_on'    => array(),

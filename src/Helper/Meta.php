@@ -108,35 +108,4 @@ class Meta {
 
 	}
 
-
-	public static function display_column( int $object_id, array $args ): void {
-
-		$value = get_metadata( $args['object_type'], $object_id, $args['id'], ! $args['repeatable'] );
-
-		if ( ! $value ) {
-			return;
-		}
-
-		if ( 1 === count( (array) $value ) ) {
-			if ( $args['repeatable'] || $args['multiple'] ) {
-				print_r( $value[0] ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions
-			} else {
-				echo $value; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			}
-
-			return;
-		}
-
-		echo '<ul>';
-
-		foreach ( $value as $val ) {
-			echo '<li>';
-			print_r( $val ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions
-			echo '</li>';
-		}
-
-		echo '</ul>';
-
-	}
-
 }
