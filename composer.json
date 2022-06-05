@@ -8,9 +8,22 @@
 			"email": "genealyson.torcende@gmail.com"
 		}
 	],
+	"minimum-stability": "dev",
+	"prefer-stable": true,
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		},
+		"optimize-autoloader": true,
+		"preferred-install": "dist",
+		"sort-packages": true
+	},
 	"require": {
 		"ext-json": "*",
 		"php": "^7.4|^8.0"
+	},
+	"require-dev": {
+		"themeplate/tester": "^2.0"
 	},
 	"autoload": {
 		"psr-4": {
@@ -19,5 +32,10 @@
 		"files": [
 			"functions.php"
 		]
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"Tests\\": "tests"
+		}
 	}
 }
