@@ -17,7 +17,7 @@ class Select extends Field {
 	public function render( $value ): void {
 
 		$config_options = $this->get_config( 'options' );
-		$is_sequential = Main::is_sequential( $config_options );
+		$is_sequential  = Main::is_sequential( $config_options );
 
 		echo '<select' . ( 'select2' === $this->get_config( 'type' ) ? ' class="themeplate-select2"' : '' ) . '
 				name="' . esc_attr( $this->get_config( 'name' ) ) . ( $this->get_config( 'multiple' ) ? '[]' : '' ) . '"

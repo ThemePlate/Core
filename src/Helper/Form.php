@@ -92,6 +92,7 @@ class Form {
 			case 'editor':
 				return Field\Editor::class;
 
+			case 'type':
 			case 'post':
 			case 'page':
 			case 'user':
