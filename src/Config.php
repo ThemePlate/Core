@@ -10,10 +10,10 @@ class Config {
 
 	protected string $prefix;
 	protected array $types;
-	protected Fields $fields;
+	protected ?Fields $fields;
 
 
-	public function __construct( string $prefix, array $types, Fields $fields ) {
+	public function __construct( string $prefix, array $types, ?Fields $fields ) {
 
 		$this->prefix = $prefix;
 		$this->types  = $types;
@@ -36,7 +36,7 @@ class Config {
 	}
 
 
-	public function get_fields(): Fields {
+	public function get_fields(): ?Fields {
 
 		return $this->fields;
 

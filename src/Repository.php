@@ -8,12 +8,18 @@ namespace ThemePlate\Core;
 
 class Repository {
 
-	protected array $items;
+	protected array $items = array();
 
 
 	public function store( Config $config ): void {
 
-		foreach ( $config->get_fields()->get_collection() as $field ) {
+		$fields = $config->get_fields();
+
+		if ( null === $fields ) {
+			return;
+		}
+
+		foreach ( $fields->get_collection() as $field ) {
 			foreach ( $config->get_types() as $type ) {
 				$key = $field->data_key( $config->get_prefix() );
 
