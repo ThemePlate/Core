@@ -38,6 +38,8 @@ class Fields {
 
 		foreach ( $fields as $id => $field ) {
 			if ( $field instanceof Field ) {
+				$processed[] = $field;
+
 				continue;
 			}
 
