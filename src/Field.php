@@ -11,7 +11,7 @@ use ThemePlate\Core\Helper\MetaHelper;
 
 abstract class Field {
 
-	protected array $defaults = array(
+	public const DEFAULTS = array(
 		'type'       => 'text',
 		'options'    => array(),
 		'multiple'   => false,
@@ -26,6 +26,8 @@ abstract class Field {
 		'hide_on'    => array(),
 		'count'      => 1,
 	);
+
+
 	protected array $config;
 	protected string $data_key;
 
@@ -43,7 +45,7 @@ abstract class Field {
 
 	protected function check( array $config ): array {
 
-		$config = MainHelper::fool_proof( $this->defaults, $config );
+		$config = MainHelper::fool_proof( self::DEFAULTS, $config );
 		$config = MetaHelper::normalize_options( $config );
 
 		if ( $config['minimum'] < 0 ) {

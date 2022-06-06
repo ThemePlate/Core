@@ -14,8 +14,7 @@ use ThemePlate\Core\Helper\MetaHelper;
 
 abstract class Form {
 
-	protected ?Fields $fields = null;
-	protected array $defaults = array(
+	public const DEFAULTS = array(
 		'description' => '',
 		'data_prefix' => '',
 		'style'       => '',
@@ -24,6 +23,9 @@ abstract class Form {
 		'context'     => 'normal',
 		'priority'    => 'default',
 	);
+
+
+	protected ?Fields $fields = null;
 	protected array $config;
 	protected string $title;
 
@@ -53,7 +55,7 @@ abstract class Form {
 
 	protected function check( array $config ): array {
 
-		$config = MainHelper::fool_proof( $this->defaults, $config );
+		$config = MainHelper::fool_proof( self::DEFAULTS, $config );
 		$config = MetaHelper::normalize_options( $config );
 
 		$config['form_id'] = sanitize_title( $this->title );
