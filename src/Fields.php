@@ -38,7 +38,7 @@ class Fields {
 
 		foreach ( $fields as $id => $field ) {
 			if ( $field instanceof Field ) {
-				$processed[] = $field;
+				$processed[ $id ] = $field;
 
 				continue;
 			}
@@ -55,7 +55,7 @@ class Fields {
 				}
 			}
 
-			$processed[] = FormHelper::make_field( $id, $field );
+			$processed[ $id ] = FormHelper::make_field( $id, $field );
 
 		}
 
