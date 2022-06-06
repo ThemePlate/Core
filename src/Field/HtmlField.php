@@ -11,7 +11,7 @@ namespace ThemePlate\Core\Field;
 
 use ThemePlate\Core\Field;
 
-class Html extends Field {
+class HtmlField extends Field {
 
 	public function render( $value ): void {
 

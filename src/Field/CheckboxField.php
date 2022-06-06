@@ -12,7 +12,7 @@ namespace ThemePlate\Core\Field;
 use ThemePlate\Core\Field;
 use ThemePlate\Core\Helper\MainHelper;
 
-class Checkbox extends Field {
+class CheckboxField extends Field {
 
 	public function render( $value ): void {
 

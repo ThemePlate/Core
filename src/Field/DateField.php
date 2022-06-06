@@ -11,7 +11,7 @@ namespace ThemePlate\Core\Field;
 
 use ThemePlate\Core\Field;
 
-class Date extends Field {
+class DateField extends Field {
 
 	public function render( $value ): void {
 

@@ -11,7 +11,7 @@ namespace ThemePlate\Core\Field;
 
 use ThemePlate\Core\Field;
 
-class Input extends Field {
+class InputField extends Field {
 
 	/**
 	 * @param $value string

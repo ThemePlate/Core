@@ -12,7 +12,7 @@ namespace ThemePlate\Core\Field;
 use ThemePlate\Core\Field;
 use ThemePlate\Core\Helper\MainHelper;
 
-class Radio extends Field {
+class RadioField extends Field {
 
 	public function render( $value ): void {
 

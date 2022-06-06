@@ -11,7 +11,7 @@ namespace ThemePlate\Core\Field;
 
 use ThemePlate\Core\Field;
 
-class Link extends Field {
+class LinkField extends Field {
 
 	public function render( $value ): void {
 

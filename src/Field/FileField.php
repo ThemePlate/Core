@@ -11,7 +11,7 @@ namespace ThemePlate\Core\Field;
 
 use ThemePlate\Core\Field;
 
-class File extends Field {
+class FileField extends Field {
 
 	public function render( $value ): void {
 

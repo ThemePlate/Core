@@ -15,7 +15,7 @@ use WP_Query;
 use WP_Term_Query;
 use WP_User_Query;
 
-class Type extends Field {
+class TypeField extends Field {
 
 	public function render( $value ): void {
 

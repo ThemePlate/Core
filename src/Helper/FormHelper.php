@@ -59,54 +59,54 @@ class FormHelper {
 			case 'time':
 			case 'email':
 			case 'url':
-				return Field\Input::class;
+				return Field\InputField::class;
 
 			case 'textarea':
-				return Field\Textarea::class;
+				return Field\TextareaField::class;
 
 			case 'date':
-				return Field\Date::class;
+				return Field\DateField::class;
 
 			case 'select':
 			case 'select2':
-				return Field\Select::class;
+				return Field\SelectField::class;
 
 			case 'radiolist':
 			case 'radio':
-				return Field\Radio::class;
+				return Field\RadioField::class;
 
 			case 'checklist':
 			case 'checkbox':
-				return Field\Checkbox::class;
+				return Field\CheckboxField::class;
 
 			case 'color':
-				return Field\Color::class;
+				return Field\ColorField::class;
 
 			case 'file':
-				return Field\File::class;
+				return Field\FileField::class;
 
 			case 'number':
 			case 'range':
-				return Field\Number::class;
+				return Field\NumberField::class;
 
 			case 'editor':
-				return Field\Editor::class;
+				return Field\EditorField::class;
 
 			case 'type':
 			case 'post':
 			case 'page':
 			case 'user':
 			case 'term':
-				return Field\Type::class;
+				return Field\TypeField::class;
 
 			case 'html':
-				return Field\Html::class;
+				return Field\HtmlField::class;
 
 			case 'link':
-				return Field\Link::class;
+				return Field\LinkField::class;
 
 			case 'group':
-				return Field\Group::class;
+				return Field\GroupField::class;
 		}
 
 	}

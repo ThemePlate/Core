@@ -12,7 +12,7 @@ namespace ThemePlate\Core\Field;
 use ThemePlate\Core\Field;
 use ThemePlate\Core\Fields;
 
-class Group extends Field {
+class GroupField extends Field {
 
 	/**
 	 * @param $value array
