@@ -48,6 +48,9 @@ abstract class Form {
 	abstract protected function get_field_value( Field $field, string $current_id );
 
 
+	abstract public function get_config(): Config;
+
+
 	protected function check( array $config ): array {
 
 		$config = MainHelper::fool_proof( $this->defaults, $config );
