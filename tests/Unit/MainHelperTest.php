@@ -7,9 +7,9 @@
 namespace Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
-use ThemePlate\Core\Helper\Main;
+use ThemePlate\Core\Helper\MainHelper;
 
-class MainTest extends TestCase {
+class MainHelperTest extends TestCase {
 	public function for_fool_proof(): array {
 		// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 		return array(
@@ -111,7 +111,7 @@ class MainTest extends TestCase {
 		$options  = array_merge( $defaults, $options );
 		$expected = array_merge( $defaults, $expected );
 
-		$this->assertSame( $expected, Main::fool_proof( $defaults, $options ) );
+		$this->assertSame( $expected, MainHelper::fool_proof( $defaults, $options ) );
 	}
 
 	public function for_is_sequential(): array {
@@ -155,9 +155,9 @@ class MainTest extends TestCase {
 	 */
 	public function test_is_sequential( array $input, bool $is_sequential ): void {
 		if ( $is_sequential ) {
-			$this->assertTrue( Main::is_sequential( $input ) );
+			$this->assertTrue( MainHelper::is_sequential( $input ) );
 		} else {
-			$this->assertFalse( Main::is_sequential( $input ) );
+			$this->assertFalse( MainHelper::is_sequential( $input ) );
 		}
 	}
 
@@ -195,9 +195,9 @@ class MainTest extends TestCase {
 		);
 
 		if ( $is_complete ) {
-			$this->assertTrue( Main::is_complete( $config, $expected ) );
+			$this->assertTrue( MainHelper::is_complete( $config, $expected ) );
 		} else {
-			$this->assertFalse( Main::is_complete( $config, $expected ) );
+			$this->assertFalse( MainHelper::is_complete( $config, $expected ) );
 		}
 	}
 }

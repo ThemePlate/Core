@@ -10,13 +10,13 @@
 namespace ThemePlate\Core\Field;
 
 use ThemePlate\Core\Field;
-use ThemePlate\Core\Helper\Main;
+use ThemePlate\Core\Helper\MainHelper;
 
 class Checkbox extends Field {
 
 	public function render( $value ): void {
 
-		$seq = Main::is_sequential( $this->get_config( 'options' ) );
+		$seq = MainHelper::is_sequential( $this->get_config( 'options' ) );
 		$tag = 'checklist' === $this->get_config( 'type' ) ? 'p' : 'span';
 
 		echo '<input type="hidden" name="' . esc_attr( $this->get_config( 'name' ) ) . '" />';

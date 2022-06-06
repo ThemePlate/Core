@@ -6,10 +6,10 @@
 
 namespace Tests\Unit;
 
-use ThemePlate\Core\Helper\Box;
+use ThemePlate\Core\Helper\BoxHelper;
 use PHPUnit\Framework\TestCase;
 
-class BoxTest extends TestCase {
+class BoxHelperTest extends TestCase {
 	public function for_prepare_save(): array {
 		$empty_like_values = array(
 			'',
@@ -90,7 +90,7 @@ class BoxTest extends TestCase {
 	 * @dataProvider for_prepare_save
 	 */
 	public function test_prepare_save( array $data, array $expected ): void {
-		$this->assertSame( $expected, Box::prepare_save( $data ) );
+		$this->assertSame( $expected, BoxHelper::prepare_save( $data ) );
 	}
 
 	public function for_get_priority(): array {
@@ -120,6 +120,6 @@ class BoxTest extends TestCase {
 	 * @dataProvider for_get_priority
 	 */
 	public function test_get_priority( array $config, int $priority ) {
-		$this->assertSame( $priority, Box::get_priority( $config ) );
+		$this->assertSame( $priority, BoxHelper::get_priority( $config ) );
 	}
 }

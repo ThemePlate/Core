@@ -11,7 +11,7 @@ namespace ThemePlate\Core\Helper;
 
 use ThemePlate\Core\Field;
 
-class Form {
+class FormHelper {
 
 	public static function enqueue_assets( string $hook_suffix ): void {
 
@@ -25,16 +25,16 @@ class Form {
 		wp_enqueue_style( 'editor-buttons' );
 		wp_enqueue_script( 'wplink' );
 		wp_enqueue_script( 'jquery-ui-sortable' );
-		wp_enqueue_style( 'themeplate-select2-style', Main::asset_url( 'select2.min.css' ), array(), '4.0.12' );
-		wp_enqueue_script( 'themeplate-select2-script', Main::asset_url( 'select2.full.min.js' ), array(), '4.0.12', true );
-		wp_enqueue_style( 'themeplate-datepicker-style', Main::asset_url( 'datepicker.min.css' ), array(), '1.9.0' );
-		wp_enqueue_script( 'themeplate-datepicker-script', Main::asset_url( 'datepicker.min.js' ), array(), '1.9.0', true );
+		wp_enqueue_style( 'themeplate-select2-style', MainHelper::asset_url( 'select2.min.css' ), array(), '4.0.12' );
+		wp_enqueue_script( 'themeplate-select2-script', MainHelper::asset_url( 'select2.full.min.js' ), array(), '4.0.12', true );
+		wp_enqueue_style( 'themeplate-datepicker-style', MainHelper::asset_url( 'datepicker.min.css' ), array(), '1.9.0' );
+		wp_enqueue_script( 'themeplate-datepicker-script', MainHelper::asset_url( 'datepicker.min.js' ), array(), '1.9.0', true );
 		wp_add_inline_script( 'themeplate-datepicker-script', 'if ( ! jQuery.fn.bootstrapDP && jQuery.fn.datepicker && jQuery.fn.datepicker.noConflict ) jQuery.fn.bootstrapDP = jQuery.fn.datepicker.noConflict();' );
-		wp_enqueue_style( 'themeplate-style', Main::asset_url( 'themeplate.css' ), array(), TP_CORE_VERSION );
-		wp_enqueue_script( 'themeplate-script', Main::asset_url( 'themeplate.js' ), array(), TP_CORE_VERSION, true );
-		wp_enqueue_script( 'themeplate-wysiwyg', Main::asset_url( 'wysiwyg.js' ), array(), TP_CORE_VERSION, true );
-		wp_enqueue_script( 'themeplate-show-hide', Main::asset_url( 'show-hide.js' ), array(), TP_CORE_VERSION, true );
-		wp_enqueue_script( 'themeplate-repeater', Main::asset_url( 'repeater.js' ), array(), TP_CORE_VERSION, true );
+		wp_enqueue_style( 'themeplate-style', MainHelper::asset_url( 'themeplate.css' ), array(), TP_CORE_VERSION );
+		wp_enqueue_script( 'themeplate-script', MainHelper::asset_url( 'themeplate.js' ), array(), TP_CORE_VERSION, true );
+		wp_enqueue_script( 'themeplate-wysiwyg', MainHelper::asset_url( 'wysiwyg.js' ), array(), TP_CORE_VERSION, true );
+		wp_enqueue_script( 'themeplate-show-hide', MainHelper::asset_url( 'show-hide.js' ), array(), TP_CORE_VERSION, true );
+		wp_enqueue_script( 'themeplate-repeater', MainHelper::asset_url( 'repeater.js' ), array(), TP_CORE_VERSION, true );
 
 		wp_localize_script( 'themeplate-script', 'ThemePlate', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 
@@ -43,9 +43,9 @@ class Form {
 		}
 
 		if ( function_exists( 'use_block_editor_for_post' ) && use_block_editor_for_post( get_the_ID() ) ) {
-			wp_enqueue_script( 'themeplate-show-hide-gutenberg', Main::asset_url( 'show-hide-gutenberg.js' ), array(), TP_CORE_VERSION, true );
+			wp_enqueue_script( 'themeplate-show-hide-gutenberg', MainHelper::asset_url( 'show-hide-gutenberg.js' ), array(), TP_CORE_VERSION, true );
 		} else {
-			wp_enqueue_script( 'themeplate-show-hide-classic', Main::asset_url( 'show-hide-classic.js' ), array(), TP_CORE_VERSION, true );
+			wp_enqueue_script( 'themeplate-show-hide-classic', MainHelper::asset_url( 'show-hide-classic.js' ), array(), TP_CORE_VERSION, true );
 		}
 
 	}

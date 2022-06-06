@@ -7,9 +7,9 @@
 namespace Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
-use ThemePlate\Core\Helper\Meta;
+use ThemePlate\Core\Helper\MetaHelper;
 
-class MetaTest extends TestCase {
+class MetaHelperTest extends TestCase {
 	public function for_should_display(): array {
 		// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 		return array(
@@ -87,9 +87,9 @@ class MetaTest extends TestCase {
 	 */
 	public function test_should_display_show( array $config, string $current_id, bool $should_display ): void {
 		if ( $should_display ) {
-			$this->assertTrue( Meta::should_display( $this->transform_should_display( 'show', $config ), $current_id ) );
+			$this->assertTrue( MetaHelper::should_display( $this->transform_should_display( 'show', $config ), $current_id ) );
 		} else {
-			$this->assertFalse( Meta::should_display( $this->transform_should_display( 'show', $config ), $current_id ) );
+			$this->assertFalse( MetaHelper::should_display( $this->transform_should_display( 'show', $config ), $current_id ) );
 		}
 	}
 
@@ -98,9 +98,9 @@ class MetaTest extends TestCase {
 	 */
 	public function test_should_display_hide( array $config, string $current_id, bool $should_display ): void {
 		if ( ! $should_display ) {
-			$this->assertTrue( Meta::should_display( $this->transform_should_display( 'hide', $config ), $current_id ) );
+			$this->assertTrue( MetaHelper::should_display( $this->transform_should_display( 'hide', $config ), $current_id ) );
 		} else {
-			$this->assertFalse( Meta::should_display( $this->transform_should_display( 'hide', $config ), $current_id ) );
+			$this->assertFalse( MetaHelper::should_display( $this->transform_should_display( 'hide', $config ), $current_id ) );
 		}
 	}
 
@@ -193,7 +193,7 @@ class MetaTest extends TestCase {
 	 * @dataProvider for_normalize_options
 	 */
 	public function test_normalize_options( array $container, $expected ): void {
-		$this->assertSame( $expected, Meta::normalize_options( $container ) );
+		$this->assertSame( $expected, MetaHelper::normalize_options( $container ) );
 	}
 
 	public function for_render_options(): array {
@@ -268,7 +268,7 @@ class MetaTest extends TestCase {
 	 */
 	public function test_render_options( array $container ): void {
 		ob_start();
-		Meta::render_options( $container );
+		MetaHelper::render_options( $container );
 
 		$output = ob_get_clean();
 

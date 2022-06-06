@@ -9,7 +9,7 @@
 
 namespace ThemePlate\Core\Helper;
 
-class Box {
+class BoxHelper {
 
 	public static function prepare_save( array $data ): array {
 

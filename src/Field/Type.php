@@ -10,7 +10,7 @@
 namespace ThemePlate\Core\Field;
 
 use ThemePlate\Core\Field;
-use ThemePlate\Core\Helper\Main;
+use ThemePlate\Core\Helper\MainHelper;
 use WP_Query;
 use WP_Term_Query;
 use WP_User_Query;
@@ -27,7 +27,7 @@ class Type extends Field {
 				$action   = 'tp_posts';
 				$defaults = array( 'post_type' => $this->get_config( 'type' ) );
 
-				if ( Main::is_sequential( $config_options ) ) {
+				if ( MainHelper::is_sequential( $config_options ) ) {
 					$config_options = array( 'post_type' => $config_options );
 				}
 
@@ -36,7 +36,7 @@ class Type extends Field {
 				$action   = 'tp_users';
 				$defaults = array( 'role' => '' );
 
-				if ( Main::is_sequential( $config_options ) ) {
+				if ( MainHelper::is_sequential( $config_options ) ) {
 					$config_options = array( 'role' => $config_options );
 				}
 
@@ -45,14 +45,14 @@ class Type extends Field {
 				$action   = 'tp_terms';
 				$defaults = array( 'taxonomy' => null );
 
-				if ( Main::is_sequential( $config_options ) ) {
+				if ( MainHelper::is_sequential( $config_options ) ) {
 					$config_options = array( 'taxonomy' => $config_options );
 				}
 
 				break;
 		}
 
-		$args = Main::fool_proof( $defaults, $config_options );
+		$args = MainHelper::fool_proof( $defaults, $config_options );
 
 		echo '<select disabled><option>Loading values...</option></select>';
 		echo '<select class="themeplate-select2 select2-hidden-accessible"

@@ -6,10 +6,10 @@
 
 namespace Tests\Integration;
 
-use ThemePlate\Core\Helper\Main;
+use ThemePlate\Core\Helper\MainHelper;
 use WP_UnitTestCase;
 
-class MainTest extends WP_UnitTestCase {
+class MainHelperTest extends WP_UnitTestCase {
 	public function for_get_url(): array {
 		return array(
 			array(
@@ -23,6 +23,6 @@ class MainTest extends WP_UnitTestCase {
 	 * @dataProvider for_get_url
 	 */
 	public function test_get_url( string $base_path, string $base_url ): void {
-		$this->assertSame( $base_url, Main::get_url( $base_path ) );
+		$this->assertSame( $base_url, MainHelper::get_url( $base_path ) );
 	}
 }

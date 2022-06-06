@@ -6,8 +6,8 @@
 
 namespace ThemePlate\Core;
 
-use ThemePlate\Core\Helper\Main;
-use ThemePlate\Core\Helper\Meta;
+use ThemePlate\Core\Helper\MainHelper;
+use ThemePlate\Core\Helper\MetaHelper;
 
 abstract class Field {
 
@@ -43,8 +43,8 @@ abstract class Field {
 
 	protected function check( array $config ): array {
 
-		$config = Main::fool_proof( $this->defaults, $config );
-		$config = Meta::normalize_options( $config );
+		$config = MainHelper::fool_proof( $this->defaults, $config );
+		$config = MetaHelper::normalize_options( $config );
 
 		if ( $config['minimum'] < 0 ) {
 			$config['minimum'] = 0;

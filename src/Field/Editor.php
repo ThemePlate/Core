@@ -10,7 +10,7 @@
 namespace ThemePlate\Core\Field;
 
 use ThemePlate\Core\Field;
-use ThemePlate\Core\Helper\Main;
+use ThemePlate\Core\Helper\MainHelper;
 
 class Editor extends Field {
 
@@ -20,7 +20,7 @@ class Editor extends Field {
 			'editor_class'  => 'themeplate-wysiwyg',
 			'textarea_rows' => 10,
 		);
-		$settings = Main::fool_proof( $defaults, $this->get_config( 'options' ) );
+		$settings = MainHelper::fool_proof( $defaults, $this->get_config( 'options' ) );
 
 		$settings['textarea_name'] = $this->get_config( 'name' );
 

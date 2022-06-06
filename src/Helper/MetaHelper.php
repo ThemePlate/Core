@@ -9,7 +9,7 @@
 
 namespace ThemePlate\Core\Helper;
 
-class Meta {
+class MetaHelper {
 
 	public static function should_display( array $meta_box, string $current_id ): bool {
 
@@ -71,7 +71,7 @@ class Meta {
 
 		$value = $container[ $type ];
 
-		if ( ! Main::is_sequential( $value ) ) {
+		if ( ! MainHelper::is_sequential( $value ) ) {
 			$container[ $type ] = array( $value );
 			$value              = array( $value );
 		}

@@ -10,14 +10,14 @@
 namespace ThemePlate\Core\Field;
 
 use ThemePlate\Core\Field;
-use ThemePlate\Core\Helper\Main;
+use ThemePlate\Core\Helper\MainHelper;
 
 class Textarea extends Field {
 
 	public function render( $value ): void {
 
 		$defaults = array( 'rows' => 4 );
-		$attrs    = Main::fool_proof( $defaults, $this->get_config( 'options' ) );
+		$attrs    = MainHelper::fool_proof( $defaults, $this->get_config( 'options' ) );
 
 		echo '<textarea
 			name="' . esc_attr( $this->get_config( 'name' ) ) . '"

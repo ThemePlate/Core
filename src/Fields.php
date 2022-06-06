@@ -9,8 +9,8 @@
 
 namespace ThemePlate\Core;
 
-use ThemePlate\Core\Helper\Form;
-use ThemePlate\Core\Helper\Meta;
+use ThemePlate\Core\Helper\FormHelper;
+use ThemePlate\Core\Helper\MetaHelper;
 
 class Fields {
 
@@ -53,7 +53,7 @@ class Fields {
 				}
 			}
 
-			$processed[] = Form::make_field( $id, $field );
+			$processed[] = FormHelper::make_field( $id, $field );
 
 		}
 
@@ -70,7 +70,7 @@ class Fields {
 
 		/* phpcs:disable Generic.WhiteSpace.ScopeIndent.IncorrectExact */
 		echo '<div class="field-wrapper ' . $field->get_classname() . '">'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-			Meta::render_options( $field_config );
+			MetaHelper::render_options( $field_config );
 
 			if ( ! empty( $field->get_config( 'title' ) ) || ! empty( $field->get_config( 'description' ) ) ) {
 				echo '<div class="field-label">';

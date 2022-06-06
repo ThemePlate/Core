@@ -9,8 +9,8 @@
 
 namespace ThemePlate\Core;
 
-use ThemePlate\Core\Helper\Main;
-use ThemePlate\Core\Helper\Meta;
+use ThemePlate\Core\Helper\MainHelper;
+use ThemePlate\Core\Helper\MetaHelper;
 
 abstract class Form {
 
@@ -50,8 +50,8 @@ abstract class Form {
 
 	protected function check( array $config ): array {
 
-		$config = Main::fool_proof( $this->defaults, $config );
-		$config = Meta::normalize_options( $config );
+		$config = MainHelper::fool_proof( $this->defaults, $config );
+		$config = MetaHelper::normalize_options( $config );
 
 		$config['form_id'] = sanitize_title( $this->title );
 
@@ -112,7 +112,7 @@ abstract class Form {
 		$prefix = $this->config['data_prefix'];
 
 		$this->maybe_nonce_fields( $current_id );
-		Meta::render_options( $this->config );
+		MetaHelper::render_options( $this->config );
 
 		if ( ! empty( $this->config['description'] ) ) {
 			echo '<p class="description">' . $this->config['description'] . '</p>'; // phpcs:ignore WordPress.XSS.EscapeOutput.OutputNotEscaped
@@ -122,7 +122,7 @@ abstract class Form {
 
 		if ( null !== $this->fields ) {
 			foreach ( $this->fields->get_collection() as $field ) {
-				if ( ! Meta::should_display( $field->get_config(), $current_id ) ) {
+				if ( ! MetaHelper::should_display( $field->get_config(), $current_id ) ) {
 					continue;
 				}
 

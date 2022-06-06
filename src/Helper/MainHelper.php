@@ -9,7 +9,7 @@
 
 namespace ThemePlate\Core\Helper;
 
-class Main {
+class MainHelper {
 
 	public static function fool_proof( array $defaults, array $options ): array {
 
