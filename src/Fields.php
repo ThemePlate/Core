@@ -49,7 +49,8 @@ class Fields {
 
 			if ( 'group' === $field['type'] ) {
 				if ( array_key_exists( 'fields', $field ) && ! empty( $field['fields'] ) ) {
-					$field['fields'] = new Fields( $field['fields'] );
+					$group_fields    = $field['fields'];
+					$field['fields'] = $group_fields instanceof Fields ? $group_fields : new Fields( $group_fields );
 				} else {
 					continue;
 				}
