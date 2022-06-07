@@ -13,18 +13,8 @@ class Repository {
 
 	public function store( Config $config ): void {
 
-		$fields = $config->get_fields();
-
-		if ( null === $fields ) {
-			return;
-		}
-
-		foreach ( $fields->get_collection() as $field ) {
-			foreach ( $config->get_types() as $type ) {
-				$key = $field->data_key( $config->get_prefix() );
-
-				$this->items[ $type ][ $key ] = $field;
-			}
+		foreach ( $config->get_types() as $type ) {
+			$this->items[ $type ] = $config->get_fields();
 		}
 
 	}
@@ -32,11 +22,20 @@ class Repository {
 
 	public function retrieve( string $type, string $key ): Field {
 
-		if ( isset( $this->items[ $type ][ $key ] ) ) {
-			return $this->items[ $type ][ $key ];
+		if ( empty( $this->items[ $type ] ) ) {
+			return $this->field( $key );
 		}
 
-		return new class( $type ) extends Field {
+		$fields = $this->items[ $type ]->get_collection();
+
+		return $fields[ $key ] ?? $this->field( $key );
+
+	}
+
+
+	protected function field( $key ): Field {
+
+		return new class( $key ) extends Field {
 			public function render( $value ): void {}
 		};
 

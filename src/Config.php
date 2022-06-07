@@ -17,7 +17,22 @@ class Config {
 
 		$this->prefix = $prefix;
 		$this->types  = $types;
-		$this->fields = $fields;
+		$this->fields = $this->process( $fields );
+
+	}
+
+
+	protected function process( ?Fields $fields ): Fields {
+
+		$collection = array();
+
+		if ( null !== $fields ) {
+			foreach ( $fields->get_collection() as $field ) {
+				$collection[ $field->data_key( $this->get_prefix() ) ] = $field;
+			}
+		}
+
+		return new Fields( $collection );
 
 	}
 
