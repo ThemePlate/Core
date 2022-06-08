@@ -9,7 +9,7 @@ namespace ThemePlate\Core;
 class Config {
 
 	protected string $prefix;
-	protected ?Fields $fields;
+	protected Fields $fields;
 
 
 	public function __construct( string $prefix, ?Fields $fields ) {
@@ -26,7 +26,7 @@ class Config {
 
 		if ( null !== $fields ) {
 			foreach ( $fields->get_collection() as $field ) {
-				$collection[ $field->data_key( $this->get_prefix() ) ] = $field;
+				$collection[ $field->data_key( $this->prefix ) ] = $field;
 			}
 		}
 
@@ -35,14 +35,7 @@ class Config {
 	}
 
 
-	public function get_prefix(): string {
-
-		return $this->prefix;
-
-	}
-
-
-	public function get_fields(): ?Fields {
+	public function get_fields(): Fields {
 
 		return $this->fields;
 
