@@ -20,12 +20,12 @@ class ConfigRepositoryTest extends TestCase {
 	}
 
 	public function test_repository(): void {
-		$this->assertInstanceOf( Field::class, $this->repository->retrieve( 'test', 'test' ) );
-		$this->assertEmpty( $this->repository->dump() );
+		$this->assertInstanceOf( Field::class, $this->repository->retrieve( 'test' ) );
+		$this->assertIsArray( $this->repository->dump() );
 	}
 
 	public function test_with_config(): void {
-		$config = new Config( '', array(), null );
+		$config = new Config( '', null );
 
 		$this->repository->store( $config );
 		$this->test_repository();
@@ -42,10 +42,11 @@ class ConfigRepositoryTest extends TestCase {
 				),
 			)
 		);
-		$config = new Config( 'prefix_', array( 'type' ), $fields );
+		$config = new Config( 'prefix_', $fields );
 
 		$this->repository->store( $config );
-		$this->assertInstanceOf( Field\TypeField::class, $this->repository->retrieve( 'type', 'prefix_test' ) );
-		$this->assertInstanceOf( Field\DateField::class, $this->repository->retrieve( 'type', 'prefix_this' ) );
+		$this->assertInstanceOf( Field\TypeField::class, $this->repository->retrieve( 'prefix_test' ) );
+		$this->assertInstanceOf( Field\DateField::class, $this->repository->retrieve( 'prefix_this' ) );
+		$this->assertInstanceOf( Field::class, $this->repository->retrieve( 'prefix_unknown' ) );
 	}
 }

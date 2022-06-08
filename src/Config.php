@@ -9,14 +9,12 @@ namespace ThemePlate\Core;
 class Config {
 
 	protected string $prefix;
-	protected array $types;
 	protected ?Fields $fields;
 
 
-	public function __construct( string $prefix, array $types, ?Fields $fields ) {
+	public function __construct( string $prefix, ?Fields $fields ) {
 
 		$this->prefix = $prefix;
-		$this->types  = $types;
 		$this->fields = $this->process( $fields );
 
 	}
@@ -40,13 +38,6 @@ class Config {
 	public function get_prefix(): string {
 
 		return $this->prefix;
-
-	}
-
-
-	public function get_types(): array {
-
-		return $this->types;
 
 	}
 

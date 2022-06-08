@@ -8,27 +8,30 @@ namespace ThemePlate\Core;
 
 class Repository {
 
+	/**
+	 * @var Fields[]
+	 */
 	protected array $items = array();
 
 
 	public function store( Config $config ): void {
 
-		foreach ( $config->get_types() as $type ) {
-			$this->items[ $type ] = $config->get_fields();
-		}
+		$this->items[] = $config->get_fields();
 
 	}
 
 
-	public function retrieve( string $type, string $key ): Field {
+	public function retrieve( string $key ): Field {
 
-		if ( empty( $this->items[ $type ] ) ) {
-			return $this->field( $key );
+		foreach ( $this->items as $fields ) {
+			foreach ( $fields->get_collection() as $field_key => $field ) {
+				if ( $key === $field_key ) {
+					return $field;
+				}
+			}
 		}
 
-		$fields = $this->items[ $type ]->get_collection();
-
-		return $fields[ $key ] ?? $this->field( $key );
+		return $this->field( $key );
 
 	}
 
