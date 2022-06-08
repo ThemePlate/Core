@@ -26,7 +26,7 @@ class Config {
 
 		if ( null !== $fields ) {
 			foreach ( $fields->get_collection() as $field ) {
-				$collection[ $field->data_key( $this->prefix ) ] = $field;
+				$collection[ $field->data_key( $this->prefix ) ] = $field->get_config();
 			}
 		}
 
@@ -35,9 +35,9 @@ class Config {
 	}
 
 
-	public function get_fields(): Fields {
+	public function get_fields(): array {
 
-		return $this->fields;
+		return $this->fields->get_collection();
 
 	}
 
