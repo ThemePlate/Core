@@ -26,6 +26,7 @@ abstract class Form {
 
 
 	protected ?Fields $fields = null;
+	protected Handler $handler;
 	protected array $config;
 	protected string $title;
 
@@ -35,7 +36,12 @@ abstract class Form {
 		$this->title  = $title;
 		$this->config = $this->check( $config );
 
+		$this->handler = $this->get_handler();
+
 	}
+
+
+	abstract protected function get_handler(): Handler;
 
 
 	abstract protected function initialize( array &$config ): void;
@@ -45,9 +51,6 @@ abstract class Form {
 
 
 	abstract protected function maybe_nonce_fields( string $current_id ): void;
-
-
-	abstract protected function get_field_value( Field $field, string $current_id );
 
 
 	abstract public function get_config(): Config;
@@ -134,7 +137,7 @@ abstract class Form {
 				$field->set_id( $this->fields_group_key() . '_' . $field->data_key( $prefix ) );
 				$field->set_name( $this->fields_group_key() . '[' . $field->data_key( $prefix ) . ']' );
 
-				$this->fields->layout( $field, $this->get_field_value( $field, $current_id ) );
+				$this->fields->layout( $field, $this->handler->get_value( $field, $prefix, $current_id ) );
 			}
 		}
 
