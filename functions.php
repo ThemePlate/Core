@@ -19,5 +19,5 @@ if ( function_exists( 'add_action' ) && ! function_exists( 'themeplate_core_ajax
 }
 
 if ( ! defined( 'TP_CORE_VERSION' ) ) {
-	define( 'TP_CORE_VERSION', '1.0.0' );
+	define( 'TP_CORE_VERSION', '2.0.0' );
 }
