@@ -102,7 +102,8 @@ class MainHelper {
 
 	public static function asset_url( string $file ): string {
 
-		$url = defined( 'TP_CORE_URL' ) ? untrailingslashit( TP_CORE_URL ) : self::get_url( TP_CORE_PATH );
+		$url = defined( 'TP_CORE_URL' ) ? untrailingslashit( TP_CORE_URL ) : '';
+		$url = '' !== $url ? $url : self::get_url( dirname( __DIR__, 2 ) );
 
 		return $url . '/assets/' . $file;
 
