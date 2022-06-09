@@ -24,7 +24,7 @@ class TypeField extends Field {
 		switch ( $this->get_config( 'type' ) ) {
 			default:
 			case 'post':
-				$action   = 'tp_posts';
+				$action   = 'themeplate_type_posts';
 				$defaults = array( 'post_type' => $this->get_config( 'type' ) );
 
 				if ( MainHelper::is_sequential( $config_options ) ) {
@@ -33,7 +33,7 @@ class TypeField extends Field {
 
 				break;
 			case 'user':
-				$action   = 'tp_users';
+				$action   = 'themeplate_type_users';
 				$defaults = array( 'role' => '' );
 
 				if ( MainHelper::is_sequential( $config_options ) ) {
@@ -42,7 +42,7 @@ class TypeField extends Field {
 
 				break;
 			case 'term':
-				$action   = 'tp_terms';
+				$action   = 'themeplate_type_terms';
 				$defaults = array( 'taxonomy' => null );
 
 				if ( MainHelper::is_sequential( $config_options ) ) {
