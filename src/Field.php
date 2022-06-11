@@ -64,6 +64,12 @@ abstract class Field {
 			$config['minimum'] = 1;
 		}
 
+		$result = json_decode( $config['default'], true );
+
+		if ( JSON_ERROR_NONE === json_last_error() ) {
+			$config['default'] = $result;
+		}
+
 		return $config;
 
 	}
