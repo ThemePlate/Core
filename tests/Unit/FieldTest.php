@@ -7,6 +7,7 @@
 namespace Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
+use ThemePlate\Core\Field\InputField;
 use ThemePlate\Core\Helper\FormHelper;
 
 class FieldTest extends TestCase {
@@ -67,5 +68,58 @@ class FieldTest extends TestCase {
 		} else {
 			$this->assertIsString( $field->get_config( 'default' ) );
 		}
+	}
+	public function for_maybe_adjust_value(): array {
+		// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
+		return array(
+			'with a non-repeatable and string' => array(
+				false,
+				null,
+				'test',
+				'test',
+			),
+			'with a non-repeatable and array' => array(
+				false,
+				null,
+				array( 'test' ),
+				array( 'test' ),
+			),
+			'with a repeatable and string' => array(
+				true,
+				1,
+				'test',
+				array( 'test' ),
+			),
+			'with a repeatable and array' => array(
+				true,
+				1,
+				array( 'test' ),
+				array( 'test' ),
+			),
+			'with 3 repeatable and string' => array(
+				true,
+				3,
+				'test',
+				array( 'test', 'test', 'test' ),
+			),
+			'with 3 repeatable and array' => array(
+				true,
+				3,
+				array( 'test' ),
+				array( 'test', '', '' ),
+			),
+		);
+		// phpcs:enable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
+	}
+
+	/**
+	 * @dataProvider for_maybe_adjust_value
+	 */
+	public function test_maybe_adjust_value( bool $repeatable, ?int $minimum, $default, $expected_value ): void {
+		$field = new InputField( 'test', compact( 'repeatable', 'minimum', 'default' ) );
+		$value = $default;
+
+		$field->maybe_adjust( $value );
+		$this->assertSame( $expected_value, $value );
 	}
 }

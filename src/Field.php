@@ -137,15 +137,34 @@ abstract class Field {
 	}
 
 
+	public function clone_value(): string {
+
+		if ( is_array( $this->get_config( 'default' ) ) ) {
+			return self::DEFAULTS['default'];
+		}
+
+		return $this->get_config( 'default' );
+
+	}
+
+
 	public function maybe_adjust( &$value ): void {
 
-		$current = count( (array) $value );
+		if ( ! $this->get_config( 'repeatable' ) ) {
+			return;
+		}
+
+		if ( ! is_array( $value ) ) {
+			$value = (array) $value;
+		}
+
+		$current = count( $value );
 
 		if ( $current < $this->get_config( 'minimum' ) ) {
 			$balance = $this->get_config( 'minimum' ) - $current;
-			$value   = array_merge( (array) $value, array_fill( $current, $balance, null ) );
+			$value   = array_merge( $value, array_fill( $current, $balance, $this->clone_value() ) );
 
-			$this->config['count'] = count( (array) $value );
+			$this->config['count'] = count( $value );
 		}
 
 	}
