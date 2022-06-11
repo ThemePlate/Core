@@ -64,6 +64,17 @@ abstract class Field {
 			$config['minimum'] = 1;
 		}
 
+		if (
+			'group' !== $config['type'] &&
+			! $config['repeatable'] &&
+			(
+				! $this->can_have_multiple_value() ||
+				! $config['multiple']
+			)
+		) {
+			return $config;
+		}
+
 		$result = json_decode( $config['default'], true );
 
 		if ( JSON_ERROR_NONE === json_last_error() ) {
@@ -71,6 +82,13 @@ abstract class Field {
 		}
 
 		return $config;
+
+	}
+
+
+	protected function can_have_multiple_value(): bool {
+
+		return false;
 
 	}
 
