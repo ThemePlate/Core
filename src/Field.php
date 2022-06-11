@@ -88,7 +88,7 @@ abstract class Field {
 			return $this->config;
 		}
 
-		return $this->config[ $key ] ?? '';
+		return $this->config[ $key ] ?? null;
 
 	}
 
