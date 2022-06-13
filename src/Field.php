@@ -37,6 +37,10 @@ abstract class Field {
 		$this->data_key = $data_key;
 		$this->config   = $this->check( $config );
 
+		if ( method_exists( $this, 'initialize' ) ) {
+			$this->initialize();
+		}
+
 	}
 
 
