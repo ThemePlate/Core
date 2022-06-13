@@ -17,7 +17,3 @@ if ( function_exists( 'add_action' ) && ! function_exists( 'themeplate_core_ajax
 
 	themeplate_core_ajax_actions();
 }
-
-if ( ! defined( 'TP_CORE_VERSION' ) ) {
-	define( 'TP_CORE_VERSION', '2.0.0' );
-}
