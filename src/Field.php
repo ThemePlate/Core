@@ -100,6 +100,9 @@ abstract class Field {
 	}
 
 
+	/**
+	 * @return array|mixed|null
+	 */
 	public function get_config( string $key = '' ) {
 
 		if ( '' === $key ) {
@@ -111,14 +114,14 @@ abstract class Field {
 	}
 
 
-	public function set_id( string $value ) {
+	public function set_id( string $value ): void {
 
 		$this->config['id'] = $value;
 
 	}
 
 
-	public function set_name( string $value ) {
+	public function set_name( string $value ): void {
 
 		$this->config['name'] = $value;
 

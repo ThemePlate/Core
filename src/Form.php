@@ -79,6 +79,7 @@ abstract class Form {
 	}
 
 
+	/** @noinspection PhpUnused */
 	public function layout_postbox( string $current_id ): void {
 
 		global $wp_version;

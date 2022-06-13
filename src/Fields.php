@@ -28,8 +28,6 @@ class Fields {
 
 
 	/**
-	 * @param array $fields
-	 *
 	 * @return Field[]
 	 */
 	protected function filter( array $fields ): array {
