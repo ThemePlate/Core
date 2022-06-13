@@ -163,9 +163,13 @@ abstract class Field {
 		if ( $current < $this->get_config( 'minimum' ) ) {
 			$balance = $this->get_config( 'minimum' ) - $current;
 			$value   = array_merge( $value, array_fill( $current, $balance, $this->clone_value() ) );
-
-			$this->config['count'] = count( $value );
 		}
+
+		if ( $this->get_config( 'maximum' ) && ( $current > $this->get_config( 'maximum' ) ) ) {
+			$value = array_slice( $value, 0, $this->get_config( 'maximum' ) );
+		}
+
+		$this->config['count'] = count( $value );
 
 	}
 

@@ -72,8 +72,16 @@ class FieldTest extends TestCase {
 	public function for_maybe_adjust_value(): array {
 		// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 		return array(
+			'with a non-repeatable and nothing specified' => array(
+				false,
+				null,
+				null,
+				null,
+				null,
+			),
 			'with a non-repeatable and string' => array(
 				false,
+				null,
 				null,
 				'test',
 				'test',
@@ -81,32 +89,44 @@ class FieldTest extends TestCase {
 			'with a non-repeatable and array' => array(
 				false,
 				null,
+				null,
 				array( 'test' ),
 				array( 'test' ),
 			),
 			'with a repeatable and string' => array(
 				true,
 				1,
+				null,
 				'test',
 				array( 'test' ),
 			),
 			'with a repeatable and array' => array(
 				true,
 				1,
+				null,
 				array( 'test' ),
 				array( 'test' ),
 			),
 			'with 3 repeatable and string' => array(
 				true,
 				3,
+				null,
 				'test',
 				array( 'test', 'test', 'test' ),
 			),
 			'with 3 repeatable and array' => array(
 				true,
 				3,
+				null,
 				array( 'test' ),
 				array( 'test', '', '' ),
+			),
+			'with over the limit; a maximum of 2' => array(
+				true,
+				null,
+				2,
+				array( 'please', 'this', 'important' ),
+				array( 'please', 'this' ),
 			),
 		);
 		// phpcs:enable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
@@ -115,11 +135,13 @@ class FieldTest extends TestCase {
 	/**
 	 * @dataProvider for_maybe_adjust_value
 	 */
-	public function test_maybe_adjust_value( bool $repeatable, ?int $minimum, $default, $expected_value ): void {
-		$field = new InputField( 'test', compact( 'repeatable', 'minimum', 'default' ) );
+	public function test_maybe_adjust_value( bool $repeatable, ?int $minimum, ?int $maximum, $default, $expected_value ): void {
+		$field = new InputField( 'test', compact( 'repeatable', 'minimum', 'maximum', 'default' ) );
+		$count = max( $field->get_config( 'minimum' ), $field->get_config( 'maximum' ), 1 );
 		$value = $default;
 
 		$field->maybe_adjust( $value );
 		$this->assertSame( $expected_value, $value );
+		$this->assertSame( $count, $field->get_config( 'count' ) );
 	}
 }
