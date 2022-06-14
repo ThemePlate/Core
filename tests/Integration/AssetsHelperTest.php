@@ -27,7 +27,9 @@ class AssetsHelperTest extends WP_Ajax_UnitTestCase {
 		AssetsHelper::setup_loader();
 		wp_set_current_user( 1 );
 
-		$this->assertSame( 10, has_action( 'wp_ajax_' . AssetsHelper::LOADER_ACTION, array( AssetsHelper::class, 'load_assets' ) ) );
+		$this->assertSame( 10, has_action( 'wp_ajax_' . AssetsHelper::LOADER_ACTION, array( AssetsHelper::class,
+			'load_asset'
+		) ) );
 
 		// phpcs:ignore WordPress.Security.NonceVerification.Recommended
 		global $_GET;

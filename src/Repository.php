@@ -48,7 +48,7 @@ class Repository {
 	}
 
 
-	protected function field( $key ): Field {
+	protected function field( string $key ): Field {
 
 		return new class( $key ) extends Field {
 			public function render( $value ): void {}

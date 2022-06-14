@@ -9,8 +9,6 @@
 
 namespace ThemePlate\Core\Helper;
 
-use ThemePlate\Core\Field;
-
 class AssetsHelper {
 
 	public const LOADER_ACTION  = 'themeplate_assets_loader';
@@ -19,7 +17,7 @@ class AssetsHelper {
 
 	public static function setup_loader(): void {
 
-		add_action( 'wp_ajax_' . self::LOADER_ACTION, array( self::class, 'load_assets' ) );
+		add_action( 'wp_ajax_' . self::LOADER_ACTION, array( self::class, 'load_asset' ) );
 
 	}
 
@@ -38,7 +36,7 @@ class AssetsHelper {
 	}
 
 
-	public static function load_assets(): void {
+	public static function load_asset(): void {
 
 		check_ajax_referer( self::LOADER_ACTION );
 
