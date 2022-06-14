@@ -144,4 +144,35 @@ class FieldTest extends TestCase {
 		$this->assertSame( $expected_value, $value );
 		$this->assertSame( $count, $field->get_config( 'count' ) );
 	}
+
+	public function for_correctly_passed_classname(): array {
+		// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
+		return array(
+			array(
+				'color',
+				'',
+				'type-color',
+			),
+			array(
+				'editor',
+				'custom-class',
+				'type-editor custom-class',
+			),
+			array(
+				'group',
+				' whitespaces ',
+				'type-group whitespaces',
+			),
+		);
+		// phpcs:enable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
+	}
+
+	/**
+	 * @dataProvider for_correctly_passed_classname
+	 */
+	public function test_correctly_passed_classname( string $type, string $style, string $expected ): void {
+		$field = FormHelper::make_field( 'test', compact( 'type', 'style' ) );
+
+		$this->assertSame( $expected, $field->get_classname() );
+	}
 }

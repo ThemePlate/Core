@@ -136,7 +136,7 @@ abstract class Field {
 
 		$classes = array(
 			'type-' . $this->get_config( 'type' ),
-			$this->get_config( 'style' ),
+			trim( $this->get_config( 'style' ) ),
 		);
 
 		return esc_attr( implode( ' ', array_filter( $classes ) ) );
