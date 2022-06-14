@@ -175,4 +175,52 @@ class FieldTest extends TestCase {
 
 		$this->assertSame( $expected, $field->get_classname() );
 	}
+
+	public function test_set_id_and_name(): void {
+		$field = new InputField( 'test' );
+		$id    = 'my_id';
+		$name  = 'my_name';
+
+		$field->set_id( $id );
+		$this->assertSame( $id, $field->get_config( 'id' ) );
+		$field->set_name( $name );
+		$this->assertSame( $name, $field->get_config( 'name' ) );
+	}
+
+	public function for_enforcing_minimum_and_maximum(): array {
+		// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
+		return array(
+			'with both less than 0' => array(
+				-1,
+				-1,
+				false,
+				array( 0, 0 ),
+			),
+			'with max less than min' => array(
+				4,
+				2,
+				false,
+				array( 4, 4 ),
+			),
+			'with marked as required' => array(
+				0,
+				0,
+				true,
+				array( 1, 0 ),
+			),
+		);
+		// phpcs:enable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
+	}
+
+	/**
+	 * @dataProvider for_enforcing_minimum_and_maximum
+	 */
+	public function test_enforcing_minimum_and_maximum( int $minimum, int $maximum, bool $required, array $expected ): void {
+		$field = new InputField( 'test', compact( 'minimum', 'maximum', 'required' ) );
+
+		list( $min, $max ) = $expected;
+
+		$this->assertSame( $min, $field->get_config( 'minimum' ) );
+		$this->assertSame( $max, $field->get_config( 'maximum' ) );
+	}
 }
