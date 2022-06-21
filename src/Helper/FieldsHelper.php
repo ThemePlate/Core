@@ -22,10 +22,11 @@ class FieldsHelper {
 		$default = $field->get_config( 'default' );
 
 		if ( 'group' === $field->get_config( 'type' ) ) {
-			/**
-			 * @var Fields $fields
-			 */
-			$fields = $field->get_config( 'fields' );
+			if ( empty( $field->get_config( 'fields' ) ) ) {
+				return $default;
+			}
+
+			$fields = self::group_fields( $field->get_config( 'fields' ) );
 
 			foreach ( $fields->get_collection() as $sub_field ) {
 				if ( isset( $default[ $sub_field->data_key() ] ) ) {
@@ -41,6 +42,16 @@ class FieldsHelper {
 		}
 
 		return $default;
+
+	}
+
+
+	/**
+	 * @param array|Fields $group_fields
+	 */
+	public static function group_fields( $group_fields ): Fields {
+
+		return $group_fields instanceof Fields ? $group_fields : new Fields( (array) $group_fields );
 
 	}
 
