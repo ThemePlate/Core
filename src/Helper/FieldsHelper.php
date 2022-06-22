@@ -14,6 +14,18 @@ use ThemePlate\Core\Fields;
 
 class FieldsHelper {
 
+	public static function get_type( Field $field ): string {
+
+		switch ( $field->get_config( 'type' ) ) {
+			default:
+				return 'string';
+
+			case 'group':
+				return 'object';
+		}
+
+	}
+
 	/**
 	 * @return mixed
 	 */

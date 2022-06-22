@@ -11,6 +11,33 @@ use ThemePlate\Core\Helper\FieldsHelper;
 use ThemePlate\Core\Helper\FormHelper;
 
 class FieldsHelperTest extends TestCase {
+	public function for_getting_type(): array {
+		// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
+		return array(
+			'with a text type field' => array(
+				'text',
+				'string',
+			),
+			'with any type of field' => array(
+				'any',
+				'string',
+			),
+			'with a group type field' => array(
+				'group',
+				'object',
+			),
+		);
+		// phpcs:enable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
+	}
+
+	/**
+	 * @dataProvider for_getting_type
+	 */
+	public function test_getting_type( string $type, string $expected ): void {
+		$field = FormHelper::make_field( 'test', compact( 'type' ) );
+
+		$this->assertSame( $expected, FieldsHelper::get_type( $field ) );
+	}
 	public function for_getting_default(): array {
 		// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 		return array(
