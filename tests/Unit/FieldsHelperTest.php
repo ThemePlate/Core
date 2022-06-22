@@ -58,6 +58,41 @@ class FieldsHelperTest extends TestCase {
 					),
 				),
 			),
+			'with a link has default' => array(
+				array(
+					'test' => array(
+						'type' => 'link',
+						'default' => array(
+							'url' => '#',
+							'text' => 'Tester',
+						),
+					),
+				),
+				'',
+				array(
+					'test' => array(
+						'type' => 'object',
+						'default' => array(
+							'url' => '#',
+							'text' => 'Tester',
+						),
+						'properties' => array(
+							'url' => array(
+								'type' => 'string',
+								'default' => '#',
+							),
+							'text' => array(
+								'type' => 'string',
+								'default' => 'Tester',
+							),
+							'target' => array(
+								'type' => 'string',
+								'default' => '',
+							),
+						),
+					),
+				),
+			),
 			'with a group no fields' => array(
 				array(
 					'test' => array( 'type' => 'text' ),
