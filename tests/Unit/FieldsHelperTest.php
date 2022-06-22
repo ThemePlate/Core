@@ -20,6 +20,7 @@ class FieldsHelperTest extends TestCase {
 					'test' => array( 'type' => 'text' ),
 					'any' => array( 'type' => 'any' ),
 				),
+				'',
 				array(
 					'test' => array(
 						'type' => 'string',
@@ -37,6 +38,7 @@ class FieldsHelperTest extends TestCase {
 					'any' => array( 'type' => 'any' ),
 					'group' => array( 'type' => 'group' ),
 				),
+				'',
 				array(
 					'test' => array(
 						'type' => 'string',
@@ -59,6 +61,7 @@ class FieldsHelperTest extends TestCase {
 						),
 					),
 				),
+				'',
 				array(
 					'test' => array(
 						'type' => 'string',
@@ -82,6 +85,36 @@ class FieldsHelperTest extends TestCase {
 					),
 				),
 			),
+			'with a data prefix' => array(
+				array(
+					'test' => array( 'type' => 'text' ),
+					'group' => array(
+						'type' => 'group',
+						'fields' => array(
+							'any' => array( 'type' => 'text' ),
+						),
+					),
+				),
+				'my_',
+				array(
+					'my_test' => array(
+						'type' => 'string',
+						'default' => '',
+					),
+					'my_group' => array(
+						'type' => 'object',
+						'default' => array(
+							'any' => '',
+						),
+						'properties' => array(
+							'any' => array(
+								'type' => 'string',
+								'default' => '',
+							),
+						),
+					),
+				),
+			),
 		);
 		// phpcs:enable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 	}
@@ -89,8 +122,8 @@ class FieldsHelperTest extends TestCase {
 	/**
 	 * @dataProvider for_building_schema
 	 */
-	public function test_building_schema( array $fields, array $expected ): void {
-		$schema = FieldsHelper::build_schema( new Fields( $fields ) );
+	public function test_building_schema( array $fields, string $data_prefix, array $expected ): void {
+		$schema = FieldsHelper::build_schema( new Fields( $fields ), $data_prefix );
 
 		$this->assertSame( $expected, $schema );
 	}

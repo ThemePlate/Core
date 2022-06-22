@@ -14,18 +14,18 @@ use ThemePlate\Core\Fields;
 
 class FieldsHelper {
 
-	public static function build_schema( Fields $fields ): array {
+	public static function build_schema( Fields $fields, string $data_prefix = '' ): array {
 
 		$schema = array();
 
 		foreach ( $fields->get_collection() as $field ) {
-			$schema[ $field->data_key() ] = array(
+			$schema[ $field->data_key( $data_prefix ) ] = array(
 				'type'    => self::get_type( $field ),
 				'default' => self::get_default( $field ),
 			);
 
 			if ( 'group' === $field->get_config( 'type' ) ) {
-				$schema[ $field->data_key() ]['properties'] = self::build_schema( $field->get_config( 'fields' ) );
+				$schema[ $field->data_key( $data_prefix ) ]['properties'] = self::build_schema( $field->get_config( 'fields' ) );
 			}
 		}
 
