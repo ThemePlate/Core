@@ -40,6 +40,7 @@ class FieldsHelper {
 			default:
 				return 'string';
 
+			case 'link':
 			case 'group':
 				return 'object';
 		}
