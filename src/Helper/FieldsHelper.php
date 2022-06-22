@@ -26,6 +26,14 @@ class FieldsHelper {
 
 			if ( 'group' === $field->get_config( 'type' ) ) {
 				$schema[ $field->data_key( $data_prefix ) ]['properties'] = self::build_schema( $field->get_config( 'fields' ) );
+			} elseif ( 'link' === $field->get_config( 'type' ) ) {
+				$schema[ $field->data_key( $data_prefix ) ]['properties'] = array_fill_keys(
+					array( 'url', 'text', 'target' ),
+					array(
+						'type'    => 'string',
+						'default' => '',
+					)
+				);
 			}
 		}
 
