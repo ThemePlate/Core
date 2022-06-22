@@ -14,6 +14,26 @@ use ThemePlate\Core\Fields;
 
 class FieldsHelper {
 
+	public static function build_schema( Fields $fields ): array {
+
+		$schema = array();
+
+		foreach ( $fields->get_collection() as $field ) {
+			$schema[ $field->data_key() ] = array(
+				'type'    => self::get_type( $field ),
+				'default' => self::get_default( $field ),
+			);
+
+			if ( 'group' === $field->get_config( 'type' ) ) {
+				$schema[ $field->data_key() ]['properties'] = self::build_schema( $field->get_config( 'fields' ) );
+			}
+		}
+
+		return $schema;
+
+	}
+
+
 	public static function get_type( Field $field ): string {
 
 		switch ( $field->get_config( 'type' ) ) {

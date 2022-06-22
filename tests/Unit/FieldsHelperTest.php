@@ -7,10 +7,94 @@
 namespace Tests\Unit;
 
 use PHPUnit\Framework\TestCase;
+use ThemePlate\Core\Fields;
 use ThemePlate\Core\Helper\FieldsHelper;
 use ThemePlate\Core\Helper\FormHelper;
 
 class FieldsHelperTest extends TestCase {
+	public function for_building_schema(): array {
+		// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
+		return array(
+			'without a group type field' => array(
+				array(
+					'test' => array( 'type' => 'text' ),
+					'any' => array( 'type' => 'any' ),
+				),
+				array(
+					'test' => array(
+						'type' => 'string',
+						'default' => '',
+					),
+					'any' => array(
+						'type' => 'string',
+						'default' => '',
+					),
+				),
+			),
+			'with a group no fields' => array(
+				array(
+					'test' => array( 'type' => 'text' ),
+					'any' => array( 'type' => 'any' ),
+					'group' => array( 'type' => 'group' ),
+				),
+				array(
+					'test' => array(
+						'type' => 'string',
+						'default' => '',
+					),
+					'any' => array(
+						'type' => 'string',
+						'default' => '',
+					),
+				),
+			),
+			'with a group has fields' => array(
+				array(
+					'test' => array( 'type' => 'text' ),
+					'any' => array( 'type' => 'any' ),
+					'group' => array(
+						'type' => 'group',
+						'fields' => array(
+							'another' => array( 'type' => 'text' ),
+						),
+					),
+				),
+				array(
+					'test' => array(
+						'type' => 'string',
+						'default' => '',
+					),
+					'any' => array(
+						'type' => 'string',
+						'default' => '',
+					),
+					'group' => array(
+						'type' => 'object',
+						'default' => array(
+							'another' => '',
+						),
+						'properties' => array(
+							'another' => array(
+								'type' => 'string',
+								'default' => '',
+							),
+						),
+					),
+				),
+			),
+		);
+		// phpcs:enable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
+	}
+
+	/**
+	 * @dataProvider for_building_schema
+	 */
+	public function test_building_schema( array $fields, array $expected ): void {
+		$schema = FieldsHelper::build_schema( new Fields( $fields ) );
+
+		$this->assertSame( $expected, $schema );
+	}
+
 	public function for_getting_type(): array {
 		// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 		return array(
