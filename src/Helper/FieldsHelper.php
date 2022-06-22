@@ -20,8 +20,8 @@ class FieldsHelper {
 
 		foreach ( $fields->get_collection() as $field ) {
 			$schema[ $field->data_key( $data_prefix ) ] = array(
-				'type'    => self::get_type( $field ),
-				'default' => self::get_default( $field ),
+				'type'    => self::get_schema_type( $field ),
+				'default' => self::get_default_value( $field ),
 			);
 
 			if ( 'group' === $field->get_config( 'type' ) ) {
@@ -34,7 +34,7 @@ class FieldsHelper {
 	}
 
 
-	public static function get_type( Field $field ): string {
+	public static function get_schema_type( Field $field ): string {
 
 		switch ( $field->get_config( 'type' ) ) {
 			default:
@@ -49,7 +49,7 @@ class FieldsHelper {
 	/**
 	 * @return mixed
 	 */
-	public static function get_default( Field $field ) {
+	public static function get_default_value( Field $field ) {
 
 		$default = $field->get_config( 'default' );
 
@@ -69,7 +69,7 @@ class FieldsHelper {
 					$default = array();
 				}
 
-				$default[ $sub_field->data_key() ] = self::get_default( $sub_field );
+				$default[ $sub_field->data_key() ] = self::get_default_value( $sub_field );
 			}
 		}
 

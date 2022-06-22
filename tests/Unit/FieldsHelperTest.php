@@ -153,7 +153,7 @@ class FieldsHelperTest extends TestCase {
 	public function test_getting_type( string $type, string $expected ): void {
 		$field = FormHelper::make_field( 'test', compact( 'type' ) );
 
-		$this->assertSame( $expected, FieldsHelper::get_type( $field ) );
+		$this->assertSame( $expected, FieldsHelper::get_schema_type( $field ) );
 	}
 	public function for_getting_default(): array {
 		// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
@@ -213,6 +213,6 @@ class FieldsHelperTest extends TestCase {
 	public function test_getting_default( string $type, array $config, $expected ): void {
 		$field = FormHelper::make_field( 'test', array_merge( $config, compact( 'type' ) ) );
 
-		$this->assertSame( $expected, FieldsHelper::get_default( $field ) );
+		$this->assertSame( $expected, FieldsHelper::get_default_value( $field ) );
 	}
 }
