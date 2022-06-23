@@ -20,7 +20,7 @@ class FieldsHelper {
 
 		foreach ( $fields->get_collection() as $field ) {
 			$schema[ $field->data_key( $data_prefix ) ] = array(
-				'type'    => self::get_schema_type( $field ),
+				'type'    => static::get_schema_type( $field ),
 				'default' => self::get_default_value( $field ),
 			);
 
@@ -57,6 +57,7 @@ class FieldsHelper {
 		}
 
 	}
+
 
 	/**
 	 * @return mixed
