@@ -23,4 +23,10 @@ class FormHelperTest extends TestCase {
 			$this->assertSame( $namespace . '\\' . $base, get_class( $field ) );
 		}
 	}
+
+	public function test_make_field_with_undefined_type(): void {
+		$field = FormHelper::make_field( 'wanted', array() );
+
+		$this->assertInstanceOf( FormHelper::get_field_class( Field::DEFAULTS['type'] ), $field );
+	}
 }
