@@ -237,7 +237,7 @@ class FieldsHelperTest extends TestCase {
 			'with a group no fields' => array(
 				'group',
 				array(),
-				'',
+				array(),
 			),
 			'with a group has fields' => array(
 				'group',

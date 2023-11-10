@@ -11,8 +11,21 @@ namespace ThemePlate\Core\Field;
 
 use ThemePlate\Core\Field;
 use ThemePlate\Core\Fields;
+use ThemePlate\Core\Helper\FieldsHelper;
 
 class GroupField extends Field {
+
+	protected function initialize(): void {
+
+		$default = FieldsHelper::get_default_value( $this );
+
+		if ( empty( $default ) ) {
+			$default = array();
+		}
+
+		$this->config['default'] = $default;
+
+	}
 
 	/**
 	 * @param array $value

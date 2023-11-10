@@ -224,4 +224,58 @@ class FieldTest extends TestCase {
 		$this->assertSame( $min, $field->get_config( 'minimum' ) );
 		$this->assertSame( $max, $field->get_config( 'maximum' ) );
 	}
+
+	public function for_group_default_values(): array {
+		// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
+		return array(
+			'with empty fields' => array(
+				array(),
+				array(),
+			),
+			'with no default' => array(
+				array(
+					'fields' => array(
+						'test' => array(
+							'type' => 'text',
+						),
+						'this' => array(
+							'type' => 'text',
+						),
+					),
+				),
+				array(
+					'test' => '',
+					'this' => '',
+				),
+			),
+			'on field level' => array(
+				array(
+					'fields' => array(
+						'another' => array(
+							'type' => 'text',
+							'default' => 'one',
+						),
+						'try' => array(
+							'type' => 'text',
+							'default' => 'again',
+						),
+					),
+				),
+				array(
+					'another' => 'one',
+					'try' => 'again',
+				),
+			),
+		);
+		// phpcs:enable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
+	}
+
+	/**
+	 * @dataProvider for_group_default_values
+	 */
+	public function test_group_default_values( array $config, $expected ): void {
+		$field = FormHelper::make_field( 'test', array_merge( $config, array( 'type' => 'group' ) ) );
+
+		$this->assertSame( $expected, $field->get_config( 'default' ) );
+	}
 }
