@@ -40,7 +40,11 @@ class FieldsHelperTest extends TestCase {
 				array(
 					'test' => array(
 						'type' => 'object',
-						'default' => '',
+						'default' => array(
+							'url' => '',
+							'text' => '',
+							'target' => '',
+						),
 						'properties' => array(
 							'url' => array(
 								'type' => 'string',
@@ -75,6 +79,7 @@ class FieldsHelperTest extends TestCase {
 						'default' => array(
 							'url' => '#',
 							'text' => 'Tester',
+							'target' => '',
 						),
 						'properties' => array(
 							'url' => array(

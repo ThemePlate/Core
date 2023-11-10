@@ -10,8 +10,27 @@
 namespace ThemePlate\Core\Field;
 
 use ThemePlate\Core\Field;
+use ThemePlate\Core\Helper\MainHelper;
 
 class LinkField extends Field {
+
+	protected function initialize(): void {
+
+		$default = array(
+			'url'    => '',
+			'text'   => '',
+			'target' => '',
+		);
+
+		$this->config['default'] = array_intersect_key(
+			MainHelper::fool_proof(
+				$default,
+				(array) $this->config['default']
+			),
+			$default
+		);
+
+	}
 
 	public function render( $value ): void {
 
