@@ -70,6 +70,19 @@ class FieldTest extends TestCase {
 		}
 	}
 
+	/**
+	 * @dataProvider for_default_can_be_an_array
+	 */
+	public function test_enforcing_default_array( string $type, array $config, bool $can_have_multiple_value ): void {
+		$field = FormHelper::make_field( 'test', array_merge( $config, compact( 'type' ) ) );
+
+		if ( $can_have_multiple_value ) {
+			$this->assertIsArray( $field->get_config( 'default' ) );
+		} else {
+			$this->assertIsString( $field->get_config( 'default' ) );
+		}
+	}
+
 	public function for_maybe_adjust_value(): array {
 		// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 		return array(
