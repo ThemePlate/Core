@@ -74,7 +74,8 @@ class FieldTest extends TestCase {
 	 * @dataProvider for_default_can_be_an_array
 	 */
 	public function test_enforcing_default_array( string $type, array $config, bool $can_have_multiple_value ): void {
-		$field = FormHelper::make_field( 'test', array_merge( $config, compact( 'type' ) ) );
+		$default = 'test';
+		$field   = FormHelper::make_field( 'test', array_merge( $config, compact( 'type', 'default' ) ) );
 
 		if ( $can_have_multiple_value ) {
 			$this->assertIsArray( $field->get_config( 'default' ) );

@@ -85,8 +85,11 @@ abstract class Field {
 		if ( JSON_ERROR_NONE === json_last_error() ) {
 			$config['default'] = $result;
 		} elseif (
-			empty( $config['default'] ) &&
 			(
+				empty( $config['default'] ) ||
+				! $config['repeatable'] ||
+				$config['minimum'] <= 1
+			) && (
 				( $this->can_have_multiple_value() && $config['multiple'] ) ||
 				$config['repeatable']
 			)

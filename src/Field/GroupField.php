@@ -21,6 +21,8 @@ class GroupField extends Field {
 
 		if ( empty( $default ) ) {
 			$default = array();
+		} elseif ( ! is_array( $default ) ) {
+			$default = array( $default );
 		}
 
 		$this->config['default'] = $default;
