@@ -37,6 +37,16 @@ class FieldsHelper {
 				};
 
 				$schema[ $field->data_key( $data_prefix ) ]['properties'] = $properties;
+			} elseif ( 'array' === self::get_schema_type( $field ) ) {
+				$schema[ $field->data_key( $data_prefix ) ]['items'] = array( 'type' => 'string' );
+			}
+
+			if ( $field->get_config( 'repeatable' ) ) {
+				$base = $schema[ $field->data_key( $data_prefix ) ];
+				unset( $base['default'] );
+
+				$schema[ $field->data_key( $data_prefix ) ]['type'] = 'array';
+				$schema[ $field->data_key( $data_prefix ) ]['items'] = $base;
 			}
 		}
 
@@ -48,12 +58,16 @@ class FieldsHelper {
 	public static function get_schema_type( Field $field ): string {
 
 		switch ( $field->get_config( 'type' ) ) {
-			default:
-				return 'string';
-
 			case 'link':
 			case 'group':
 				return 'object';
+
+			default:
+				if ( $field->can_have_multiple_value() && $field->get_config( 'multiple' ) ) {
+					return 'array';
+				}
+
+				return 'string';
 		}
 
 	}

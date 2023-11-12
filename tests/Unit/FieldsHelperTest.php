@@ -181,6 +181,65 @@ class FieldsHelperTest extends TestCase {
 					),
 				),
 			),
+			'with a multiple-able field' => array(
+				array(
+					'type' => array( 'type' => 'type' ),
+					'mtype' => array(
+						'type' => 'type',
+						'multiple' => true,
+					),
+					'select' => array(
+						'type' => 'select',
+						'default' => 'test',
+					),
+					'mselect' => array(
+						'type' => 'select',
+						'multiple' => true,
+						'default' => 'test',
+					),
+					'mfile' => array(
+						'type' => 'file',
+						'multiple' => true,
+						'default' => array( 'tester' ),
+					),
+					'date' => array(
+						'type' => 'date',
+						'repeatable' => true,
+						'default' => array( 'testing' ),
+					),
+				),
+				'',
+				array(
+					'type' => array(
+						'type' => 'string',
+						'default' => '',
+					),
+					'mtype' => array(
+						'type' => 'array',
+						'default' => array( '' ),
+						'items' => array( 'type' => 'string' ),
+					),
+					'select' => array(
+						'type' => 'string',
+						'default' => 'test',
+					),
+					'mselect' => array(
+						'type' => 'array',
+						'default' => array( 'test' ),
+						'items' => array( 'type' => 'string' ),
+					),
+					'mfile' => array(
+						'type' => 'array',
+						'default' => array( 'tester' ),
+						'items' => array( 'type' => 'string' ),
+					),
+					'date' => array(
+						'type' => 'array',
+						'default' => array( 'testing' ),
+						'items' => array( 'type' => 'string' ),
+					),
+				),
+			),
 		);
 		// phpcs:enable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 	}

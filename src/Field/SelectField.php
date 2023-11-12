@@ -14,7 +14,7 @@ use ThemePlate\Core\Helper\MainHelper;
 
 class SelectField extends Field {
 
-	protected function can_have_multiple_value(): bool {
+	public function can_have_multiple_value(): bool {
 
 		return true;
 
