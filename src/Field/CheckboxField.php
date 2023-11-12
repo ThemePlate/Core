@@ -14,6 +14,21 @@ use ThemePlate\Core\Helper\MainHelper;
 
 class CheckboxField extends Field {
 
+	protected function initialize(): void {
+
+		if ( ! empty( $this->get_config( 'options' ) ) ) {
+			$this->config['multiple'] = true;
+			$this->config['default']  = (array) $this->config['default'];
+		}
+
+	}
+
+	public function can_have_multiple_value(): bool {
+
+		return true;
+
+	}
+
 	public function render( $value ): void {
 
 		$seq = MainHelper::is_sequential( $this->get_config( 'options' ) );

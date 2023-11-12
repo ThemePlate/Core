@@ -49,6 +49,16 @@ class FieldTest extends TestCase {
 				array( 'repeatable' => true ),
 				true,
 			),
+			'with a checkbox' => array(
+				'checkbox',
+				array(),
+				false,
+			),
+			'with a multi-checkbox' => array(
+				'checkbox',
+				array( 'options' => array( 'test', 'try' ) ),
+				true,
+			),
 		);
 		// phpcs:enable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 	}

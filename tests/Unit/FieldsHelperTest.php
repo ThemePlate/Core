@@ -207,6 +207,17 @@ class FieldsHelperTest extends TestCase {
 						'repeatable' => true,
 						'default' => array( 'testing' ),
 					),
+					'checkbox' => array(
+						'type' => 'date',
+						'multiple' => true,
+						'repeatable' => true,
+						'options' => array(
+							'try' => 'try',
+							'this' => 'this',
+							'one' => 'one',
+						),
+						'default' => array( 'try', 'one' ),
+					),
 				),
 				'',
 				array(
@@ -237,6 +248,14 @@ class FieldsHelperTest extends TestCase {
 						'type' => 'array',
 						'default' => array( 'testing' ),
 						'items' => array( 'type' => 'string' ),
+					),
+					'checkbox' => array(
+						'type' => 'array',
+						'default' => array( 'try', 'one' ),
+						'items' => array(
+							'type' => 'array',
+							'items' => array( 'type' => 'string' ),
+						),
 					),
 				),
 			),
