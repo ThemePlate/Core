@@ -105,8 +105,10 @@ class TypeField extends Field {
 				( $this->get_config( 'required' ) ? ' required="required"' : '' ) .
 				'>';
 
-		if ( $value ) {
-			foreach ( (array) $value as $item ) {
+		$value = array_filter( (array) $value );
+
+		if ( ! empty( $value ) ) {
+			foreach ( $value as $item ) {
 				echo '<option value="' . esc_attr( $item ) . '" selected="selected">' . esc_html( $item ) . '</option>';
 			}
 		}
@@ -115,7 +117,7 @@ class TypeField extends Field {
 		echo '<div class="select2-options"
 				data-action="' . esc_attr( $this->get_action_name( $this->get_config( 'type' ) ) ) . '"
 				data-options="' . esc_attr( wp_json_encode( $args, JSON_NUMERIC_CHECK ) ) . '"
-				data-value="' . esc_attr( wp_json_encode( $value, JSON_NUMERIC_CHECK ) ) . '"
+				data-value="' . esc_attr( wp_json_encode( empty( $value ) ? '' : $value, JSON_NUMERIC_CHECK ) ) . '"
 				></div>';
 
 	}

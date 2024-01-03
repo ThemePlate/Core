@@ -37,7 +37,9 @@ class FileField extends Field {
 			echo '</div>';
 		}
 
-		if ( $value ) {
+		$value = array_filter( (array) $value );
+
+		if ( ! empty( $value ) ) {
 			foreach ( (array) $value as $file ) {
 				$name    = basename( get_attached_file( $file ) );
 				$info    = wp_check_filetype( $name );
@@ -61,7 +63,7 @@ class FileField extends Field {
 
 		if ( $this->get_config( 'multiple' ) ) {
 			echo '<input type="button" class="button attachment-add" value="Add" />';
-			echo '<input type="button" class="button attachments-clear' . ( ! $value ? ' hidden' : '' ) . '" value="Clear" />';
+			echo '<input type="button" class="button attachments-clear' . ( empty( $value ) ? '' : ' hidden' ) . '" value="Clear" />';
 		}
 
 		echo '</div>';
