@@ -19,25 +19,7 @@ class FieldsHelper {
 		$schema = array();
 
 		foreach ( $fields->get_collection() as $field ) {
-			$schema[ $field->data_key( $data_prefix ) ] = array(
-				'type'    => static::get_schema_type( $field ),
-				'default' => self::get_default_value( $field ),
-			);
-
-			if ( 'group' === $field->get_config( 'type' ) ) {
-				$schema[ $field->data_key( $data_prefix ) ]['properties'] = self::build_schema( $field->get_config( 'fields' ) );
-			} elseif ( 'link' === $field->get_config( 'type' ) ) {
-				$properties = array();
-
-				foreach ( array( 'url', 'text', 'target' ) as $key ) {
-					$properties[ $key ] = array(
-						'type'    => 'string',
-						'default' => $schema[ $field->data_key( $data_prefix ) ]['default'][ $key ] ?? '',
-					);
-				};
-
-				$schema[ $field->data_key( $data_prefix ) ]['properties'] = $properties;
-			}
+			$schema[ $field->data_key( $data_prefix ) ] = static::get_schema( $field );
 
 			if (
 				(
@@ -52,6 +34,33 @@ class FieldsHelper {
 				$schema[ $field->data_key( $data_prefix ) ]['type'] = 'array';
 				$schema[ $field->data_key( $data_prefix ) ]['items'] = $base;
 			}
+		}
+
+		return $schema;
+
+	}
+
+
+	public static function get_schema( Field $field ): array {
+
+		$schema = array(
+			'type'    => static::get_schema_type( $field ),
+			'default' => self::get_default_value( $field ),
+		);
+
+		if ( 'group' === $field->get_config( 'type' ) ) {
+			$schema['properties'] = self::build_schema( $field->get_config( 'fields' ) );
+		} elseif ( 'link' === $field->get_config( 'type' ) ) {
+			$properties = array();
+
+			foreach ( array( 'url', 'text', 'target' ) as $key ) {
+				$properties[ $key ] = array(
+					'type'    => 'string',
+					'default' => $schema['default'][ $key ] ?? '',
+				);
+			};
+
+			$schema['properties'] = $properties;
 		}
 
 		return $schema;
