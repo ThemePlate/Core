@@ -45,11 +45,11 @@ class FieldsHelper {
 
 		$schema = array(
 			'type'    => static::get_schema_type( $field ),
-			'default' => self::get_default_value( $field ),
+			'default' => static::get_default_value( $field ),
 		);
 
 		if ( 'group' === $field->get_config( 'type' ) ) {
-			$schema['properties'] = self::build_schema( $field->get_config( 'fields' ) );
+			$schema['properties'] = static::build_schema( $field->get_config( 'fields' ) );
 		} elseif ( 'link' === $field->get_config( 'type' ) ) {
 			$properties = array();
 
@@ -94,7 +94,7 @@ class FieldsHelper {
 				return $default;
 			}
 
-			$fields = self::group_fields( $field->get_config( 'fields' ) );
+			$fields = static::group_fields( $field->get_config( 'fields' ) );
 
 			foreach ( $fields->get_collection() as $sub_field ) {
 				if ( isset( $default[ $sub_field->data_key() ] ) ) {
@@ -105,7 +105,7 @@ class FieldsHelper {
 					$default = array();
 				}
 
-				$default[ $sub_field->data_key() ] = self::get_default_value( $sub_field );
+				$default[ $sub_field->data_key() ] = static::get_default_value( $sub_field );
 			}
 		}
 
