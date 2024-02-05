@@ -29,10 +29,13 @@ class FieldsHelper {
 				$field->get_config( 'repeatable' )
 			) {
 				$base = $schema[ $field->data_key( $data_prefix ) ];
-				unset( $base['default'] );
 
-				$schema[ $field->data_key( $data_prefix ) ]['type'] = 'array';
+				unset( $base['default'] );
+				unset( $schema[ $field->data_key( $data_prefix ) ]['properties'] );
+
+				$schema[ $field->data_key( $data_prefix ) ]['type']  = 'array';
 				$schema[ $field->data_key( $data_prefix ) ]['items'] = $base;
+
 			}
 		}
 
@@ -94,15 +97,15 @@ class FieldsHelper {
 				return $default;
 			}
 
+			if ( ! is_array( $default ) ) {
+				$default = array();
+			}
+
 			$fields = static::group_fields( $field->get_config( 'fields' ) );
 
 			foreach ( $fields->get_collection() as $sub_field ) {
 				if ( isset( $default[ $sub_field->data_key() ] ) ) {
 					continue;
-				}
-
-				if ( ! is_array( $default ) ) {
-					$default = array();
 				}
 
 				$default[ $sub_field->data_key() ] = static::get_default_value( $sub_field );
