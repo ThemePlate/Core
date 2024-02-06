@@ -356,4 +356,15 @@ class FieldsHelperTest extends TestCase {
 
 		$this->assertSame( $expected, FieldsHelper::get_default_value( $field ) );
 	}
+
+	/**
+	 * @dataProvider for_getting_default
+	 */
+	public function test_repeatable_getting_default( string $type, array $config, $expected ): void {
+		$config['repeatable'] = true;
+
+		$field = FormHelper::make_field( 'test', array_merge( $config, compact( 'type' ) ) );
+
+		$this->assertSame( array( $expected ), FieldsHelper::get_default_value( $field ) );
+	}
 }

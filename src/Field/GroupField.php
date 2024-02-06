@@ -15,15 +15,15 @@ use ThemePlate\Core\Helper\FieldsHelper;
 
 class GroupField extends Field {
 
+	public const DEFAULT_VALUE = array();
+
+
 	protected function initialize(): void {
 
-		$default = FieldsHelper::get_default_value( $this );
+		$clone = clone $this;
+		$clone->config['repeatable'] = false;
 
-		if ( empty( $default ) ) {
-			$default = array();
-		} elseif ( ! is_array( $default ) ) {
-			$default = array( $default );
-		}
+		$default = FieldsHelper::get_default_value( $clone );
 
 		$this->config['default'] = $default;
 

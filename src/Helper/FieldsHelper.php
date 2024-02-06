@@ -35,7 +35,6 @@ class FieldsHelper {
 
 				$schema[ $field->data_key( $data_prefix ) ]['type']  = 'array';
 				$schema[ $field->data_key( $data_prefix ) ]['items'] = $base;
-
 			}
 		}
 
@@ -93,10 +92,6 @@ class FieldsHelper {
 		$default = $field->get_config( 'default' );
 
 		if ( 'group' === $field->get_config( 'type' ) ) {
-			if ( empty( $field->get_config( 'fields' ) ) ) {
-				return $default;
-			}
-
 			if ( ! is_array( $default ) ) {
 				$default = array();
 			}
@@ -110,6 +105,10 @@ class FieldsHelper {
 
 				$default[ $sub_field->data_key() ] = static::get_default_value( $sub_field );
 			}
+		}
+
+		if ( is_array( $field::DEFAULT_VALUE ) && $field->get_config( 'repeatable' ) ) {
+			$default = array( $default );
 		}
 
 		return $default;

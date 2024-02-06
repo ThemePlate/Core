@@ -16,7 +16,6 @@ abstract class Field {
 		'options'    => array(),
 		'multiple'   => false,
 		'none'       => false,
-		'default'    => '',
 		'style'      => '',
 		'repeatable' => false,
 		'required'   => false,
@@ -26,6 +25,8 @@ abstract class Field {
 		'hide_on'    => array(),
 		'count'      => 1,
 	);
+
+	public const DEFAULT_VALUE = '';
 
 
 	protected array $config;
@@ -49,7 +50,13 @@ abstract class Field {
 
 	protected function check( array $config ): array {
 
-		$config = MainHelper::fool_proof( self::DEFAULTS, $config );
+		$config = MainHelper::fool_proof(
+			array_merge(
+				self::DEFAULTS,
+				array( 'default' => static::DEFAULT_VALUE ),
+			),
+			$config
+		);
 		$config = MetaHelper::normalize_options( $config );
 
 		if ( $config['minimum'] < 0 ) {
@@ -66,6 +73,10 @@ abstract class Field {
 
 		if ( $config['required'] && ! $config['minimum'] ) {
 			$config['minimum'] = 1;
+		}
+
+		if ( is_array( static::DEFAULT_VALUE ) ) {
+			return $config;
 		}
 
 		if (
@@ -159,7 +170,7 @@ abstract class Field {
 	public function clone_value(): string {
 
 		if ( is_array( $this->get_config( 'default' ) ) ) {
-			return self::DEFAULTS['default'];
+			return self::DEFAULT_VALUE;
 		}
 
 		return $this->get_config( 'default' );

@@ -14,6 +14,9 @@ use ThemePlate\Core\Helper\MainHelper;
 
 class LinkField extends Field {
 
+	public const DEFAULT_VALUE = array();
+
+
 	protected function initialize(): void {
 
 		$default = array(
