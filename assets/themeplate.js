@@ -339,11 +339,11 @@
 		});
 	}
 
-	setTimeout( function() {
-		console.log( 'ThemePlate initialization' );
+	wp.domReady( function() {
+		console.log( 'ThemePlate!' );
+
 		handleFields();
-	}, 3000 );
-	$( window ).on( 'load', handleFields );
+	});
 	$( document ).on( 'clone', handleFields );
 
 }( jQuery ));
