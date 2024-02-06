@@ -36,7 +36,7 @@ class LinkField extends Field {
 
 		echo '<div id="' . esc_attr( $this->get_config( 'id' ) ) . '" class="themeplate-link">';
 		echo '<input type="button" class="button link-select" value="Select" />';
-		echo '<input type="button" class="button link-remove' . ( empty( $value ) ? ' hidden' : '' ) . '" value="Remove" />';
+		echo '<input type="button" class="button link-remove' . ( empty( array_filter( (array) $value ) ) ? ' hidden' : '' ) . '" value="Remove" />';
 
 		foreach ( array( 'url', 'text', 'target' ) as $attr_key ) {
 			$attr_value = $value[ $attr_key ] ?? '';
