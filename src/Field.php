@@ -27,6 +27,7 @@ abstract class Field {
 	);
 
 	public const DEFAULT_VALUE = '';
+	public const MULTIPLE_ABLE = false;
 
 
 	protected array $config;
@@ -79,15 +80,7 @@ abstract class Field {
 			return $config;
 		}
 
-		if (
-			'group' !== $config['type'] &&
-			'link' !== $config['type'] &&
-			! $config['repeatable'] &&
-			(
-				! $this->can_have_multiple_value() ||
-				! $config['multiple']
-			)
-		) {
+		if ( ! $this->can_have_multiple_value( $config ) ) {
 			return $config;
 		}
 
@@ -98,11 +91,9 @@ abstract class Field {
 		} elseif (
 			(
 				empty( $config['default'] ) ||
-				! $config['repeatable'] ||
 				$config['minimum'] <= 1
 			) && (
-				( $this->can_have_multiple_value() && $config['multiple'] ) ||
-				$config['repeatable']
+				$this->can_have_multiple_value( $config )
 			)
 		) {
 			$config['default'] = (array) $config['default'];
@@ -113,9 +104,13 @@ abstract class Field {
 	}
 
 
-	public function can_have_multiple_value(): bool {
+	public function can_have_multiple_value( array $config = null ): bool {
 
-		return false;
+		if ( null === $config ) {
+			$config = $this->get_config();
+		}
+
+		return ( static::MULTIPLE_ABLE && !! $config['multiple'] ) || !! $config['repeatable'];
 
 	}
 

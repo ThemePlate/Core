@@ -14,6 +14,9 @@ use ThemePlate\Core\Helper\MainHelper;
 
 class CheckboxField extends Field {
 
+	public const MULTIPLE_ABLE = true;
+
+
 	protected function initialize(): void {
 
 		if ( ! empty( $this->get_config( 'options' ) ) ) {
@@ -23,11 +26,6 @@ class CheckboxField extends Field {
 
 	}
 
-	public function can_have_multiple_value(): bool {
-
-		return true;
-
-	}
 
 	public function render( $value ): void {
 

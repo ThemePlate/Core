@@ -13,11 +13,7 @@ use ThemePlate\Core\Field;
 
 class FileField extends Field {
 
-	public function can_have_multiple_value(): bool {
-
-		return true;
-
-	}
+	public const MULTIPLE_ABLE = true;
 
 
 	public function render( $value ): void {

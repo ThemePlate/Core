@@ -17,6 +17,8 @@ use WP_User_Query;
 
 class TypeField extends Field {
 
+	public const MULTIPLE_ABLE = true;
+
 	public const ACTION_PREFIX = 'themeplate_type_';
 
 
@@ -51,13 +53,6 @@ class TypeField extends Field {
 		$hook_name = 'wp_ajax_' . $this->get_action_name( $this->get_config( 'type' ) );
 
 		add_action( $hook_name, $this->get_callback( $this->get_config( 'type' ) ) );
-
-	}
-
-
-	public function can_have_multiple_value(): bool {
-
-		return true;
 
 	}
 
