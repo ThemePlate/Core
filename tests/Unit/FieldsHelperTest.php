@@ -280,6 +280,10 @@ class FieldsHelperTest extends TestCase {
 				'any',
 				'string',
 			),
+			'with a link type field' => array(
+				'link',
+				'object',
+			),
 			'with a group type field' => array(
 				'group',
 				'object',
@@ -308,6 +312,24 @@ class FieldsHelperTest extends TestCase {
 				'text',
 				array( 'default' => 'test' ),
 				'test',
+			),
+			'with a link type field' => array(
+				'link',
+				array(),
+				array(
+					'url' => '',
+					'text' => '',
+					'target' => '',
+				),
+			),
+			'with a link have default' => array(
+				'link',
+				array( 'default' => array( 'url' => '#' ) ),
+				array(
+					'url' => '#',
+					'text' => '',
+					'target' => '',
+				),
 			),
 			'with a group no fields' => array(
 				'group',

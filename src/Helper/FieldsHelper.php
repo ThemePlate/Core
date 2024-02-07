@@ -55,10 +55,10 @@ class FieldsHelper {
 		} elseif ( 'link' === $field->get_config( 'type' ) ) {
 			$properties = array();
 
-			foreach ( array( 'url', 'text', 'target' ) as $key ) {
+			foreach ( $schema['default'] as $key => $value ) {
 				$properties[ $key ] = array(
 					'type'    => 'string',
-					'default' => $schema['default'][ $key ] ?? '',
+					'default' => $value,
 				);
 			};
 

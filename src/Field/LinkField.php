@@ -14,23 +14,21 @@ use ThemePlate\Core\Helper\MainHelper;
 
 class LinkField extends Field {
 
-	public const DEFAULT_VALUE = array();
+	public const DEFAULT_VALUE = array(
+		'url'    => '',
+		'text'   => '',
+		'target' => '',
+	);
 
 
 	protected function initialize(): void {
 
-		$default = array(
-			'url'    => '',
-			'text'   => '',
-			'target' => '',
-		);
-
 		$this->config['default'] = array_intersect_key(
 			MainHelper::fool_proof(
-				$default,
+				static::DEFAULT_VALUE,
 				(array) $this->config['default']
 			),
-			$default
+			static::DEFAULT_VALUE
 		);
 
 	}
