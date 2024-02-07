@@ -32,6 +32,7 @@ abstract class Field {
 
 	protected array $config;
 	protected string $data_key;
+	protected $user_passed_default = '';
 
 
 	public function __construct( string $data_key, array $config = array() ) {
@@ -76,6 +77,8 @@ abstract class Field {
 			$config['minimum'] = 1;
 		}
 
+		$this->user_passed_default = $config['default'];
+
 		if ( is_array( static::DEFAULT_VALUE ) ) {
 			return $config;
 		}
@@ -88,15 +91,28 @@ abstract class Field {
 
 		if ( JSON_ERROR_NONE === json_last_error() ) {
 			$config['default'] = $result;
-		} elseif (
+		}
+
+		$this->user_passed_default = $config['default'];
+
+		if (
 			(
 				empty( $config['default'] ) ||
-				$config['minimum'] <= 1
-			) && (
-				$this->can_have_multiple_value( $config )
-			)
+				! is_array( $config['default'] )
+			) &&
+			static::MULTIPLE_ABLE
 		) {
 			$config['default'] = (array) $config['default'];
+		}
+
+		if (
+			$config['repeatable'] &&
+			(
+				! is_array( $config['default'] ) ||
+				static::MULTIPLE_ABLE && $config['multiple']
+			)
+		) {
+			$config['default'] = array( $config['default'] );
 		}
 
 		return $config;
@@ -164,11 +180,21 @@ abstract class Field {
 
 	public function clone_value(): string {
 
-		if ( is_array( $this->get_config( 'default' ) ) ) {
-			return self::DEFAULT_VALUE;
+		$value = $this->get_config( 'default' );
+
+		if (
+			is_array( static::DEFAULT_VALUE ) ||
+			(
+				static::MULTIPLE_ABLE &&
+				is_array( $this->user_passed_default )
+			)
+		) {
+			return $value[0];
 		}
 
-		return $this->get_config( 'default' );
+		$value = $this->user_passed_default;
+
+		return is_array( $value ) ? static::DEFAULT_VALUE : $value;
 
 	}
 

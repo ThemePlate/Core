@@ -251,7 +251,7 @@ class FieldsHelperTest extends TestCase {
 					),
 					'checkbox' => array(
 						'type' => 'array',
-						'default' => array( 'try', 'one' ),
+						'default' => array( array( 'try', 'one' ) ),
 						'items' => array( 'type' => 'string' ),
 					),
 				),
@@ -312,6 +312,19 @@ class FieldsHelperTest extends TestCase {
 				'text',
 				array( 'default' => 'test' ),
 				'test',
+			),
+			'with a multi-file type' => array(
+				'file',
+				array( 'multiple' => true ),
+				array( '' ),
+			),
+			'with a multi-file have default' => array(
+				'file',
+				array(
+					'multiple' => true,
+					'default' => 'test',
+				),
+				array( 'test' ),
 			),
 			'with a link type field' => array(
 				'link',
