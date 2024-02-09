@@ -81,6 +81,8 @@ class FieldTest extends TestCase {
 		} else {
 			$this->assertIsString( $field->get_config( 'default' ) );
 		}
+
+		FormHelperTest::render_no_issues( $field );
 	}
 
 	/**
@@ -95,6 +97,8 @@ class FieldTest extends TestCase {
 		} else {
 			$this->assertIsString( $field->get_config( 'default' ) );
 		}
+
+		FormHelperTest::render_no_issues( $field );
 	}
 
 	public function for_maybe_adjust_value(): array {
@@ -180,6 +184,7 @@ class FieldTest extends TestCase {
 		$field->maybe_adjust( $actual_value );
 		$this->assertSame( $expected_value, $actual_value );
 		$this->assertSame( $count, $field->get_config( 'count' ) );
+		FormHelperTest::render_no_issues( $field );
 	}
 
 	/**
@@ -189,6 +194,7 @@ class FieldTest extends TestCase {
 		$field = new InputField( 'test', compact( 'repeatable', 'minimum', 'maximum', 'default' ) );
 
 		$this->assert_maybe_adjust_value( $field, $default, $expected_value );
+		FormHelperTest::render_no_issues( $field );
 	}
 
 	/**
@@ -200,6 +206,7 @@ class FieldTest extends TestCase {
 		$field = new FileField( 'test', compact( 'multiple', 'repeatable', 'minimum', 'maximum', 'default' ) );
 
 		$this->assert_maybe_adjust_value( $field, $default, $expected_value );
+		FormHelperTest::render_no_issues( $field );
 	}
 
 	public function for_maybe_adjust_value_link(): array {
@@ -282,6 +289,7 @@ class FieldTest extends TestCase {
 		$field = new LinkField( 'test', compact( 'repeatable', 'minimum', 'maximum', 'default' ) );
 
 		$this->assert_maybe_adjust_value( $field, $default, $expected_value );
+		FormHelperTest::render_no_issues( $field );
 	}
 
 	public function for_correctly_passed_classname(): array {
@@ -313,6 +321,7 @@ class FieldTest extends TestCase {
 		$field = FormHelper::make_field( 'test', compact( 'type', 'style' ) );
 
 		$this->assertSame( $expected, $field->get_classname() );
+		FormHelperTest::render_no_issues( $field );
 	}
 
 	public function test_set_id_and_name(): void {
@@ -324,6 +333,7 @@ class FieldTest extends TestCase {
 		$this->assertSame( $id, $field->get_config( 'id' ) );
 		$field->set_name( $name );
 		$this->assertSame( $name, $field->get_config( 'name' ) );
+		FormHelperTest::render_no_issues( $field );
 	}
 
 	public function for_enforcing_minimum_and_maximum(): array {
@@ -361,6 +371,7 @@ class FieldTest extends TestCase {
 
 		$this->assertSame( $min, $field->get_config( 'minimum' ) );
 		$this->assertSame( $max, $field->get_config( 'maximum' ) );
+		FormHelperTest::render_no_issues( $field );
 	}
 
 	public function for_group_default_values(): array {
@@ -415,5 +426,6 @@ class FieldTest extends TestCase {
 		$field = FormHelper::make_field( 'test', array_merge( $config, array( 'type' => 'group' ) ) );
 
 		$this->assertSame( $expected, $field->get_config( 'default' ) );
+		FormHelperTest::render_no_issues( $field );
 	}
 }

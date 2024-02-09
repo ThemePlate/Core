@@ -26,6 +26,7 @@ class GroupField extends Field {
 		$default = FieldsHelper::get_default_value( $clone );
 
 		$this->config['default'] = $default;
+		$this->config['fields']  = FieldsHelper::group_fields( $this->config['fields'] ?? array() );
 
 	}
 

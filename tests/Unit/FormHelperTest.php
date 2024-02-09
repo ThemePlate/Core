@@ -11,6 +11,12 @@ use ThemePlate\Core\Field;
 use ThemePlate\Core\Helper\FormHelper;
 
 class FormHelperTest extends TestCase {
+	public static function render_no_issues( Field $field ): void {
+		ob_start();
+		$field->render( $field->clone_value() );
+		ob_get_clean();
+	}
+
 	public function test_make_field(): void {
 		$namespace = 'ThemePlate\Core\Field';
 
@@ -21,6 +27,7 @@ class FormHelperTest extends TestCase {
 
 			$this->assertInstanceOf( Field::class, $field );
 			$this->assertSame( $namespace . '\\' . $base, get_class( $field ) );
+			self::render_no_issues( $field );
 		}
 	}
 
@@ -28,5 +35,6 @@ class FormHelperTest extends TestCase {
 		$field = FormHelper::make_field( 'wanted', array() );
 
 		$this->assertInstanceOf( FormHelper::get_field_class( Field::DEFAULTS['type'] ), $field );
+		self::render_no_issues( $field );
 	}
 }
