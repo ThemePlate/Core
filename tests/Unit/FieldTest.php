@@ -99,7 +99,7 @@ class FieldTest extends TestCase {
 	public function for_maybe_adjust_value(): array {
 		// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 		return array(
-			'with a non-repeatable and nothing specified' => array(
+			'with a non-repeatable and nothing' => array(
 				false,
 				null,
 				null,
@@ -120,6 +120,13 @@ class FieldTest extends TestCase {
 				array( 'test' ),
 				array( 'test' ),
 			),
+			'with a repeatable and nothing' => array(
+				true,
+				1,
+				null,
+				null,
+				array( '' ),
+			),
 			'with a repeatable and string' => array(
 				true,
 				1,
@@ -133,6 +140,13 @@ class FieldTest extends TestCase {
 				null,
 				array( 'test' ),
 				array( 'test' ),
+			),
+			'with 3 repeatable and nothing' => array(
+				true,
+				3,
+				null,
+				'',
+				array( '', '', '' ),
 			),
 			'with 3 repeatable and string' => array(
 				true,
