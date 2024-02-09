@@ -180,19 +180,15 @@ abstract class Field {
 
 	public function clone_value(): string {
 
-		$value = $this->get_config( 'default' );
+		$value = $this->user_passed_default;
 
-		if (
-			is_array( static::DEFAULT_VALUE ) ||
-			(
-				static::MULTIPLE_ABLE &&
-				is_array( $this->user_passed_default )
-			)
-		) {
-			return $value[0];
+		if ( static::MULTIPLE_ABLE && ! is_array( $this->user_passed_default ) ) {
+			return $value;
 		}
 
-		$value = $this->user_passed_default;
+		if ( is_array( static::DEFAULT_VALUE ) ) {
+			$value = $value[0];
+		}
 
 		return is_array( $value ) ? static::DEFAULT_VALUE : $value;
 
