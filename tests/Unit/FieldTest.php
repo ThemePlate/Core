@@ -10,6 +10,7 @@ use PHPUnit\Framework\TestCase;
 use ThemePlate\Core\Field;
 use ThemePlate\Core\Field\FileField;
 use ThemePlate\Core\Field\InputField;
+use ThemePlate\Core\Field\LinkField;
 use ThemePlate\Core\Helper\FormHelper;
 
 class FieldTest extends TestCase {
@@ -197,6 +198,88 @@ class FieldTest extends TestCase {
 		$multiple = true;
 
 		$field = new FileField( 'test', compact( 'multiple', 'repeatable', 'minimum', 'maximum', 'default' ) );
+
+		$this->assert_maybe_adjust_value( $field, $default, $expected_value );
+	}
+
+	public function for_maybe_adjust_value_link(): array {
+		// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
+		return array(
+			'with a non-repeatable and nothing' => array(
+				false,
+				null,
+				null,
+				null,
+				null,
+			),
+			'with a non-repeatable and value' => array(
+				false,
+				null,
+				null,
+				array( 'url' => 'test' ),
+				array( 'url' => 'test' ),
+			),
+			'with a repeatable and nothing' => array(
+				true,
+				1,
+				null,
+				null,
+				array( array() ),
+			),
+			'with a repeatable and value' => array(
+				true,
+				null,
+				null,
+				array( 'url' => 'test' ),
+				array( array( 'url' => 'test' ) ),
+			),
+			'with 3 repeatable and value' => array(
+				true,
+				3,
+				null,
+				array( 'url' => 'test' ),
+				array(
+					array( 'url' => 'test' ),
+					array( 'url' => 'test' ),
+					array( 'url' => 'test' ),
+				),
+			),
+			'with over the limit; a maximum of 2' => array(
+				true,
+				null,
+				2,
+				array(
+					array( 'url' => 'please' ),
+					array( 'url' => 'this' ),
+					array( 'url' => 'important' ),
+				),
+				array(
+					array( 'url' => 'please' ),
+					array( 'url' => 'this' ),
+				),
+			),
+			'with under the limit; a minimum of 2' => array(
+				true,
+				3,
+				null,
+				array(
+					array( 'url' => 'please' ),
+				),
+				array(
+					array( 'url' => 'please' ),
+					array(),
+					array(),
+				),
+			),
+		);
+		// phpcs:enable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
+	}
+
+	/**
+	 * @dataProvider for_maybe_adjust_value_link
+	 */
+	public function test_maybe_adjust_value_link( bool $repeatable, ?int $minimum, ?int $maximum, $default, $expected_value ): void {
+		$field = new LinkField( 'test', compact( 'repeatable', 'minimum', 'maximum', 'default' ) );
 
 		$this->assert_maybe_adjust_value( $field, $default, $expected_value );
 	}

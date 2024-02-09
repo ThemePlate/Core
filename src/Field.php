@@ -109,7 +109,12 @@ abstract class Field {
 			$config['repeatable'] &&
 			(
 				! is_array( $config['default'] ) ||
-				static::MULTIPLE_ABLE && $config['multiple']
+				(
+					static::MULTIPLE_ABLE && $config['multiple'] &&
+					(
+						! is_array( $config['default'][0] )
+					)
+				)
 			)
 		) {
 			$config['default'] = array( $config['default'] );
@@ -178,19 +183,32 @@ abstract class Field {
 	}
 
 
-	public function clone_value(): string {
+	/**
+	 * @return string|array
+	 */
+	public function clone_value() {
 
 		$value = $this->user_passed_default;
 
-		if ( static::MULTIPLE_ABLE && ! is_array( $this->user_passed_default ) ) {
+		if ( is_array( static::DEFAULT_VALUE ) ) {
+			return MainHelper::is_sequential( $value ) ? array() : $value;
+		}
+
+		if ( static::MULTIPLE_ABLE && $this->get_config( 'multiple' ) ) {
+			if ( is_array( $value ) ) {
+				if ( is_array( $value[0] ) ) {
+					return array();
+				}
+
+				if ( count( $value ) === 1 ) {
+					return '';
+				}
+			}
+
 			return $value;
 		}
 
-		if ( is_array( static::DEFAULT_VALUE ) ) {
-			$value = $value[0];
-		}
-
-		return is_array( $value ) ? static::DEFAULT_VALUE : $value;
+		return is_array( $value ) ? '' : $value;
 
 	}
 
@@ -203,6 +221,10 @@ abstract class Field {
 
 		if ( ! is_array( $value ) ) {
 			$value = (array) $value;
+		}
+
+		if ( is_array( static::DEFAULT_VALUE ) && ! MainHelper::is_sequential( $value ) ) {
+			$value = array( $value );
 		}
 
 		$current = count( $value );
