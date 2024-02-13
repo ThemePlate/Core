@@ -21,7 +21,7 @@ class CheckboxField extends Field {
 
 		if ( ! empty( $this->get_config( 'options' ) ) ) {
 			$this->config['multiple'] = true;
-			$this->config['default']  = (array) $this->config['default'];
+			$this->config['default']  = MainHelper::values_to_string( (array) $this->config['default'] );
 		}
 
 	}
@@ -43,7 +43,7 @@ class CheckboxField extends Field {
 				echo '<' . esc_attr( $tag ) . '>';
 				echo '<label><input type="checkbox" name="' . esc_attr( $this->get_config( 'name' ) ) . '[]" value="' . esc_attr( $option_value ) . '"';
 
-				if ( in_array( (string) $option_value, (array) $value, true ) ) {
+				if ( in_array( (string) $option_value, MainHelper::values_to_string( (array) $value ), true ) ) {
 					echo ' checked="checked"';
 				}
 

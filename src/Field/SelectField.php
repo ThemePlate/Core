@@ -53,7 +53,7 @@ class SelectField extends Field {
 			foreach ( (array) $value as $item ) {
 				$item = ( $is_sequential ? (int) $item - 1 : $item );
 
-				if ( ! in_array( (string) $item, array_map( 'strval', $values ), true ) ) {
+				if ( ! in_array( (string) $item, MainHelper::values_to_string( $values ), true ) ) {
 					continue;
 				}
 
@@ -70,7 +70,7 @@ class SelectField extends Field {
 
 			echo '<option value="' . esc_attr( $option_value ) . '"';
 
-			if ( in_array( (string) $option_value, (array) $value, true ) ) {
+			if ( in_array( (string) $option_value, MainHelper::values_to_string( (array) $value ), true ) ) {
 				echo ' selected="selected"';
 			}
 

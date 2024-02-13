@@ -76,4 +76,20 @@ class MainHelper {
 
 	}
 
+
+	public static function values_to_string( array $array ): array {
+
+		return array_map(
+			function( $value ) {
+				if ( is_array( $value ) ) {
+					return self::values_to_string( $value );
+				}
+
+				return (string) $value;
+			},
+			$array
+		);
+
+	}
+
 }
