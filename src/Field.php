@@ -195,14 +195,8 @@ abstract class Field {
 		}
 
 		if ( static::MULTIPLE_ABLE && $this->get_config( 'multiple' ) ) {
-			if ( is_array( $value ) ) {
-				if ( MainHelper::is_sequential( $value ) && is_array( $value[0] ) ) {
-					return array();
-				}
-
-				if ( count( $value ) === 1 ) {
-					return '';
-				}
+			if ( is_array( $value ) && MainHelper::is_sequential( $value ) && is_array( $value[0] ) ) {
+				return array();
 			}
 
 			return $value;

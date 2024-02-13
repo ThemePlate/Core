@@ -205,6 +205,12 @@ class FieldTest extends TestCase {
 
 		$field = new FileField( 'test', compact( 'multiple', 'repeatable', 'minimum', 'maximum', 'default' ) );
 
+		if ( $repeatable && is_array( $default ) ) {
+			$expected_value = array_fill( 0, max( $minimum, $maximum ), $default );
+
+			$default = array_fill( 0, $maximum, $default );
+		}
+
 		$this->assert_maybe_adjust_value( $field, $default, $expected_value );
 		FormHelperTest::render_no_issues( $field );
 	}
