@@ -105,7 +105,7 @@ class FieldsHelper {
 			$default = array( $default );
 		}
 
-		return $default;
+		return is_array( $default ) ? MainHelper::values_to_string( $default ) : (string) $default;
 
 	}
 
