@@ -92,4 +92,14 @@ class MainHelper {
 
 	}
 
+
+	/**
+	 * @param $value array|string|null
+	 */
+	public static function for_repeatable( $value ): bool {
+
+		return is_array( $value ) && self::is_sequential( $value ) && is_array( $value[0] );
+
+	}
+
 }

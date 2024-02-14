@@ -195,7 +195,7 @@ abstract class Field {
 		}
 
 		if ( static::MULTIPLE_ABLE && $this->get_config( 'multiple' ) ) {
-			if ( is_array( $value ) && MainHelper::is_sequential( $value ) && is_array( $value[0] ) ) {
+			if ( MainHelper::for_repeatable( $value ) ) {
 				return array();
 			}
 
@@ -210,6 +210,10 @@ abstract class Field {
 	public function maybe_adjust( &$value ): void {
 
 		if ( ! $this->get_config( 'repeatable' ) ) {
+			if ( MainHelper::for_repeatable( $value ) ) {
+				$value = $value[0];
+			}
+
 			return;
 		}
 
