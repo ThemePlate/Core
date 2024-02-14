@@ -25,7 +25,7 @@ class DateField extends Field {
 			echo '<input
 					type="hidden"
 					name="' . esc_attr( $this->get_config( 'name' ) ) . '"
-					value="' . esc_attr( $value ) . '"
+					value="' . esc_attr( implode( ',', (array) $value ) ) . '"
 					' . ( $this->get_config( 'none' ) ? ' data-none="true"' : '' );
 
 			if ( ! empty( $this->get_config( 'options' ) ) ) {
