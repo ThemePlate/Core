@@ -9,6 +9,8 @@
 
 namespace ThemePlate\Core\Helper;
 
+use ThemePlate\Core\Field;
+
 class MainHelper {
 
 	public static function fool_proof( array $defaults, array $options ): array {
@@ -99,6 +101,30 @@ class MainHelper {
 	public static function for_repeatable( $value ): bool {
 
 		return is_array( $value ) && self::is_sequential( $value ) && is_array( $value[0] );
+
+	}
+
+
+	/**
+	 * @param $value array|string|null
+	 */
+	public static function maybe_adjust( Field $field, &$value ): void {
+
+		if (
+			self::for_repeatable( $value ) &&
+			(
+				! $field->get_config( 'repeatable' ) ||
+				! (
+					is_array( $field::DEFAULT_VALUE ) ||
+					(
+						$field::MULTIPLE_ABLE &&
+						!! $field->get_config( 'multiple' )
+					)
+				)
+			)
+		) {
+			$value = $value[0];
+		}
 
 	}
 

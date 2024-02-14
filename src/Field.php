@@ -210,10 +210,6 @@ abstract class Field {
 	public function maybe_adjust( &$value ): void {
 
 		if ( ! $this->get_config( 'repeatable' ) ) {
-			if ( MainHelper::for_repeatable( $value ) ) {
-				$value = $value[0];
-			}
-
 			return;
 		}
 
