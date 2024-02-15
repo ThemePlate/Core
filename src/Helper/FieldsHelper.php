@@ -21,7 +21,7 @@ class FieldsHelper {
 		foreach ( $fields->get_collection() as $field ) {
 			$schema[ $field->data_key( $data_prefix ) ] = static::get_schema( $field );
 
-			if ( $field->can_have_multiple_value() ) {
+			if ( $field->get_config( 'repeatable' ) ) {
 				$base = $schema[ $field->data_key( $data_prefix ) ];
 
 				unset( $base['default'] );
@@ -57,6 +57,15 @@ class FieldsHelper {
 			};
 
 			$schema['properties'] = $properties;
+		}
+
+		if ( $field::MULTIPLE_ABLE && !! $field->get_config( 'multiple' ) ) {
+			$base = $schema;
+
+			unset( $base['default'] );
+
+			$schema['type']  = 'array';
+			$schema['items'] = $base;
 		}
 
 		return $schema;

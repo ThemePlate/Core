@@ -252,7 +252,10 @@ class FieldsHelperTest extends TestCase {
 					'checkbox' => array(
 						'type' => 'array',
 						'default' => array( array( 'try', 'one' ) ),
-						'items' => array( 'type' => 'string' ),
+						'items' => array(
+							'type'  => 'array',
+							'items' => array( 'type' => 'string' ),
+						),
 					),
 				),
 			),
