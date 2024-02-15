@@ -27,16 +27,16 @@ class FileField extends Field {
 				data-options="' . esc_attr( $options ) . '">';
 		echo '<div class="preview-holder">';
 
+		$value = array_filter( (array) $value );
+
 		if ( ! $this->get_config( 'multiple' ) ) {
 			echo '<div class="attachment placeholder">';
-			echo '<input type="button" class="button attachment-add' . ( $value ? ' hidden' : '' ) . '" value="Select" />';
+			echo '<input type="button" class="button attachment-add' . ( empty( $value ) ? ' hidden' : '' ) . '" value="Select" />';
 			echo '</div>';
 		}
 
-		$value = array_filter( (array) $value );
-
 		if ( ! empty( $value ) ) {
-			foreach ( (array) $value as $file ) {
+			foreach ( $value as $file ) {
 				$name    = basename( get_attached_file( $file ) );
 				$info    = wp_check_filetype( $name );
 				$type    = wp_ext2type( $info['ext'] );

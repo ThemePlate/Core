@@ -41,7 +41,7 @@ class SelectField extends Field {
 		) {
 			echo '<option value=""' .
 				( $this->get_config( 'none' ) && $value ? '' : ' disabled hidden' ) .
-				( esc_attr( $value ) ? '>' . esc_attr( __( '&mdash; None &mdash;' ) ) : ' selected>' .
+				( $value ? '>' . esc_attr( __( '&mdash; None &mdash;' ) ) : ' selected>' .
 				esc_attr( __( '&mdash; Select &mdash;' ) ) ) .
 				'</option>';
 		}
@@ -50,7 +50,7 @@ class SelectField extends Field {
 			$ordered = array();
 			$values  = array_keys( $config_options );
 
-			foreach ( (array) $value as $item ) {
+			foreach ( $value as $item ) {
 				$item = ( $is_sequential ? (int) $item - 1 : $item );
 
 				if ( ! in_array( (string) $item, MainHelper::values_to_string( $values ), true ) ) {
