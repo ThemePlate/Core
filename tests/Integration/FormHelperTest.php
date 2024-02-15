@@ -11,6 +11,7 @@ use WP_UnitTestCase;
 
 class FormHelperTest extends WP_UnitTestCase {
 	public function test_enqueue_assets(): void {
+		ob_start();
 		FormHelper::enqueue_assets( 'test' ); // custom hook suffix
 		$this->assertTrue( wp_script_is( 'themeplate-script' ) );
 
@@ -28,5 +29,6 @@ class FormHelperTest extends WP_UnitTestCase {
 		FormHelper::enqueue_assets( 'post.php' ); // in a gutenberg editing screen
 		$this->assertTrue( wp_script_is( 'themeplate-show-hide-gutenberg' ) );
 		wp_dequeue_script( 'themeplate-script' ); // force dequeue
+		ob_get_clean();
 	}
 }

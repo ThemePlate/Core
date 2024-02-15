@@ -9,6 +9,7 @@
 
 namespace ThemePlate\Core\Helper;
 
+use _WP_Editors;
 use ThemePlate\Core\Field;
 
 class FormHelper {
@@ -42,6 +43,10 @@ class FormHelper {
 		wp_localize_script( 'themeplate-script', 'ThemePlate', array( 'ajax_url' => admin_url( 'admin-ajax.php' ) ) );
 
 		if ( 'post.php' !== $hook_suffix ) {
+			require_once ABSPATH . 'wp-includes/class-wp-editor.php';
+
+			_WP_Editors::wp_link_dialog();
+
 			return;
 		}
 
