@@ -10,6 +10,7 @@
 namespace ThemePlate\Core\Field;
 
 use ThemePlate\Core\Field;
+use ThemePlate\Core\Helper\MainHelper;
 
 class ColorField extends Field {
 
@@ -17,7 +18,9 @@ class ColorField extends Field {
 
 		$default = $this->get_config( 'default' );
 
-		if ( $this->get_config( 'repeatable' ) && is_array( $default ) ) {
+		MainHelper::maybe_adjust( $this, $default );
+
+		if ( is_array( $default ) ) {
 			$default = $default[0];
 		}
 

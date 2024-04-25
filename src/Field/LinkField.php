@@ -23,10 +23,21 @@ class LinkField extends Field {
 
 	protected function initialize(): void {
 
-		$this->config['default'] = array_intersect_key(
+		$this->config['default'] = $this->values_structure( $this->config['default'] );
+
+	}
+
+
+	private function values_structure( array $default ): array {
+
+		if ( MainHelper::is_sequential( $default ) ) {
+			return array_map( array( $this, 'values_structure' ), $default );
+		}
+
+		return array_intersect_key(
 			MainHelper::fool_proof(
 				static::DEFAULT_VALUE,
-				(array) $this->config['default']
+				$default
 			),
 			static::DEFAULT_VALUE
 		);

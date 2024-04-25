@@ -20,6 +20,15 @@ class CheckboxField extends Field {
 	protected function initialize(): void {
 
 		if ( ! empty( $this->get_config( 'options' ) ) ) {
+			if ( ! is_array( $this->config['default'] ) ) {
+				$result = json_decode( $this->config['default'], true );
+
+				if ( JSON_ERROR_NONE === json_last_error() ) {
+					$this->user_passed_default = $result;
+					$this->config['default']   = $result;
+				}
+			}
+
 			$this->config['multiple'] = true;
 			$this->config['default']  = MainHelper::values_to_string( (array) $this->config['default'] );
 		}
