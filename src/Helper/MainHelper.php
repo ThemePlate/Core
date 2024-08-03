@@ -49,9 +49,9 @@ class MainHelper {
 	}
 
 
-	public static function is_sequential( array $array ): bool {
+	public static function is_sequential( array $array_var ): bool {
 
-		return ( array_keys( $array ) === range( 0, count( $array ) - 1 ) );
+		return ( array_keys( $array_var ) === range( 0, count( $array_var ) - 1 ) );
 
 	}
 
@@ -79,7 +79,7 @@ class MainHelper {
 	}
 
 
-	public static function values_to_string( array $array ): array {
+	public static function values_to_string( array $array_var ): array {
 
 		return array_map(
 			function( $value ) {
@@ -89,7 +89,7 @@ class MainHelper {
 
 				return (string) $value;
 			},
-			$array
+			$array_var
 		);
 
 	}

@@ -72,9 +72,9 @@ abstract class Form {
 	}
 
 
-	public function fields( array $list ): self {
+	public function fields( array $collection ): self {
 
-		$this->fields = new Fields( $list );
+		$this->fields = new Fields( $collection );
 
 		return $this;
 
