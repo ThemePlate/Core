@@ -118,7 +118,7 @@ class MainHelper {
 					is_array( $field::DEFAULT_VALUE ) ||
 					(
 						$field::MULTIPLE_ABLE &&
-						!! $field->get_config( 'multiple' )
+						(bool) $field->get_config( 'multiple' )
 					)
 				)
 			)

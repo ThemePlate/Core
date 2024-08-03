@@ -131,7 +131,7 @@ abstract class Field {
 			$config = $this->get_config();
 		}
 
-		return ( static::MULTIPLE_ABLE && !! $config['multiple'] ) || !! $config['repeatable'];
+		return ( static::MULTIPLE_ABLE && (bool) $config['multiple'] ) || (bool) $config['repeatable'];
 
 	}
 

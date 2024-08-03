@@ -59,7 +59,7 @@ class FieldsHelper {
 			$schema['properties'] = $properties;
 		}
 
-		if ( $field::MULTIPLE_ABLE && !! $field->get_config( 'multiple' ) ) {
+		if ( $field::MULTIPLE_ABLE && (bool) $field->get_config( 'multiple' ) ) {
 			$base = $schema;
 
 			unset( $base['default'] );

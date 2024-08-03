@@ -236,7 +236,7 @@ class TypeField extends Field {
 		$total    = wp_count_terms( $_GET['options']['taxonomy'] );
 		$query    = new WP_Term_Query( array_merge( $defaults, $_GET['options'] ) );
 
-		if ( ! is_wp_error( $total ) && $_GET['_page']['paged'] < ceil( $total / self::$count ) ) {
+		if ( ! is_wp_error( $total ) && $_GET['_page']['paged'] < ceil( (int) $total / self::$count ) ) {
 			$return['pagination']['more'] = true;
 		}
 
