@@ -82,7 +82,7 @@ class MainHelper {
 	public static function values_to_string( array $array_var ): array {
 
 		return array_map(
-			function( $value ) {
+			function ( $value ) {
 				if ( is_array( $value ) ) {
 					return self::values_to_string( $value );
 				}

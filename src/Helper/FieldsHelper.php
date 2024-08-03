@@ -54,7 +54,7 @@ class FieldsHelper {
 					'type'    => 'string',
 					'default' => $value,
 				);
-			};
+			}
 
 			$schema['properties'] = $properties;
 		}

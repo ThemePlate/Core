@@ -32,6 +32,9 @@ abstract class Field {
 
 	protected array $config;
 	protected string $data_key;
+	/**
+	 * @var string|array
+	 */
 	protected $user_passed_default = '';
 
 
