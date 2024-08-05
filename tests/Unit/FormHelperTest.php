@@ -20,6 +20,7 @@ class FormHelperTest extends TestCase {
 	public function test_make_field(): void {
 		$namespace = 'ThemePlate\Core\Field';
 
+		// phpcs:ignore Modernize.FunctionCalls.Dirname.FileConstant
 		foreach ( glob( dirname( __FILE__, 3 ) . '/src/Field/*.php', GLOB_MARK ) as $file ) {
 			$base  = basename( $file, '.php' );
 			$type  = strtolower( str_replace( 'Field', '', $base ) );

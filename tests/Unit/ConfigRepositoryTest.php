@@ -66,8 +66,8 @@ class ConfigRepositoryTest extends TestCase {
 		$this->assertInstanceOf( Field\TypeField::class, $this->repository->search( 'prefix_test' ) );
 		$this->assertInstanceOf( Field\DateField::class, $this->repository->search( 'prefix_this' ) );
 		$this->assertInstanceOf( Field::class, $this->repository->search( 'prefix_unknown' ) );
-		$this->assertSame( '', $this->repository->retrieve( 'prefix_that', 0 ) );
-		$this->assertSame( 'hooray!', $this->repository->retrieve( 'prefix_that', 123 ) );
-		$this->assertSame( 'tester', $this->repository->retrieve( 'prefix_then', 0 ) );
+		$this->assertSame( '', $this->repository->retrieve( 'prefix_that', '0' ) );
+		$this->assertSame( 'hooray!', $this->repository->retrieve( 'prefix_that', '123' ) );
+		$this->assertSame( 'tester', $this->repository->retrieve( 'prefix_then', '0' ) );
 	}
 }

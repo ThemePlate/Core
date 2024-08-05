@@ -208,7 +208,7 @@ class FieldTest extends TestCase {
 		if ( $repeatable && is_array( $default ) ) {
 			$expected_value = array_fill( 0, max( $minimum, $maximum ), $default );
 
-			$default = array_fill( 0, $maximum, $default );
+			$default = array_fill( 0, $maximum ?? 0, $default );
 		}
 
 		$this->assert_maybe_adjust_value( $field, $default, $expected_value );
