@@ -44,7 +44,9 @@ class AssetsHelper {
 			wp_die();
 		}
 
-		$filename = dirname( __DIR__, 2 ) . '/assets/' . $_GET['filename'];
+		$filename = sanitize_file_name( $_GET['filename'] );
+		$filename = str_replace( '_.', '.', $filename );
+		$filename = dirname( __DIR__, 2 ) . '/assets/' . $filename;
 
 		if ( ! file_exists( $filename ) ) {
 			wp_die();
