@@ -10,6 +10,7 @@
 namespace ThemePlate\Core\Field;
 
 use ThemePlate\Core\Field;
+use ThemePlate\Core\Helper\AssetsHelper;
 use ThemePlate\Core\Helper\MainHelper;
 use WP_Query;
 use WP_Term_Query;
@@ -121,8 +122,10 @@ class TypeField extends Field {
 	private static int $count      = 10;
 	private static array $prefixes = array();
 
-	// phpcs:disable WordPress.Security.NonceVerification
+
 	public static function get_posts(): void {
+
+		check_ajax_referer( AssetsHelper::LOADER_ACTION );
 
 		$return   = array(
 			'results'    => array(),
@@ -185,6 +188,8 @@ class TypeField extends Field {
 
 	public static function get_users(): void {
 
+		check_ajax_referer( AssetsHelper::LOADER_ACTION );
+
 		$return   = array(
 			'results'    => array(),
 			'pagination' => array(
@@ -218,6 +223,8 @@ class TypeField extends Field {
 
 
 	public static function get_terms(): void {
+
+		check_ajax_referer( AssetsHelper::LOADER_ACTION );
 
 		$return   = array(
 			'results'    => array(),
