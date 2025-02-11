@@ -46,6 +46,20 @@ class FieldsHelper {
 
 		if ( 'group' === $field->get_config( 'type' ) ) {
 			$schema['properties'] = static::build_schema( $field->get_config( 'fields' ) );
+
+			$default = $schema['default'];
+
+			if ( ! MainHelper::for_repeatable( $default ) ) {
+				$default = array( $default );
+			}
+
+			foreach ( $schema['properties'] as $key => &$value ) {
+				if ( ! empty( $value['default'] ) ) {
+					continue;
+				}
+
+				$value['default'] = $default[0][ $key ];
+			}
 		} elseif ( 'link' === $field->get_config( 'type' ) ) {
 			$properties = array();
 

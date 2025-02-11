@@ -443,12 +443,35 @@ class FieldsHelperTest extends TestCase {
 			$this->for_group_with_defaults( false ),
 		);
 
-		$expected = array(
-			'test'    => 'this',
-			'another' => 'one',
+		$this->assertSame(
+			array(
+				'test'    => 'this',
+				'another' => 'one',
+			),
+			FieldsHelper::get_default_value( $field )
 		);
-
-		$this->assertSame( $expected, FieldsHelper::get_default_value( $field ) );
+		$this->assertSame(
+			array(
+				'test' => array(
+					'type'       => 'object',
+					'default'    => array(
+						'test'    => 'this',
+						'another' => 'one',
+					),
+					'properties' => array(
+						'test'    => array(
+							'type'    => 'string',
+							'default' => 'this',
+						),
+						'another' => array(
+							'type'    => 'string',
+							'default' => 'one',
+						),
+					),
+				),
+			),
+			FieldsHelper::build_schema( new Fields( array( $field ) ) )
+		);
 		FormHelperTest::render_no_issues( $field );
 	}
 
@@ -458,18 +481,50 @@ class FieldsHelperTest extends TestCase {
 			$this->for_group_with_defaults( true ),
 		);
 
-		$expected = array(
+		$this->assertSame(
 			array(
-				'test'    => 'this',
-				'another' => 'one',
+				array(
+					'test'    => 'this',
+					'another' => 'one',
+				),
+				array(
+					'test'    => 'again',
+					'another' => 'time',
+				),
 			),
-			array(
-				'test'    => 'again',
-				'another' => 'time',
-			),
+			FieldsHelper::get_default_value( $field )
 		);
-
-		$this->assertSame( $expected, FieldsHelper::get_default_value( $field ) );
+		$this->assertSame(
+			array(
+				'test' => array(
+					'type'       => 'array',
+					'default'    => array(
+						array(
+							'test'    => 'this',
+							'another' => 'one',
+						),
+						array(
+							'test'    => 'again',
+							'another' => 'time',
+						),
+					),
+					'items' => array(
+						'type' => 'object',
+						'properties' => array(
+							'test'    => array(
+								'type'    => 'string',
+								'default' => 'this',
+							),
+							'another' => array(
+								'type'    => 'string',
+								'default' => 'one',
+							),
+						),
+					),
+				),
+			),
+			FieldsHelper::build_schema( new Fields( array( $field ) ) )
+		);
 		FormHelperTest::render_no_issues( $field );
 	}
 }
