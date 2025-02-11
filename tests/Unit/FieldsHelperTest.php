@@ -304,6 +304,7 @@ class FieldsHelperTest extends TestCase {
 		$this->assertSame( $expected, FieldsHelper::get_schema_type( $field ) );
 		FormHelperTest::render_no_issues( $field );
 	}
+
 	public function for_getting_default(): array {
 		// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 		return array(
@@ -406,6 +407,69 @@ class FieldsHelperTest extends TestCase {
 		$field = FormHelper::make_field( 'test', array_merge( $config, compact( 'type' ) ) );
 
 		$this->assertSame( array( $expected ), FieldsHelper::get_default_value( $field ) );
+		FormHelperTest::render_no_issues( $field );
+	}
+
+	public function for_group_with_defaults( bool $repeatable ): array {
+		// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
+		return array(
+			'repeatable' => $repeatable,
+			'type' => 'group',
+			'default' => array(
+				array(
+					'test' => 'this',
+					'another' => 'one',
+				),
+				array(
+					'test' => 'again',
+					'another' => 'time',
+				),
+			),
+			'fields' => array(
+				'test' => array(
+					'type' => 'text',
+				),
+				'another' => array(
+					'type' => 'text',
+				),
+			),
+		);
+		// phpcs:enable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
+	}
+
+	public function test_group_with_defaults(): void {
+		$field = FormHelper::make_field(
+			'test',
+			$this->for_group_with_defaults( false ),
+		);
+
+		$expected = array(
+			'test'    => 'this',
+			'another' => 'one',
+		);
+
+		$this->assertSame( $expected, FieldsHelper::get_default_value( $field ) );
+		FormHelperTest::render_no_issues( $field );
+	}
+
+	public function test_group_with_defaults_repeatable(): void {
+		$field = FormHelper::make_field(
+			'test',
+			$this->for_group_with_defaults( true ),
+		);
+
+		$expected = array(
+			array(
+				'test'    => 'this',
+				'another' => 'one',
+			),
+			array(
+				'test'    => 'again',
+				'another' => 'time',
+			),
+		);
+
+		$this->assertSame( $expected, FieldsHelper::get_default_value( $field ) );
 		FormHelperTest::render_no_issues( $field );
 	}
 }

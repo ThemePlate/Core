@@ -95,19 +95,29 @@ class FieldsHelper {
 		$default = $field->get_config( 'default' );
 
 		if ( 'group' === $field->get_config( 'type' ) ) {
-			if ( ! is_array( $default ) ) {
-				$default = array();
+			$default = (array) $default;
+
+			if ( ! MainHelper::for_repeatable( $default ) ) {
+				$default = array( $default );
 			}
 
-			$fields = static::group_fields( $field->get_config( 'fields' ) );
+			foreach ( $default as &$def ) {
+				$fields = static::group_fields( $field->get_config( 'fields' ) );
 
-			foreach ( $fields->get_collection() as $sub_field ) {
-				if ( isset( $default[ $sub_field->data_key() ] ) ) {
-					continue;
+				foreach ( $fields->get_collection() as $sub_field ) {
+					if ( isset( $def[ $sub_field->data_key() ] ) ) {
+						continue;
+					}
+
+					$def[ $sub_field->data_key() ] = static::get_default_value( $sub_field );
 				}
-
-				$default[ $sub_field->data_key() ] = static::get_default_value( $sub_field );
 			}
+
+			if ( ! $field->get_config( 'repeatable' ) ) {
+				$default = $default[0];
+			}
+
+			return MainHelper::values_to_string( $default );
 		}
 
 		if ( is_array( $field::DEFAULT_VALUE ) && $field->get_config( 'repeatable' ) ) {
