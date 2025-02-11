@@ -10,6 +10,7 @@
 namespace ThemePlate\Core\Helper;
 
 use ThemePlate\Core\Field;
+use ThemePlate\Core\Field\LinkField;
 use ThemePlate\Core\Fields;
 
 class FieldsHelper {
@@ -61,16 +62,20 @@ class FieldsHelper {
 				$value['default'] = $default[0][ $key ];
 			}
 		} elseif ( 'link' === $field->get_config( 'type' ) ) {
-			$properties = array();
+			$schema['properties'] = LinkField::DEFAULT_VALUE;
 
-			foreach ( $schema['default'] as $key => $value ) {
-				$properties[ $key ] = array(
-					'type'    => 'string',
-					'default' => $value,
-				);
+			$default = $schema['default'];
+
+			if ( MainHelper::for_repeatable( $default ) ) {
+				$default = $default[0];
 			}
 
-			$schema['properties'] = $properties;
+			foreach ( $schema['properties'] as $key => &$value ) {
+				$value = array(
+					'type'    => 'string',
+					'default' => $default[ $key ],
+				);
+			}
 		}
 
 		if ( $field::MULTIPLE_ABLE && (bool) $field->get_config( 'multiple' ) ) {
@@ -134,7 +139,7 @@ class FieldsHelper {
 			return MainHelper::values_to_string( $default );
 		}
 
-		if ( is_array( $field::DEFAULT_VALUE ) && $field->get_config( 'repeatable' ) ) {
+		if ( $field->get_config( 'repeatable' ) && ! MainHelper::for_repeatable( $default ) ) {
 			$default = array( $default );
 		}
 

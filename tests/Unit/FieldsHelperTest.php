@@ -497,8 +497,8 @@ class FieldsHelperTest extends TestCase {
 		$this->assertSame(
 			array(
 				'test' => array(
-					'type'       => 'array',
-					'default'    => array(
+					'type'    => 'array',
+					'default' => array(
 						array(
 							'test'    => 'this',
 							'another' => 'one',
@@ -508,8 +508,8 @@ class FieldsHelperTest extends TestCase {
 							'another' => 'time',
 						),
 					),
-					'items' => array(
-						'type' => 'object',
+					'items'   => array(
+						'type'       => 'object',
 						'properties' => array(
 							'test'    => array(
 								'type'    => 'string',
@@ -518,6 +518,127 @@ class FieldsHelperTest extends TestCase {
 							'another' => array(
 								'type'    => 'string',
 								'default' => 'one',
+							),
+						),
+					),
+				),
+			),
+			FieldsHelper::build_schema( new Fields( array( $field ) ) )
+		);
+		FormHelperTest::render_no_issues( $field );
+	}
+
+	public function for_link_with_defaults( bool $repeatable ): array {
+		// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
+		return array(
+			'repeatable' => $repeatable,
+			'type' => 'link',
+			'default' => array(
+				array(
+					'url' => '#',
+					'text' => 'first',
+				),
+				array( 'url' => '/second' ),
+			),
+		);
+		// phpcs:enable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
+	}
+
+	public function test_link_with_defaults(): void {
+		$field = FormHelper::make_field(
+			'test',
+			$this->for_link_with_defaults( false ),
+		);
+
+		$this->assertSame(
+			array(
+				'url'    => '#',
+				'text'   => 'first',
+				'target' => '',
+			),
+			FieldsHelper::get_default_value( $field )
+		);
+		$this->assertSame(
+			array(
+				'test' => array(
+					'type'       => 'object',
+					'default'    => array(
+						'url'    => '#',
+						'text'   => 'first',
+						'target' => '',
+					),
+					'properties' => array(
+						'url'    => array(
+							'type'    => 'string',
+							'default' => '#',
+						),
+						'text'   => array(
+							'type'    => 'string',
+							'default' => 'first',
+						),
+						'target' => array(
+							'type'    => 'string',
+							'default' => '',
+						),
+					),
+				),
+			),
+			FieldsHelper::build_schema( new Fields( array( $field ) ) )
+		);
+		FormHelperTest::render_no_issues( $field );
+	}
+
+	public function test_link_with_defaults_repeatable(): void {
+		$field = FormHelper::make_field(
+			'test',
+			$this->for_link_with_defaults( true ),
+		);
+
+		$this->assertSame(
+			array(
+				array(
+					'url'    => '#',
+					'text'   => 'first',
+					'target' => '',
+				),
+				array(
+					'url'    => '/second',
+					'text'   => '',
+					'target' => '',
+				),
+			),
+			FieldsHelper::get_default_value( $field )
+		);
+		$this->assertSame(
+			array(
+				'test' => array(
+					'type'    => 'array',
+					'default' => array(
+						array(
+							'url'    => '#',
+							'text'   => 'first',
+							'target' => '',
+						),
+						array(
+							'url'    => '/second',
+							'text'   => '',
+							'target' => '',
+						),
+					),
+					'items'   => array(
+						'type'       => 'object',
+						'properties' => array(
+							'url'    => array(
+								'type'    => 'string',
+								'default' => '#',
+							),
+							'text'   => array(
+								'type'    => 'string',
+								'default' => 'first',
+							),
+							'target' => array(
+								'type'    => 'string',
+								'default' => '',
 							),
 						),
 					),
