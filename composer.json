@@ -39,6 +39,11 @@
 			"ThemePlate\\Core\\": "src"
 		}
 	},
+	"extra": {
+        "branch-alias": {
+            "dev-develop": "2.9.x-dev"
+        }
+    },
 	"autoload-dev": {
 		"psr-4": {
 			"Tests\\": "tests"
