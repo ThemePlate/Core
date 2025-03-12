@@ -9,7 +9,6 @@
 
 namespace ThemePlate\Core;
 
-use ThemePlate\Core\Helper\FieldsHelper;
 use ThemePlate\Core\Helper\FormHelper;
 use ThemePlate\Core\Helper\MetaHelper;
 
