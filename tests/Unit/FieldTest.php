@@ -190,28 +190,31 @@ class FieldTest extends TestCase {
 	/**
 	 * @dataProvider for_maybe_adjust_value
 	 */
-	public function test_maybe_adjust_value( bool $repeatable, ?int $minimum, ?int $maximum, $default, $expected_value ): void {
+	public function test_maybe_adjust_value( bool $repeatable, ?int $minimum, ?int $maximum, $actual_value, $expected_value ): void {
+		$default = $actual_value;
+
 		$field = new InputField( 'test', compact( 'repeatable', 'minimum', 'maximum', 'default' ) );
 
-		$this->assert_maybe_adjust_value( $field, $default, $expected_value );
+		$this->assert_maybe_adjust_value( $field, $actual_value, $expected_value );
 		FormHelperTest::render_no_issues( $field );
 	}
 
 	/**
 	 * @dataProvider for_maybe_adjust_value
 	 */
-	public function test_maybe_adjust_value_multiple( bool $repeatable, ?int $minimum, ?int $maximum, $default, $expected_value ): void {
+	public function test_maybe_adjust_value_multiple( bool $repeatable, ?int $minimum, ?int $maximum, $actual_value, $expected_value ): void {
 		$multiple = true;
+		$default  = $actual_value;
 
 		$field = new FileField( 'test', compact( 'multiple', 'repeatable', 'minimum', 'maximum', 'default' ) );
 
-		if ( $repeatable && is_array( $default ) ) {
-			$expected_value = array_fill( 0, max( $minimum, $maximum ), $default );
+		if ( $repeatable && is_array( $actual_value ) ) {
+			$expected_value = array_fill( 0, max( $minimum, $maximum ), $actual_value );
 
-			$default = array_fill( 0, $maximum ?? 0, $default );
+			$actual_value = array_fill( 0, $maximum ?? 0, $actual_value );
 		}
 
-		$this->assert_maybe_adjust_value( $field, $default, $expected_value );
+		$this->assert_maybe_adjust_value( $field, $actual_value, $expected_value );
 		FormHelperTest::render_no_issues( $field );
 	}
 
@@ -291,10 +294,12 @@ class FieldTest extends TestCase {
 	/**
 	 * @dataProvider for_maybe_adjust_value_link
 	 */
-	public function test_maybe_adjust_value_link( bool $repeatable, ?int $minimum, ?int $maximum, ?array $default, ?array $expected_value ): void {
+	public function test_maybe_adjust_value_link( bool $repeatable, ?int $minimum, ?int $maximum, ?array $actual_value, ?array $expected_value ): void {
+		$default = $actual_value;
+
 		$field = new LinkField( 'test', compact( 'repeatable', 'minimum', 'maximum', 'default' ) );
 
-		$this->assert_maybe_adjust_value( $field, $default, $expected_value );
+		$this->assert_maybe_adjust_value( $field, $actual_value, $expected_value );
 		FormHelperTest::render_no_issues( $field );
 	}
 
