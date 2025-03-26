@@ -51,9 +51,9 @@ class TypeField extends Field {
 
 	protected function initialize(): void {
 
-		$hook_name = 'wp_ajax_' . $this->get_action_name( $this->get_config( 'type' ) );
+		$hook_name = 'wp_ajax_' . static::get_action_name( $this->get_config( 'type' ) );
 
-		add_action( $hook_name, $this->get_callback( $this->get_config( 'type' ) ) );
+		add_action( $hook_name, static::get_callback( $this->get_config( 'type' ) ) );
 
 	}
 
@@ -122,7 +122,7 @@ class TypeField extends Field {
 
 		echo '</select>';
 		echo '<div class="select2-options"
-				data-action="' . esc_attr( $this->get_action_name( $this->get_config( 'type' ) ) ) . '"
+				data-action="' . esc_attr( static::get_action_name( $this->get_config( 'type' ) ) ) . '"
 				data-options="' . esc_attr( wp_json_encode( $args, JSON_NUMERIC_CHECK ) ) . '"
 				data-value="' . esc_attr( wp_json_encode( empty( $value ) ? '' : $value, JSON_NUMERIC_CHECK ) ) . '"
 				></div>';
