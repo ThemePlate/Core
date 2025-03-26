@@ -41,7 +41,11 @@ class Fields {
 				continue;
 			}
 
-			if ( ! is_array( $field ) || empty( $field ) ) {
+			if ( ! is_array( $field ) ) {
+				continue;
+			}
+
+			if ( empty( $field ) ) {
 				continue;
 			}
 

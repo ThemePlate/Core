@@ -33,7 +33,7 @@ class MetaHelper {
 		$result = (bool) ( $callback( $current_id ) );
 
 		if ( 'hide' === $type ) {
-			$result = ! $result;
+			return ! $result;
 		}
 
 		return $result;
@@ -46,7 +46,7 @@ class MetaHelper {
 		$result = in_array( $current_id, array_map( 'strval', $wanted_ids ), true );
 
 		if ( 'hide' === $type ) {
-			$result = ! $result;
+			return ! $result;
 		}
 
 		return $result;
