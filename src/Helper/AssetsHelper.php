@@ -27,8 +27,9 @@ class AssetsHelper {
 		return add_query_arg(
 			array(
 				'action'   => self::LOADER_ACTION,
+				'version'  => self::LOADER_VERSION,
 				'filename' => $filename,
-				'_wpnonce' => wp_create_nonce( self::LOADER_ACTION ),
+				'_wpnonce' => wp_create_nonce( self::LOADER_ACTION . '@' . self::LOADER_VERSION ),
 			),
 			admin_url( 'admin-ajax.php' )
 		);
@@ -38,7 +39,9 @@ class AssetsHelper {
 
 	public static function load_asset(): void {
 
-		check_ajax_referer( self::LOADER_ACTION );
+		if ( ! check_ajax_referer( self::LOADER_ACTION . '@' . self::LOADER_VERSION, false, false ) ) {
+			return;
+		}
 
 		if ( empty( $_GET['filename'] ) ) {
 			wp_die();
