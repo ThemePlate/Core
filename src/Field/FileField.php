@@ -35,24 +35,22 @@ class FileField extends Field {
 			echo '</div>';
 		}
 
-		if ( ! empty( $value ) ) {
-			foreach ( $value as $file ) {
-				$name    = basename( get_attached_file( $file ) );
-				$info    = wp_check_filetype( $name );
-				$type    = wp_ext2type( $info['ext'] );
-				$preview = ( 'image' === $type ? wp_get_attachment_url( $file ) : includes_url( '/images/media/' ) . $type . '.png' );
+		foreach ( $value as $file ) {
+			$name    = basename( get_attached_file( $file ) );
+			$info    = wp_check_filetype( $name );
+			$type    = wp_ext2type( $info['ext'] );
+			$preview = ( 'image' === $type ? wp_get_attachment_url( $file ) : includes_url( '/images/media/' ) . $type . '.png' );
 
-				echo '<div class="attachment"><div class="attachment-preview landscape"><div class="thumbnail">';
-				echo '<div class="centered"><img src="' . esc_attr( $preview ) . '" alt="' . esc_attr( get_the_title( $file ) ) . '"/></div>';
-				echo '<div class="filename"><div>' . esc_html( $name ) . '</div></div>';
-				echo '</div></div>';
-				echo '<button type="button" class="button-link attachment-close media-modal-icon"><span class="screen-reader-text">Remove</span></button>';
-				echo '<input
-					type="hidden"
-					name="' . esc_attr( $this->get_config( 'name' ) ) . ( $this->get_config( 'multiple' ) ? '[]' : '' ) . '"
-					value="' . esc_attr( $file ) . '" />';
-				echo '</div>';
-			}
+			echo '<div class="attachment"><div class="attachment-preview landscape"><div class="thumbnail">';
+			echo '<div class="centered"><img src="' . esc_attr( $preview ) . '" alt="' . esc_attr( get_the_title( $file ) ) . '"/></div>';
+			echo '<div class="filename"><div>' . esc_html( $name ) . '</div></div>';
+			echo '</div></div>';
+			echo '<button type="button" class="button-link attachment-close media-modal-icon"><span class="screen-reader-text">Remove</span></button>';
+			echo '<input
+				type="hidden"
+				name="' . esc_attr( $this->get_config( 'name' ) ) . ( $this->get_config( 'multiple' ) ? '[]' : '' ) . '"
+				value="' . esc_attr( $file ) . '" />';
+			echo '</div>';
 		}
 
 		echo '</div>';

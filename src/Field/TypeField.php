@@ -116,10 +116,8 @@ class TypeField extends Field {
 
 		$value = array_filter( (array) $value );
 
-		if ( ! empty( $value ) ) {
-			foreach ( $value as $item ) {
-				echo '<option value="' . esc_attr( $item ) . '" selected="selected">' . esc_html( $item ) . '</option>';
-			}
+		foreach ( $value as $item ) {
+			echo '<option value="' . esc_attr( $item ) . '" selected="selected">' . esc_html( $item ) . '</option>';
 		}
 
 		echo '</select>';
