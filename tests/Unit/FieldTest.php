@@ -291,7 +291,7 @@ class FieldTest extends TestCase {
 	/**
 	 * @dataProvider for_maybe_adjust_value_link
 	 */
-	public function test_maybe_adjust_value_link( bool $repeatable, ?int $minimum, ?int $maximum, $default, $expected_value ): void {
+	public function test_maybe_adjust_value_link( bool $repeatable, ?int $minimum, ?int $maximum, ?array $default, ?array $expected_value ): void {
 		$field = new LinkField( 'test', compact( 'repeatable', 'minimum', 'maximum', 'default' ) );
 
 		$this->assert_maybe_adjust_value( $field, $default, $expected_value );
@@ -428,7 +428,7 @@ class FieldTest extends TestCase {
 	/**
 	 * @dataProvider for_group_default_values
 	 */
-	public function test_group_default_values( array $config, $expected ): void {
+	public function test_group_default_values( array $config, array $expected ): void {
 		$field = FormHelper::make_field( 'test', array_merge( $config, array( 'type' => 'group' ) ) );
 
 		$this->assertSame( $expected, $field->get_config( 'default' ) );

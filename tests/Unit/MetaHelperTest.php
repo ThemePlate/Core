@@ -15,7 +15,7 @@ class MetaHelperTest extends TestCase {
 		return array(
 			'with callback returning false' => array(
 				array(
-					'on_cb' => function () {
+					'on_cb' => function (): bool {
 						return false;
 					},
 				),
@@ -24,7 +24,7 @@ class MetaHelperTest extends TestCase {
 			),
 			'with callback returning true' => array(
 				array(
-					'on_cb' => function () {
+					'on_cb' => function (): bool {
 						return true;
 					},
 				),
@@ -47,7 +47,7 @@ class MetaHelperTest extends TestCase {
 			),
 			'with the wanted id but falsy callback' => array(
 				array(
-					'on_cb' => function () {
+					'on_cb' => function (): bool {
 						return false;
 					},
 					'on_id' => array( 'tester' ),
@@ -57,7 +57,7 @@ class MetaHelperTest extends TestCase {
 			),
 			'with not wanted id but truthy callback' => array(
 				array(
-					'on_cb' => function () {
+					'on_cb' => function (): bool {
 						return true;
 					},
 					'on_id' => array( 'test' ),
@@ -72,7 +72,7 @@ class MetaHelperTest extends TestCase {
 	protected function transform_should_display( string $type, array $config ) {
 		return array_combine(
 			array_map(
-				function ( $key, $type ) {
+				function ( string $key, string $type ): string {
 					return $type . '_' . $key;
 				},
 				array_keys( $config ),
@@ -105,7 +105,7 @@ class MetaHelperTest extends TestCase {
 	}
 
 	public function for_normalize_options(): array {
-		$callable = function () {
+		$callable = function (): bool {
 			return true;
 		};
 
@@ -192,7 +192,7 @@ class MetaHelperTest extends TestCase {
 	/**
 	 * @dataProvider for_normalize_options
 	 */
-	public function test_normalize_options( array $container, $expected ): void {
+	public function test_normalize_options( array $container, array $expected ): void {
 		$this->assertSame( $expected, MetaHelper::normalize_options( $container ) );
 	}
 

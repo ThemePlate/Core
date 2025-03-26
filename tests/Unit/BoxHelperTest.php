@@ -121,7 +121,7 @@ class BoxHelperTest extends TestCase {
 	/**
 	 * @dataProvider for_get_priority
 	 */
-	public function test_get_priority( array $config, int $priority ) {
+	public function test_get_priority( array $config, int $priority ): void {
 		$this->assertSame( $priority, BoxHelper::get_priority( $config ) );
 	}
 }
