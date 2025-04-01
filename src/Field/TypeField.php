@@ -76,15 +76,6 @@ class TypeField extends Field {
 		$config_options = $this->get_config( 'options' );
 
 		switch ( $this->get_config( 'type' ) ) {
-			default:
-			case 'post':
-				$defaults = array( 'post_type' => $this->get_config( 'type' ) );
-
-				if ( MainHelper::is_sequential( $config_options ) ) {
-					$config_options = array( 'post_type' => $config_options );
-				}
-
-				break;
 			case 'user':
 				$defaults = array( 'role' => '' );
 
@@ -98,6 +89,15 @@ class TypeField extends Field {
 
 				if ( MainHelper::is_sequential( $config_options ) ) {
 					$config_options = array( 'taxonomy' => $config_options );
+				}
+
+				break;
+			case 'post':
+			default:
+				$defaults = array( 'post_type' => $this->get_config( 'type' ) );
+
+				if ( MainHelper::is_sequential( $config_options ) ) {
+					$config_options = array( 'post_type' => $config_options );
 				}
 
 				break;

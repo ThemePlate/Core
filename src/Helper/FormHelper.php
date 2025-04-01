@@ -69,13 +69,6 @@ class FormHelper {
 	public static function get_field_class( string $type ): string {
 
 		switch ( $type ) {
-			default:
-			case 'text':
-			case 'time':
-			case 'email':
-			case 'url':
-				return Field\InputField::class;
-
 			case 'textarea':
 				return Field\TextareaField::class;
 
@@ -122,6 +115,13 @@ class FormHelper {
 
 			case 'group':
 				return Field\GroupField::class;
+
+			case 'text':
+			case 'time':
+			case 'email':
+			case 'url':
+			default:
+				return Field\InputField::class;
 		}
 
 	}
