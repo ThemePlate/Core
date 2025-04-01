@@ -44,7 +44,17 @@ class TypeField extends Field {
 
 	protected static function get_callback( string $type ): callable {
 
-		return array( self::class, 'get_' . self::get_correct_type( $type ) );
+		$type = self::get_correct_type( $type );
+
+		switch ( $type ) {
+			case 'users':
+				return array( self::class, 'get_users' );
+			case 'terms':
+				return array( self::class, 'get_terms' );
+			case 'posts':
+			default:
+				return array( self::class, 'get_posts' );
+		}
 
 	}
 
