@@ -260,7 +260,7 @@ class TypeField extends Field {
 			$return['pagination']['more'] = true;
 		}
 
-		foreach ( $query->get_terms() as $id => $name ) {
+		foreach ( (array) $query->get_terms() as $id => $name ) {
 			$return['results'][] = array(
 				'id'   => $id,
 				'text' => $name,
