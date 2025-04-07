@@ -84,6 +84,9 @@ class MetaHelper {
 				$container[ $type . '_id' ] = (array) $value[0]['value'];
 				unset( $container[ $type ] );
 			}
+		} elseif ( is_callable( $value ) ) {
+			$container[ $type . '_cb' ] = $value;
+			unset( $container[ $type ] );
 		}
 
 		return $container;

@@ -104,6 +104,10 @@ class MetaHelperTest extends TestCase {
 		}
 	}
 
+	public function callable_callback(): bool {
+		return true;
+	}
+
 	public function for_normalize_options(): array {
 		$callable = function (): bool {
 			return true;
@@ -117,6 +121,14 @@ class MetaHelperTest extends TestCase {
 				),
 				array(
 					'show_on_cb' => $callable,
+				),
+			),
+			'with callable callback' => array(
+				array(
+					'show_on' => array( $this, 'callable_callback' ),
+				),
+				array(
+					'show_on_cb' => array( $this, 'callable_callback' ),
 				),
 			),
 			'with key-value pair for ID' => array(
