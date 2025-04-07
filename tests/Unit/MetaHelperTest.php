@@ -69,7 +69,7 @@ class MetaHelperTest extends TestCase {
 		// phpcs:enable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 	}
 
-	protected function transform_should_display( string $type, array $config ) {
+	protected function transform_should_display( string $type, array $config ): array {
 		return array_combine(
 			array_map(
 				function ( string $key, string $type ): string {

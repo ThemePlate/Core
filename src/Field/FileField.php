@@ -31,7 +31,7 @@ class FileField extends Field {
 
 		if ( ! $this->get_config( 'multiple' ) ) {
 			echo '<div class="attachment placeholder">';
-			echo '<input type="button" class="button attachment-add' . ( empty( $value ) ? ' hidden' : '' ) . '" value="Select" />';
+			echo '<input type="button" class="button attachment-add' . ( array() === $value ? ' hidden' : '' ) . '" value="Select" />';
 			echo '</div>';
 		}
 
@@ -57,7 +57,7 @@ class FileField extends Field {
 
 		if ( $this->get_config( 'multiple' ) ) {
 			echo '<input type="button" class="button attachment-add" value="Add" />';
-			echo '<input type="button" class="button attachments-clear' . ( empty( $value ) ? '' : ' hidden' ) . '" value="Clear" />';
+			echo '<input type="button" class="button attachments-clear' . ( array() === $value ? '' : ' hidden' ) . '" value="Clear" />';
 		}
 
 		echo '</div>';

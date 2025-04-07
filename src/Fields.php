@@ -45,7 +45,7 @@ class Fields {
 				continue;
 			}
 
-			if ( empty( $field ) ) {
+			if ( array() === $field ) {
 				continue;
 			}
 
