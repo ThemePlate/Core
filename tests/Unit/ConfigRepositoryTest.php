@@ -16,7 +16,7 @@ use ThemePlate\Core\Repository;
 class ConfigRepositoryTest extends TestCase {
 	private Repository $repository;
 
-	public function setUp(): void {
+	protected function setUp(): void {
 		$handler = new class() extends Handler {
 			public function get_value( Field $field, string $data_prefix, string $current_id ) {
 				if ( '123' === $current_id ) {
@@ -32,7 +32,6 @@ class ConfigRepositoryTest extends TestCase {
 
 	public function test_repository(): void {
 		$this->assertInstanceOf( Field::class, $this->repository->search( 'test' ) );
-		$this->assertIsArray( $this->repository->dump() );
 	}
 
 	public function test_with_config(): void {

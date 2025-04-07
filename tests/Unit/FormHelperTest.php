@@ -18,7 +18,7 @@ class FormHelperTest extends TestCase {
 	}
 
 	public function test_make_field(): void {
-		$namespace = 'ThemePlate\Core\Field';
+		$namespace = \ThemePlate\Core\Field::class;
 
 		// phpcs:ignore Modernize.FunctionCalls.Dirname.FileConstant
 		foreach ( glob( dirname( __FILE__, 3 ) . '/src/Field/*.php', GLOB_MARK ) as $file ) {
