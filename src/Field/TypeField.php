@@ -87,33 +87,40 @@ class TypeField extends Field {
 
 		switch ( $this->get_config( 'type' ) ) {
 			case 'user':
-				$defaults = array( 'role' => '' );
+				$type_key = 'role';
+				$defaults = array( $type_key => null );
 
 				if ( MainHelper::is_sequential( $config_options ) ) {
-					$config_options = array( 'role' => $config_options );
+					$config_options = array( $type_key => $config_options );
 				}
 
 				break;
 			case 'term':
-				$defaults = array( 'taxonomy' => null );
+				$type_key = 'taxonomy';
+				$defaults = array( $type_key => null );
 
 				if ( MainHelper::is_sequential( $config_options ) ) {
-					$config_options = array( 'taxonomy' => $config_options );
+					$config_options = array( $type_key => $config_options );
 				}
 
 				break;
 			case 'post':
 			default:
-				$defaults = array( 'post_type' => $this->get_config( 'type' ) );
+				$type_key = 'post_type';
+				$defaults = array( $type_key => array( $this->get_config( 'type' ) ) );
 
 				if ( MainHelper::is_sequential( $config_options ) ) {
-					$config_options = array( 'post_type' => $config_options );
+					$config_options = array( $type_key => $config_options );
 				}
 
 				break;
 		}
 
 		$args = MainHelper::fool_proof( $defaults, $config_options );
+
+		if ( empty( $args[ $type_key ] ) ) {
+			unset( $args[ $type_key ] );
+		}
 
 		echo '<select disabled><option>Loading values...</option></select>';
 		echo '<select class="themeplate-select2 select2-hidden-accessible"
@@ -225,7 +232,7 @@ class TypeField extends Field {
 			'number'  => isset( $_GET['ids__in'] ) ? -1 : self::$count,
 			'include' => $_GET['ids__in'] ?? '',
 		);
-		$query    = new WP_User_Query( array_merge( $defaults, $_GET['options'], $_GET['_page'] ) );
+		$query    = new WP_User_Query( array_merge( $defaults, $_GET['options'] ?? array(), $_GET['_page'] ) );
 
 		if ( $_GET['_page']['paged'] < ceil( $query->get_total() / self::$count ) ) {
 			$return['pagination']['more'] = true;
@@ -263,8 +270,8 @@ class TypeField extends Field {
 			'include' => $_GET['ids__in'] ?? '',
 			'offset'  => $offset,
 		);
-		$total    = wp_count_terms( $_GET['options']['taxonomy'] );
-		$query    = new WP_Term_Query( array_merge( $defaults, $_GET['options'] ) );
+		$total    = wp_count_terms( $_GET['options'] ?? array() );
+		$query    = new WP_Term_Query( array_merge( $defaults, $_GET['options'] ?? array() ) );
 
 		if ( ! is_wp_error( $total ) && $_GET['_page']['paged'] < ceil( (int) $total / self::$count ) ) {
 			$return['pagination']['more'] = true;
