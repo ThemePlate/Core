@@ -57,7 +57,7 @@ class FormHelper {
 			return;
 		}
 
-		if ( function_exists( 'use_block_editor_for_post' ) && use_block_editor_for_post( get_the_ID() ) ) {
+		if ( function_exists( 'use_block_editor_for_post' ) && use_block_editor_for_post( (int) get_the_ID() ) ) {
 			wp_enqueue_script( 'themeplate-show-hide-gutenberg', AssetsHelper::get_url( 'show-hide-gutenberg.js' ), array(), $version, true );
 		} else {
 			wp_enqueue_script( 'themeplate-show-hide-classic', AssetsHelper::get_url( 'show-hide-classic.js' ), array(), $version, true );

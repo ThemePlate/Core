@@ -83,7 +83,7 @@ class Fields {
 				echo '</div>';
 			}
 
-			echo '<div class="field-input' . ( esc_attr( $field->get_config( 'repeatable' ) ? ' repeatable' : '' ) ) . '" data-min="' . esc_attr( $field->get_config( 'minimum' ) ) . '" data-max="' . esc_attr( $field->get_config( 'maximum' ) ) . '">';
+			echo '<div class="field-input' . ( esc_attr( $field->get_config( 'repeatable' ) ? ' repeatable' : '' ) ) . '" data-min="' . esc_attr( (string) $field->get_config( 'minimum' ) ) . '" data-max="' . esc_attr( (string) $field->get_config( 'maximum' ) ) . '">';
 				if ( ! $field->get_config( 'repeatable' ) ) {
 					$field->render( $value );
 				} else {

@@ -61,7 +61,7 @@ class AssetsHelper {
 		ob_start();
 		include $filename;
 		// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		wp_die( ob_get_clean() );
+		wp_die( (string) ob_get_clean() );
 
 	}
 

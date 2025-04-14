@@ -143,8 +143,8 @@ class TypeField extends Field {
 		echo '</select>';
 		echo '<div class="select2-options"
 				data-action="' . esc_attr( static::get_action_name( $this->get_config( 'type' ) ) ) . '"
-				data-options="' . esc_attr( wp_json_encode( $args, JSON_NUMERIC_CHECK ) ) . '"
-				data-value="' . esc_attr( wp_json_encode( array() === $value ? '' : $value, JSON_NUMERIC_CHECK ) ) . '"
+				data-options="' . esc_attr( (string) wp_json_encode( $args, JSON_NUMERIC_CHECK ) ) . '"
+				data-value="' . esc_attr( (string) wp_json_encode( array() === $value ? '' : $value, JSON_NUMERIC_CHECK ) ) . '"
 				></div>';
 
 	}

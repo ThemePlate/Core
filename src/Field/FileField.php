@@ -18,7 +18,7 @@ class FileField extends Field {
 
 	public function render( $value ): void {
 
-		$options = wp_json_encode( $this->get_config( 'options' ) );
+		$options = (string) wp_json_encode( $this->get_config( 'options' ) );
 
 		echo '<input type="hidden" name="' . esc_attr( $this->get_config( 'name' ) ) . '" />';
 		echo '<div
@@ -36,10 +36,10 @@ class FileField extends Field {
 		}
 
 		foreach ( $value as $file ) {
-			$name    = basename( get_attached_file( $file ) );
+			$name    = basename( (string) get_attached_file( $file ) );
 			$info    = wp_check_filetype( $name );
 			$type    = wp_ext2type( $info['ext'] );
-			$preview = ( 'image' === $type ? wp_get_attachment_url( $file ) : includes_url( '/images/media/' ) . $type . '.png' );
+			$preview = ( 'image' === $type ? (string) wp_get_attachment_url( $file ) : includes_url( '/images/media/' ) . $type . '.png' );
 
 			echo '<div class="attachment"><div class="attachment-preview landscape"><div class="thumbnail">';
 			echo '<div class="centered"><img src="' . esc_attr( $preview ) . '" alt="' . esc_attr( get_the_title( $file ) ) . '"/></div>';
