@@ -20,6 +20,9 @@ class Fields {
 	protected array $collection;
 
 
+	/**
+	 * @param array<Field|mixed> $collection
+	 */
 	public function __construct( array $collection ) {
 
 		$this->collection = $this->filter( $collection );
@@ -28,6 +31,7 @@ class Fields {
 
 
 	/**
+	 * @param array<Field|mixed> $fields
 	 * @return Field[]
 	 */
 	protected function filter( array $fields ): array {

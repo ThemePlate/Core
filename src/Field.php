@@ -30,14 +30,20 @@ abstract class Field {
 	public const MULTIPLE_ABLE = false;
 
 
+	/**
+	 * @var array<string, mixed>
+	 */
 	protected array $config;
 	protected string $data_key;
 	/**
-	 * @var string|array
+	 * @var string|array<string, mixed>
 	 */
 	protected $user_passed_default = '';
 
 
+	/**
+	 * @param array<string, mixed> $config
+	 */
 	public function __construct( string $data_key, array $config = array() ) {
 
 		$this->data_key = $data_key;
@@ -53,6 +59,10 @@ abstract class Field {
 	abstract public function render( $value ): void;
 
 
+	/**
+	 * @param array<string, mixed> $config
+	 * @return array<string, mixed>
+	 */
 	protected function check( array $config ): array {
 
 		$config = MainHelper::fool_proof(
@@ -128,6 +138,9 @@ abstract class Field {
 	}
 
 
+	/**
+	 * @param array<string, mixed> $config
+	 */
 	public function can_have_multiple_value( array $config ): bool {
 
 		return ( static::MULTIPLE_ABLE && (bool) $config['multiple'] ) || (bool) $config['repeatable'];
@@ -143,7 +156,7 @@ abstract class Field {
 
 
 	/**
-	 * @return array|mixed|null
+	 * @return array<string, mixed>|mixed|null
 	 */
 	public function get_config( string $key = '' ) {
 
@@ -183,7 +196,7 @@ abstract class Field {
 
 
 	/**
-	 * @return string|array
+	 * @return string|array<string, mixed>
 	 */
 	public function clone_value() {
 

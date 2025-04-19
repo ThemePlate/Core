@@ -13,6 +13,11 @@ use ThemePlate\Core\Field;
 
 class MainHelper {
 
+	/**
+	 * @param array<string, mixed> $defaults
+	 * @param array<string, mixed> $options
+	 * @return array<string, mixed>
+	 */
 	public static function fool_proof( array $defaults, array $options ): array {
 
 		$result = array_merge( $defaults, $options );
@@ -49,6 +54,9 @@ class MainHelper {
 	}
 
 
+	/**
+	 * @param array<mixed> $array_var
+	 */
 	public static function is_sequential( array $array_var ): bool {
 
 		return ( array_keys( $array_var ) === range( 0, count( $array_var ) - 1 ) );
@@ -56,6 +64,10 @@ class MainHelper {
 	}
 
 
+	/**
+	 * @param array<mixed> $config
+	 * @param array<mixed> $expected
+	 */
 	public static function is_complete( array $config, array $expected ): bool {
 
 		$result = true;
@@ -79,6 +91,10 @@ class MainHelper {
 	}
 
 
+	/**
+	 * @param array<mixed> $array_var
+	 * @return array<mixed>
+	 */
 	public static function values_to_string( array $array_var ): array {
 
 		return array_map(
@@ -96,7 +112,7 @@ class MainHelper {
 
 
 	/**
-	 * @param array|string|null $value
+	 * @param array<mixed>|string|null $value
 	 */
 	public static function for_repeatable( $value ): bool {
 
@@ -106,7 +122,7 @@ class MainHelper {
 
 
 	/**
-	 * @param array|string|null $value
+	 * @param array<mixed>|string|null $value
 	 */
 	public static function maybe_adjust( Field $field, &$value ): void {
 

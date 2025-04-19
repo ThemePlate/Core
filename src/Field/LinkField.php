@@ -30,6 +30,10 @@ class LinkField extends Field {
 	}
 
 
+	/**
+	 * @param array<string, string> $default_value
+	 * @return array<string, string>
+	 */
 	private function values_structure( array $default_value ): array {
 
 		return array_intersect_key(
