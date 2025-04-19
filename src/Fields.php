@@ -70,6 +70,9 @@ class Fields {
 	}
 
 
+	/**
+	 * @param mixed $value
+	 */
 	public function layout( Field $field, $value ): void {
 
 		$field->maybe_adjust( $value );
@@ -113,6 +116,9 @@ class Fields {
 	}
 
 
+	/**
+	 * @param mixed $value
+	 */
 	protected function cloner( Field $field, $value, bool $last = false ): void {
 
 		echo '<div class="themeplate-clone' . ( $last ? ' hidden' : '' ) . '">';

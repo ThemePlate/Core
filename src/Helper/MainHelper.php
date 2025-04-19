@@ -112,7 +112,7 @@ class MainHelper {
 
 
 	/**
-	 * @param array<mixed>|string|null $value
+	 * @param mixed $value
 	 */
 	public static function for_repeatable( $value ): bool {
 
@@ -122,7 +122,7 @@ class MainHelper {
 
 
 	/**
-	 * @param array<mixed>|string|null $value
+	 * @param mixed $value
 	 */
 	public static function maybe_adjust( Field $field, &$value ): void {
 

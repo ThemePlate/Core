@@ -36,7 +36,7 @@ abstract class Field {
 	protected array $config;
 	protected string $data_key;
 	/**
-	 * @var string|array<string, mixed>
+	 * @var mixed
 	 */
 	protected $user_passed_default = '';
 
@@ -56,6 +56,9 @@ abstract class Field {
 	}
 
 
+	/**
+	 * @param mixed $value
+	 */
 	abstract public function render( $value ): void;
 
 
@@ -156,7 +159,7 @@ abstract class Field {
 
 
 	/**
-	 * @return array<string, mixed>|mixed|null
+	 * @return mixed
 	 */
 	public function get_config( string $key = '' ) {
 
@@ -196,7 +199,7 @@ abstract class Field {
 
 
 	/**
-	 * @return string|array<string, mixed>
+	 * @return mixed
 	 */
 	public function clone_value() {
 
@@ -219,6 +222,9 @@ abstract class Field {
 	}
 
 
+	/**
+	 * @param mixed $value
+	 */
 	public function maybe_adjust( &$value ): void {
 
 		if ( ! $this->get_config( 'repeatable' ) ) {

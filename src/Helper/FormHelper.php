@@ -66,6 +66,9 @@ class FormHelper {
 	}
 
 
+	/**
+	 * @return class-string<Field>
+	 */
 	public static function get_field_class( string $type ): string {
 
 		switch ( $type ) {
