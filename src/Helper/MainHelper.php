@@ -43,8 +43,7 @@ class MainHelper {
 				if ( is_scalar( $result[ $key ] ) || null === $result[ $key ] ) {
 					$result[ $key ] = (string) $result[ $key ];
 				} else {
-					// phpcs:ignore WordPress.WP.AlternativeFunctions.json_encode_json_encode
-					$result[ $key ] = json_encode( $result[ $key ] );
+					$result[ $key ] = wp_json_encode( $result[ $key ] );
 				}
 			}
 		}
