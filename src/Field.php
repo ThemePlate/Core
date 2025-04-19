@@ -223,7 +223,7 @@ abstract class Field {
 		$current = count( $value );
 
 		if ( $current < $this->get_config( 'minimum' ) ) {
-			$balance = $this->get_config( 'minimum' ) - $current;
+			$balance = max( 0, (int) ( $this->get_config( 'minimum' ) - $current ) );
 			$value   = array_merge( $value, array_fill( $current, $balance, $this->clone_value() ) );
 		}
 
