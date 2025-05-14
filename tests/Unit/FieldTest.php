@@ -219,7 +219,7 @@ class FieldTest extends TestCase {
 		$field = new FileField( 'test', compact( 'multiple', 'repeatable', 'minimum', 'maximum', 'default' ) );
 
 		if ( $repeatable && is_array( $actual_value ) ) {
-			$expected_value = array_fill( 0, max( $minimum, $maximum ), $actual_value );
+			$expected_value = array_fill( 0, max( $minimum ?? 0, $maximum ?? 0 ), $actual_value );
 
 			$actual_value = array_fill( 0, $maximum ?? 0, $actual_value );
 		}
