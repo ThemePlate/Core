@@ -378,7 +378,7 @@ class FieldTest extends TestCase {
 	public function test_enforcing_minimum_and_maximum( int $minimum, int $maximum, bool $required, array $expected ): void {
 		$field = new InputField( 'test', compact( 'minimum', 'maximum', 'required' ) );
 
-		list( $min, $max ) = $expected;
+		[$min, $max] = $expected;
 
 		$this->assertSame( $min, $field->get_config( 'minimum' ) );
 		$this->assertSame( $max, $field->get_config( 'maximum' ) );

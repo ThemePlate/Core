@@ -15,18 +15,14 @@ class MetaHelperTest extends TestCase {
 		return array(
 			'with callback returning false' => array(
 				array(
-					'on_cb' => function (): bool {
-						return false;
-					},
+					'on_cb' => fn(): bool => false,
 				),
 				'',
 				false,
 			),
 			'with callback returning true' => array(
 				array(
-					'on_cb' => function (): bool {
-						return true;
-					},
+					'on_cb' => fn(): bool => true,
 				),
 				'',
 				true,
@@ -47,9 +43,7 @@ class MetaHelperTest extends TestCase {
 			),
 			'with the wanted id but falsy callback' => array(
 				array(
-					'on_cb' => function (): bool {
-						return false;
-					},
+					'on_cb' => fn(): bool => false,
 					'on_id' => array( 'tester' ),
 				),
 				'tester',
@@ -57,9 +51,7 @@ class MetaHelperTest extends TestCase {
 			),
 			'with not wanted id but truthy callback' => array(
 				array(
-					'on_cb' => function (): bool {
-						return true;
-					},
+					'on_cb' => fn(): bool => true,
 					'on_id' => array( 'test' ),
 				),
 				'tester',
@@ -72,9 +64,7 @@ class MetaHelperTest extends TestCase {
 	protected function transform_should_display( string $type, array $config ): array {
 		return array_combine(
 			array_map(
-				function ( string $key, string $type ): string {
-					return $type . '_' . $key;
-				},
+				fn( string $key, string $type ): string => $type . '_' . $key,
 				array_keys( $config ),
 				array_fill( 0, count( $config ), $type )
 			),
@@ -109,9 +99,7 @@ class MetaHelperTest extends TestCase {
 	}
 
 	public function for_normalize_options(): array {
-		$callable = function (): bool {
-			return true;
-		};
+		$callable = fn(): bool => true;
 
 		// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 		return array(
