@@ -1,10 +1,10 @@
-phpfiles=$(git diff --cached --name-only --diff-filter=ACM | { grep '.php$' || true; })
-[ -z "$phpfiles" ] && exit 0
+files=$(git diff --cached --name-only --diff-filter=ACM | { grep '.php$' || true; })
+[ -z "$files" ] && exit 0
 
-unformatted=$(composer run lint $phpfiles | grep -E 'FILE:' | cut -d' ' -f2 | tr '\n' ' ')
-[ -z "$unformatted" ] && exit 0
+failed=$(composer run lint $files 2>&1 | grep 'FILE: ' | cut -d ' ' -f2 | tr '\n' ' ')
+[ -z "$failed" ] && exit 0
 
 echo >&2 "Files incorrectly formatted. Try running:"
-echo >&2 "  composer run fix $unformatted"
+echo >&2 "  composer run fix $failed"
 
 exit 1
