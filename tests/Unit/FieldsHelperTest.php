@@ -390,6 +390,8 @@ class FieldsHelperTest extends TestCase {
 
 	/**
 	 * @dataProvider for_getting_default
+	 *
+	 * @param mixed $expected
 	 */
 	public function test_getting_default( string $type, array $config, $expected ): void {
 		$field = FormHelper::make_field( 'test', array_merge( $config, compact( 'type' ) ) );
@@ -400,6 +402,8 @@ class FieldsHelperTest extends TestCase {
 
 	/**
 	 * @dataProvider for_getting_default
+	 *
+	 * @param mixed $expected
 	 */
 	public function test_repeatable_getting_default( string $type, array $config, $expected ): void {
 		$config['repeatable'] = true;

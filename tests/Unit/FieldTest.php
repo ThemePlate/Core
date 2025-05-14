@@ -178,6 +178,10 @@ class FieldTest extends TestCase {
 		// phpcs:enable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 	}
 
+	/**
+	 * @param mixed $actual_value
+	 * @param mixed $expected_value
+	 */
 	protected function assert_maybe_adjust_value( Field $field, $actual_value, $expected_value ): void {
 		$count = max( $field->get_config( 'minimum' ), $field->get_config( 'maximum' ), 1 );
 
@@ -189,6 +193,9 @@ class FieldTest extends TestCase {
 
 	/**
 	 * @dataProvider for_maybe_adjust_value
+	 *
+	 * @param mixed $actual_value
+	 * @param mixed $expected_value
 	 */
 	public function test_maybe_adjust_value( bool $repeatable, ?int $minimum, ?int $maximum, $actual_value, $expected_value ): void {
 		$default = $actual_value;
@@ -201,6 +208,9 @@ class FieldTest extends TestCase {
 
 	/**
 	 * @dataProvider for_maybe_adjust_value
+	 *
+	 * @param mixed $actual_value
+	 * @param mixed $expected_value
 	 */
 	public function test_maybe_adjust_value_multiple( bool $repeatable, ?int $minimum, ?int $maximum, $actual_value, $expected_value ): void {
 		$multiple = true;
