@@ -1,5 +1,6 @@
 parameters:
-  level: 5
+  level: 8
+  treatPhpDocTypesAsCertain: false
   excludePaths:
     analyse:
       - %currentWorkingDirectory%/dependencies?
@@ -8,3 +9,7 @@ parameters:
   scanDirectories:
     - %currentWorkingDirectory%/.cache/wordpress
     - %currentWorkingDirectory%/.cache/wordpress-tests-lib
+
+  ignoreErrors:
+    - identifier: missingType.iterableValue
+      path: %currentWorkingDirectory%/tests
