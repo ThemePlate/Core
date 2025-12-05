@@ -27,7 +27,7 @@
 
 	$( document ).on( 'click', '.tpo.postbox .hndle, .tpo.postbox .handlediv', function() {
 		var $el = $( this ),
-			p = $el.parent( '.postbox' ),
+			p = $el.parents( '.postbox' ),
 			ariaExpandedValue;
 
 		p.toggleClass( 'closed' );
