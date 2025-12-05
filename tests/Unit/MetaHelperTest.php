@@ -62,7 +62,7 @@ class MetaHelperTest extends TestCase {
 	}
 
 	protected function transform_should_display( string $type, array $config ): array {
-		return array_combine(
+		return (array) array_combine(
 			array_map(
 				fn( string $key, string $type ): string => $type . '_' . $key,
 				array_keys( $config ),
