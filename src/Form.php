@@ -12,8 +12,13 @@ namespace ThemePlate\Core;
 use ThemePlate\Core\Helper\AssetsHelper;
 use ThemePlate\Core\Helper\MainHelper;
 use ThemePlate\Core\Helper\MetaHelper;
+use ThemePlate\Core\Interfaces\FieldsInterface;
+use ThemePlate\Core\Traits\HasFields;
 
-abstract class Form {
+abstract class Form implements FieldsInterface {
+
+	use HasFields;
+
 
 	public const DEFAULTS = array(
 		'description' => '',
@@ -26,7 +31,6 @@ abstract class Form {
 	);
 
 
-	protected ?Fields $fields = null;
 	protected Handler $handler;
 	/**
 	 * @var array<string, mixed>
@@ -81,18 +85,6 @@ abstract class Form {
 		AssetsHelper::setup_loader();
 
 		return $config;
-
-	}
-
-
-	/**
-	 * @param array<Field|mixed> $collection
-	 */
-	public function fields( array $collection ): self {
-
-		$this->fields = new Fields( $collection );
-
-		return $this;
 
 	}
 
