@@ -9,6 +9,9 @@ namespace Tests\Unit;
 use PHPUnit\Framework\TestCase;
 use ThemePlate\Core\Helper\MetaHelper;
 
+/**
+ * @phpstan-import-type FConfig from \ThemePlate\Core\Field
+ */
 class MetaHelperTest extends TestCase {
 	public function for_should_display(): array {
 		// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
@@ -61,8 +64,11 @@ class MetaHelperTest extends TestCase {
 		// phpcs:enable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 	}
 
+	/**
+	 * @return FConfig
+	 */
 	protected function transform_should_display( string $type, array $config ): array {
-		return (array) array_combine(
+		$value = (array) array_combine(
 			array_map(
 				fn( string $key, string $type ): string => $type . '_' . $key,
 				array_keys( $config ),
@@ -70,6 +76,9 @@ class MetaHelperTest extends TestCase {
 			),
 			array_values( $config )
 		);
+
+		/** @var FConfig $value */
+		return $value;
 	}
 
 	/**
@@ -190,6 +199,9 @@ class MetaHelperTest extends TestCase {
 	}
 
 	/**
+	 * @param array<string, mixed> $container
+	 * @param array<string, mixed> $expected
+	 *
 	 * @dataProvider for_normalize_options
 	 */
 	public function test_normalize_options( array $container, array $expected ): void {

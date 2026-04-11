@@ -15,6 +15,22 @@ use ThemePlate\Core\Helper\MetaHelper;
 use ThemePlate\Core\Interfaces\FieldsInterface;
 use ThemePlate\Core\Traits\HasFields;
 
+/**
+ * @phpstan-type FConfig array{
+ *     description: string,
+ *     data_prefix: string,
+ *     style: string,
+ *     show_on?: array<string, string>|callable,
+ *     hide_on?: array<string, string>|callable,
+ *     show_on_cb?: callable,
+ *     hide_on_cb?: callable,
+ *     show_on_id?: int[]|string[],
+ *     hide_on_id?: int[]|string[],
+ *     context: string,
+ *     priority: string,
+ *     form_id: string,
+ * }
+ */
 abstract class Form implements FieldsInterface {
 
 	use HasFields;
@@ -33,7 +49,7 @@ abstract class Form implements FieldsInterface {
 
 	protected Handler $handler;
 	/**
-	 * @var array<string, mixed>
+	 * @var FConfig
 	 */
 	protected array $config;
 	protected string $title;
@@ -56,7 +72,7 @@ abstract class Form implements FieldsInterface {
 
 
 	/**
-	 * @param array<string, mixed> $config
+	 * @param FConfig $config
 	 */
 	abstract protected function initialize( array &$config ): void;
 
@@ -72,7 +88,7 @@ abstract class Form implements FieldsInterface {
 
 	/**
 	 * @param array<string, mixed> $config
-	 * @return array<string, mixed>
+	 * @return FConfig
 	 */
 	protected function check( array $config ): array {
 

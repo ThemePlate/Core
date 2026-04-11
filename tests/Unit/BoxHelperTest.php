@@ -95,6 +95,7 @@ class BoxHelperTest extends TestCase {
 		$this->assertSame( $expected, BoxHelper::prepare_save( $data ) );
 	}
 
+	/** @return array<string, array{0: array{priority: string}, 1: int}> */
 	public function for_get_priority(): array {
 		// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 		return array(
@@ -119,6 +120,8 @@ class BoxHelperTest extends TestCase {
 	}
 
 	/**
+	 * @param array{priority: string} $config
+	 *
 	 * @dataProvider for_get_priority
 	 */
 	public function test_get_priority( array $config, int $priority ): void {
