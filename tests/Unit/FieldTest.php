@@ -313,6 +313,14 @@ class FieldTest extends TestCase {
 		FormHelperTest::render_no_issues( $field );
 	}
 
+	public function test_default_with_empty_array_stays_structured(): void {
+		$field = new LinkField( 'test', array( 'default' => array() ) );
+
+		$this->assertSame( LinkField::DEFAULT_VALUE, $field->get_config( 'default' ) );
+		FormHelperTest::render_no_issues( $field );
+	}
+
+
 	public function for_correctly_passed_classname(): array {
 		// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 		return array(

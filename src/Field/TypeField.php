@@ -94,7 +94,7 @@ class TypeField extends Field {
 				$type_key = 'role';
 				$defaults = array( $type_key => null );
 
-				if ( MainHelper::is_sequential( $config_options ) ) {
+				if ( ! empty( $config_options ) && MainHelper::is_sequential( $config_options ) ) {
 					$config_options = array( $type_key => $config_options );
 				}
 
@@ -103,7 +103,7 @@ class TypeField extends Field {
 				$type_key = 'taxonomy';
 				$defaults = array( $type_key => null );
 
-				if ( MainHelper::is_sequential( $config_options ) ) {
+				if ( ! empty( $config_options ) && MainHelper::is_sequential( $config_options ) ) {
 					$config_options = array( $type_key => $config_options );
 				}
 
@@ -113,7 +113,7 @@ class TypeField extends Field {
 				$type_key = 'post_type';
 				$defaults = array( $type_key => array( $this->get_config( 'type' ) ) );
 
-				if ( MainHelper::is_sequential( $config_options ) ) {
+				if ( ! empty( $config_options ) && MainHelper::is_sequential( $config_options ) ) {
 					$config_options = array( $type_key => $config_options );
 				}
 

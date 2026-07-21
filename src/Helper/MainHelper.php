@@ -53,7 +53,7 @@ class MainHelper {
 	 */
 	public static function is_sequential( array $array_var ): bool {
 
-		return ( array_keys( $array_var ) === range( 0, count( $array_var ) - 1 ) );
+		return empty( $array_var ) || array_keys( $array_var ) === range( 0, count( $array_var ) - 1 );
 
 	}
 
@@ -111,7 +111,7 @@ class MainHelper {
 	 */
 	public static function for_repeatable( $value ): bool {
 
-		return is_array( $value ) && self::is_sequential( $value ) && is_array( $value[0] );
+		return is_array( $value ) && ! empty( $value ) && self::is_sequential( $value ) && is_array( $value[0] );
 
 	}
 

@@ -26,7 +26,7 @@ class LinkField extends Field {
 
 		$default = $this->config['default'];
 
-		$this->config['default'] = MainHelper::is_sequential( $default ) ? array_map( array( $this, 'values_structure' ), $default ) : $this->values_structure( $default );
+		$this->config['default'] = ! empty( $default ) && MainHelper::is_sequential( $default ) ? array_map( array( $this, 'values_structure' ), $default ) : $this->values_structure( $default );
 
 	}
 

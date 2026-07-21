@@ -146,6 +146,10 @@ class MainHelperTest extends TestCase {
 				),
 				false,
 			),
+			'with empty array' => array(
+				array(),
+				true,
+			),
 		);
 		// phpcs:enable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
 	}
@@ -199,5 +203,9 @@ class MainHelperTest extends TestCase {
 		} else {
 			$this->assertFalse( MainHelper::is_complete( $config, $expected ) );
 		}
+	}
+
+	public function test_for_repeatable_with_empty_array(): void {
+		$this->assertFalse( MainHelper::for_repeatable( array() ) );
 	}
 }
