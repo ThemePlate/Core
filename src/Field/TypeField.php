@@ -308,7 +308,8 @@ class TypeField extends Field {
 				'more' => false,
 			),
 		);
-		$offset   = ( $_GET['_page']['paged'] > 0 ) ? self::$count * ( $_GET['_page']['paged'] - 1 ) : 1;
+		$paged    = (int) ( $_GET['_page']['paged'] ?? 0 );
+		$offset   = ( $paged > 0 ) ? self::$count * ( $paged - 1 ) : 0;
 		$defaults = array(
 			'search'  => $_GET['search'] ?? '',
 			'number'  => isset( $_GET['ids__in'] ) ? 0 : self::$count,
@@ -320,7 +321,7 @@ class TypeField extends Field {
 		$is_multi = empty( $taxonomy ) ? true : is_array( $taxonomy ) && 1 < count( $taxonomy );
 		$query    = new WP_Term_Query( array_merge( $defaults, $_GET['options'] ?? array() ) );
 
-		if ( ! $total instanceof WP_Error && $_GET['_page']['paged'] < ceil( (int) $total / self::$count ) ) {
+		if ( ! $total instanceof WP_Error && $paged < ceil( (int) $total / self::$count ) ) {
 			$return['pagination']['more'] = true;
 		}
 
