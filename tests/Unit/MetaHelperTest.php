@@ -107,6 +107,108 @@ class MetaHelperTest extends TestCase {
 		return true;
 	}
 
+	public function for_combined_should_display(): array {
+		// phpcs:disable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
+		return array(
+			'show cb true and hide cb false' => array(
+				array(
+					'show_on_cb' => fn(): bool => true,
+					'hide_on_cb' => fn(): bool => false,
+				),
+				'',
+				true,
+			),
+			'show cb true and hide cb true' => array(
+				array(
+					'show_on_cb' => fn(): bool => true,
+					'hide_on_cb' => fn(): bool => true,
+				),
+				'',
+				false,
+			),
+			'show cb false and hide cb false' => array(
+				array(
+					'show_on_cb' => fn(): bool => false,
+					'hide_on_cb' => fn(): bool => false,
+				),
+				'',
+				false,
+			),
+			'show cb false and hide cb true' => array(
+				array(
+					'show_on_cb' => fn(): bool => false,
+					'hide_on_cb' => fn(): bool => true,
+				),
+				'',
+				false,
+			),
+			'show id match and hide id no match' => array(
+				array(
+					'show_on_id' => array( 'tester' ),
+					'hide_on_id' => array( 'other' ),
+				),
+				'tester',
+				true,
+			),
+			'show id match and hide id match' => array(
+				array(
+					'show_on_id' => array( 'tester' ),
+					'hide_on_id' => array( 'tester' ),
+				),
+				'tester',
+				false,
+			),
+			'show id no match and hide id no match' => array(
+				array(
+					'show_on_id' => array( 'other' ),
+					'hide_on_id' => array( 'another' ),
+				),
+				'tester',
+				false,
+			),
+			'show cb true and hide id no match' => array(
+				array(
+					'show_on_cb' => fn(): bool => true,
+					'hide_on_id' => array( 'other' ),
+				),
+				'tester',
+				true,
+			),
+			'show cb true and hide id match' => array(
+				array(
+					'show_on_cb' => fn(): bool => true,
+					'hide_on_id' => array( 'tester' ),
+				),
+				'tester',
+				false,
+			),
+			'show id match and hide cb true' => array(
+				array(
+					'show_on_id' => array( 'tester' ),
+					'hide_on_cb' => fn(): bool => true,
+				),
+				'tester',
+				false,
+			),
+			'show id match and hide cb false' => array(
+				array(
+					'show_on_id' => array( 'tester' ),
+					'hide_on_cb' => fn(): bool => false,
+				),
+				'tester',
+				true,
+			),
+		);
+		// phpcs:enable WordPress.Arrays.MultipleStatementAlignment.DoubleArrowNotAligned
+	}
+
+	/**
+	 * @dataProvider for_combined_should_display
+	 */
+	public function test_combined_should_display( array $config, string $current_id, bool $expected ): void {
+		$this->assertSame( $expected, MetaHelper::should_display( $config, $current_id ) );
+	}
+
 	public function for_normalize_options(): array {
 		$callable = fn(): bool => true;
 

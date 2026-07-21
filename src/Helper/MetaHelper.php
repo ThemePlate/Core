@@ -21,9 +21,9 @@ class MetaHelper {
 
 		foreach ( array( 'show', 'hide' ) as $type ) {
 			if ( ! empty( $meta_box[ $type . '_on_cb' ] ) ) {
-				$check = self::cb_check( $type, $current_id, $meta_box[ $type . '_on_cb' ] );
+				$check = $check && self::cb_check( $type, $current_id, $meta_box[ $type . '_on_cb' ] );
 			} elseif ( ! empty( $meta_box[ $type . '_on_id' ] ) ) {
-				$check = self::id_check( $type, $current_id, $meta_box[ $type . '_on_id' ] );
+				$check = $check && self::id_check( $type, $current_id, $meta_box[ $type . '_on_id' ] );
 			}
 		}
 
